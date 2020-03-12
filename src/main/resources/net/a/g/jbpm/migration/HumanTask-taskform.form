@@ -3,19 +3,19 @@
 <property name="name" value="HumanTask-taskform.form"/>
 <property name="displayMode" value="default"/>
 <property name="status" value="0"/>
-<field position="1" name="integerIn" type="InputTextInteger" id="485833733">
-<property name="fieldRequired" value="false"/>
-<property name="label" value="quot;enquot;,quot;intergerTask (integerIn)quot;"/>
-<property name="readonly" value="false"/>
-<property name="outputBinding" value="intergerTask"/>
-<property name="fieldClass" value="java.lang.Integer"/>
-</field>
 <field position="0" name="booleanIn" type="CheckBox" id="1780854463">
 <property name="fieldRequired" value="false"/>
 <property name="label" value="quot;enquot;,quot;booleanTask (booleanIn)quot;"/>
 <property name="readonly" value="false"/>
 <property name="outputBinding" value="booleanTask"/>
 <property name="fieldClass" value="java.lang.Boolean"/>
+</field>
+<field position="1" name="integerIn" type="InputTextInteger" id="485833733">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;intergerTask (integerIn)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="intergerTask"/>
+<property name="fieldClass" value="java.lang.Integer"/>
 </field>
 <field position="2" name="stringIn" type="InputText" id="927058266">
 <property name="fieldRequired" value="false"/>
