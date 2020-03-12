@@ -19,7 +19,7 @@
     <repository>
       <include>true</include>
       <metadata>
-        <id>jboss-fuse-public-plugin-repository</id>
+        <id>jboss-fuse-public-repository</id>
         <url>https://repo.fusesource.com/nexus/content/groups/public/</url>
         <source>SETTINGS</source>
       </metadata>
@@ -27,7 +27,7 @@
     <repository>
       <include>true</include>
       <metadata>
-        <id>jboss-fuse-public-repository</id>
+        <id>jboss-fuse-public-plugin-repository</id>
         <url>https://repo.fusesource.com/nexus/content/groups/public/</url>
         <source>SETTINGS</source>
       </metadata>
