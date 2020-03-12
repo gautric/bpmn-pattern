@@ -1,0 +1,30 @@
+
+<form id="1983980004">
+<property name="name" value="HumanTask-taskform.form"/>
+<property name="displayMode" value="default"/>
+<property name="status" value="0"/>
+<field position="0" name="booleanIn" type="CheckBox" id="325377144">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;booleanNew (booleanIn)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="booleanNew"/>
+<property name="fieldClass" value="java.lang.Boolean"/>
+</field>
+<field position="1" name="integerIn" type="InputTextInteger" id="969515070">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;intergerNew (integerIn)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="intergerNew"/>
+<property name="fieldClass" value="java.lang.Integer"/>
+</field>
+<field position="2" name="stringIn" type="InputText" id="1891830357">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;stringNew (stringIn)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="stringNew"/>
+<property name="fieldClass" value="java.lang.String"/>
+</field>
+<dataHolder inputId="" name="#FF54A7" type="basicType" outId="booleanNew" value="java.lang.Boolean" id="booleanIn"/>
+<dataHolder inputId="" name="#BBBBBB" type="basicType" outId="intergerNew" value="java.lang.Integer" id="integerIn"/>
+<dataHolder inputId="" name="#E9E371" type="basicType" outId="stringNew" value="java.lang.String" id="stringIn"/>
+</form>
