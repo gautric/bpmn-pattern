@@ -3,24 +3,8 @@
     <repository>
       <include>true</include>
       <metadata>
-        <id>jboss-public-repository</id>
-        <url>http://repository.jboss.org/nexus/content/repositories/public/</url>
-        <source>SETTINGS</source>
-      </metadata>
-    </repository>
-    <repository>
-      <include>true</include>
-      <metadata>
-        <id>apache-snapshot</id>
-        <url>https://repository.apache.org/content/repositories/snapshots</url>
-        <source>SETTINGS</source>
-      </metadata>
-    </repository>
-    <repository>
-      <include>true</include>
-      <metadata>
-        <id>jboss-fuse-public-repository</id>
-        <url>https://repo.fusesource.com/nexus/content/groups/public/</url>
+        <id>redhat-ga</id>
+        <url>https://maven.repository.redhat.com/ga/</url>
         <source>SETTINGS</source>
       </metadata>
     </repository>
@@ -30,38 +14,6 @@
         <id>jboss-fuse-public-plugin-repository</id>
         <url>https://repo.fusesource.com/nexus/content/groups/public/</url>
         <source>SETTINGS</source>
-      </metadata>
-    </repository>
-    <repository>
-      <include>true</include>
-      <metadata>
-        <id>redhat-tp</id>
-        <url>https://maven.repository.redhat.com/techpreview/all</url>
-        <source>SETTINGS</source>
-      </metadata>
-    </repository>
-    <repository>
-      <include>true</include>
-      <metadata>
-        <id>central</id>
-        <url>https://repo1.maven.org/maven2</url>
-        <source>SETTINGS</source>
-      </metadata>
-    </repository>
-    <repository>
-      <include>true</include>
-      <metadata>
-        <id>guvnor-m2-repo</id>
-        <url>http://127.0.0.1:8080/business-central/maven2/</url>
-        <source>PROJECT</source>
-      </metadata>
-    </repository>
-    <repository>
-      <include>true</include>
-      <metadata>
-        <id>local</id>
-        <url>/Users/gautric/.m2/repository</url>
-        <source>LOCAL</source>
       </metadata>
     </repository>
     <repository>
@@ -83,6 +35,30 @@
     <repository>
       <include>true</include>
       <metadata>
+        <id>guvnor-m2-repo</id>
+        <url>http://127.0.0.1:8080/business-central/maven2/</url>
+        <source>PROJECT</source>
+      </metadata>
+    </repository>
+    <repository>
+      <include>true</include>
+      <metadata>
+        <id>central</id>
+        <url>https://repo1.maven.org/maven2</url>
+        <source>SETTINGS</source>
+      </metadata>
+    </repository>
+    <repository>
+      <include>true</include>
+      <metadata>
+        <id>jboss-fuse-public-repository</id>
+        <url>https://repo.fusesource.com/nexus/content/groups/public/</url>
+        <source>SETTINGS</source>
+      </metadata>
+    </repository>
+    <repository>
+      <include>true</include>
+      <metadata>
         <id>jboss-ga-plugin-repository</id>
         <url>http://maven.repository.redhat.com/techpreview/all</url>
         <source>SETTINGS</source>
@@ -91,9 +67,33 @@
     <repository>
       <include>true</include>
       <metadata>
-        <id>redhat-ga</id>
-        <url>https://maven.repository.redhat.com/ga/</url>
+        <id>jboss-public-repository</id>
+        <url>http://repository.jboss.org/nexus/content/repositories/public/</url>
         <source>SETTINGS</source>
+      </metadata>
+    </repository>
+    <repository>
+      <include>true</include>
+      <metadata>
+        <id>redhat-tp</id>
+        <url>https://maven.repository.redhat.com/techpreview/all</url>
+        <source>SETTINGS</source>
+      </metadata>
+    </repository>
+    <repository>
+      <include>true</include>
+      <metadata>
+        <id>apache-snapshot</id>
+        <url>https://repository.apache.org/content/repositories/snapshots</url>
+        <source>SETTINGS</source>
+      </metadata>
+    </repository>
+    <repository>
+      <include>true</include>
+      <metadata>
+        <id>local</id>
+        <url>/Users/gautric/.m2/repository</url>
+        <source>LOCAL</source>
       </metadata>
     </repository>
     <repository>
