@@ -3,6 +3,7 @@
 <property name="name" value="TimerTestProcess-taskform.form"/>
 <property name="displayMode" value="default"/>
 <property name="status" value="0"/>
+<property name="migrationStep" value="1"/>
 <field position="0" name="booleanIn" type="CheckBox" id="1963120128">
 <property name="fieldRequired" value="false"/>
 <property name="label" value="quot;enquot;,quot;booleanIn (booleanIn)quot;"/>
@@ -12,9 +13,9 @@
 </field>
 <field position="1" name="integerIn" type="InputTextInteger" id="1193024448">
 <property name="fieldRequired" value="false"/>
-<property name="label" value="quot;SSClassquot;,quot;quot;quot;SSStylequot;,quot;quot;quot;caquot;,quot;quot;quot;dequot;,quot;quot;quot;enquot;,quot;integerIn (integerIn)quot;quot;esquot;,quot;quot;quot;frquot;,quot;quot;quot;jaquot;,quot;quot;quot;ptquot;,quot;quot;quot;zhquot;,quot;quot;"/>
-<property name="errorMessage" value="quot;caquot;,quot;quot;quot;dequot;,quot;quot;quot;enquot;,quot;quot;quot;esquot;,quot;quot;quot;frquot;,quot;quot;quot;jaquot;,quot;quot;quot;ptquot;,quot;quot;quot;zhquot;,quot;quot;"/>
-<property name="title" value="quot;caquot;,quot;quot;quot;dequot;,quot;quot;quot;enquot;,quot;quot;quot;esquot;,quot;quot;quot;frquot;,quot;quot;quot;jaquot;,quot;quot;quot;ptquot;,quot;quot;quot;zhquot;,quot;quot;"/>
+<property name="label" value="quot;dequot;,quot;quot;quot;ptquot;,quot;quot;quot;jaquot;,quot;quot;quot;enquot;,quot;integerIn (integerIn)quot;quot;frquot;,quot;quot;quot;caquot;,quot;quot;quot;esquot;,quot;quot;quot;zhquot;,quot;quot;"/>
+<property name="errorMessage" value="quot;dequot;,quot;quot;quot;ptquot;,quot;quot;quot;jaquot;,quot;quot;quot;enquot;,quot;quot;quot;frquot;,quot;quot;quot;caquot;,quot;quot;quot;esquot;,quot;quot;quot;zhquot;,quot;quot;"/>
+<property name="title" value="quot;dequot;,quot;quot;quot;ptquot;,quot;quot;quot;jaquot;,quot;quot;quot;enquot;,quot;quot;quot;frquot;,quot;quot;quot;caquot;,quot;quot;quot;esquot;,quot;quot;quot;zhquot;,quot;quot;"/>
 <property name="readonly" value="false"/>
 <property name="outputBinding" value="integerIn"/>
 <property name="fieldClass" value="java.lang.Integer"/>
