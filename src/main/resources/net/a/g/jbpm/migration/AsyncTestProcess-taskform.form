@@ -3,28 +3,29 @@
 <property name="name" value="AsyncTestProcess-taskform.form"/>
 <property name="displayMode" value="default"/>
 <property name="status" value="0"/>
-<field name="booleanIn" id="1057473051" position="0" type="CheckBox">
+<property name="migrationStep" value="1"/>
+<field position="0" name="booleanIn" type="CheckBox" id="1057473051">
 <property name="fieldRequired" value="false"/>
 <property name="label" value="quot;enquot;,quot;booleanIn (booleanIn)quot;"/>
 <property name="readonly" value="false"/>
 <property name="outputBinding" value="booleanIn"/>
 <property name="fieldClass" value="java.lang.Boolean"/>
 </field>
-<field name="integerIn" id="463533822" position="1" type="InputTextInteger">
+<field position="1" name="integerIn" type="InputTextInteger" id="463533822">
 <property name="fieldRequired" value="false"/>
 <property name="label" value="quot;enquot;,quot;integerIn (integerIn)quot;"/>
 <property name="readonly" value="false"/>
 <property name="outputBinding" value="integerIn"/>
 <property name="fieldClass" value="java.lang.Integer"/>
 </field>
-<field name="stringIn" id="1816276260" position="2" type="InputText">
+<field position="2" name="stringIn" type="InputText" id="1816276260">
 <property name="fieldRequired" value="false"/>
 <property name="label" value="quot;enquot;,quot;stringIn (stringIn)quot;"/>
 <property name="readonly" value="false"/>
 <property name="outputBinding" value="stringIn"/>
 <property name="fieldClass" value="java.lang.String"/>
 </field>
-<dataHolder inputId="" name="#FF54A7" outId="booleanIn" id="booleanIn" type="basicType" value="java.lang.Boolean"/>
-<dataHolder inputId="" name="#BBBBBB" outId="integerIn" id="integerIn" type="basicType" value="java.lang.Integer"/>
-<dataHolder inputId="" name="#E9E371" outId="stringIn" id="stringIn" type="basicType" value="java.lang.String"/>
+<dataHolder inputId="" name="#FF54A7" type="basicType" outId="booleanIn" value="java.lang.Boolean" id="booleanIn"/>
+<dataHolder inputId="" name="#BBBBBB" type="basicType" outId="integerIn" value="java.lang.Integer" id="integerIn"/>
+<dataHolder inputId="" name="#E9E371" type="basicType" outId="stringIn" value="java.lang.String" id="stringIn"/>
 </form>
