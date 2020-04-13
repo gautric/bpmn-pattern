@@ -24,7 +24,7 @@
       <bpmn2:incoming>_7D18BF09-4F26-40EA-861C-7ACAB1513C54</bpmn2:incoming>
       <bpmn2:outgoing>_640335F0-25F2-4646-95E8-EDC31CCF9D5E</bpmn2:outgoing>
       <bpmn2:timerEventDefinition id="_1rAd0WUbEeqcRtrkP9-KLw">
-        <bpmn2:timeDuration xsi:type="bpmn2:tFormalExpression" id="_1rAd0mUbEeqcRtrkP9-KLw">PT5M</bpmn2:timeDuration>
+        <bpmn2:timeDuration xsi:type="bpmn2:tFormalExpression" id="_1rAd0mUbEeqcRtrkP9-KLw">PT10M</bpmn2:timeDuration>
       </bpmn2:timerEventDefinition>
     </bpmn2:intermediateCatchEvent>
     <bpmn2:sequenceFlow id="_7D18BF09-4F26-40EA-861C-7ACAB1513C54" drools:selectable="true" color:background-color="#000000" color:border-color="#000000" color:color="#000000" sourceRef="processStartEvent" targetRef="_347021FD-F836-4281-B5A5-804E6C1224AB"/>
