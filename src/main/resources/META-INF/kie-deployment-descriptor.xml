@@ -10,8 +10,8 @@
     <task-event-listeners/>
     <globals>
         <global>
-            <resolver>reflection</resolver>
-            <identifier>new Double(0.75)</identifier>
+            <resolver>mvel</resolver>
+            <identifier>new java.lang.Double("0.75")</identifier>
             <parameters/>
             <name>SEUIL_PROCESS_VALIDE</name>
         </global>
