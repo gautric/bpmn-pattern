@@ -8,14 +8,7 @@
     <marshalling-strategies/>
     <event-listeners/>
     <task-event-listeners/>
-    <globals>
-        <global>
-            <resolver>mvel</resolver>
-            <identifier>new java.lang.Double("0.75")</identifier>
-            <parameters/>
-            <name>SEUIL_PROCESS_VALIDE</name>
-        </global>
-    </globals>
+    <globals/>
     <work-item-handlers>
         <work-item-handler>
             <resolver>mvel</resolver>
