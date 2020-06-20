@@ -36,14 +36,6 @@
         </work-item-handler>
     </work-item-handlers>
     <environment-entries/>
-    <configurations>
-        <configuration>
-            <resolver>mvel</resolver>
-            <identifier>false</identifier>
-            <parameters/>
-            <name>drools.dialect.mvel.strict</name>
-        </configuration>
-    </configurations>
     <required-roles/>
     <remoteable-classes/>
     <limit-serialization-classes>true</limit-serialization-classes>
