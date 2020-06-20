@@ -36,6 +36,7 @@
         </work-item-handler>
     </work-item-handlers>
     <environment-entries/>
+    <configurations/>
     <required-roles/>
     <remoteable-classes/>
     <limit-serialization-classes>true</limit-serialization-classes>
