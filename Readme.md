@@ -1,5 +1,9 @@
 
-List of command
+# Swagger 
+
+curl -u admin:admin http://localhost:8080/rest/swagger.json 
+
+# List of command
 
 
 > curl -u kieserver:kieserver123_ -X POST "http://localhost:8080/rest/server/containers/pattern/processes/TimerTestProcess/instances" -H "accept: application/json" -H "content-type: application/json" -d "{ \"booleanIn\": true, \"integerIn\": 123, \"stringIn\": \"TimerTestProcess\" , \"timerIn\": \"PT10S\" }"
