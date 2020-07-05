@@ -10,7 +10,7 @@
     <task-event-listeners/>
     <globals/>
     <work-item-handlers>
-        <work-item-handler>
+        <!-- <work-item-handler>
             <resolver>mvel</resolver>
             <identifier>new org.jbpm.process.instance.impl.demo.SystemOutWorkItemHandler()</identifier>
             <parameters/>
@@ -33,6 +33,18 @@
             <identifier>new org.jbpm.process.workitem.rest.RESTWorkItemHandler(classLoader)</identifier>
             <parameters/>
             <name>Rest</name>
+        </work-item-handler> -->
+        <!-- <work-item-handler>
+            <resolver>mvel</resolver>
+            <identifier>new org.jbpm.bpmn2.handler.SignallingTaskHandlerDecorator(new org.jbpm.process.workitem.bpmn2.ServiceTaskHandler(ksession, classLoader),"Error-ExceptionError")</identifier>
+            <parameters/>
+            <name>Service Task</name>
+        </work-item-handler> -->
+        <work-item-handler>
+            <resolver>mvel</resolver>
+            <identifier>new org.jbpm.bpmn2.handler.SignallingTaskHandlerDecorator(new org.jbpm.process.workitem.bpmn2.ServiceTaskHandler(ksession, classLoader),"Error-ExceptionCode")</identifier>
+            <parameters/>
+            <name>Service Task</name>
         </work-item-handler>
     </work-item-handlers>
     <environment-entries/>
