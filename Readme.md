@@ -3,10 +3,18 @@
 
 This project provides a lot of BPMN sample working with jBPM 7.X
 
-###
+### Project available
 
-### 
+* AsyncTestProcess
+* ExceptionTestProcess
+* HumanTaskTestProcess
+* SignalTestProcess
+* SyncTestProcess
+* TimerTestProcess
 
+### Command Line w/ Kie-Server
+
+You can follow all command to use some BPMN Process
 
 #### Env Variable
 
