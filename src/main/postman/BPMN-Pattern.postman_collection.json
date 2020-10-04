@@ -1,0 +1,624 @@
+{
+	"info": {
+		"_postman_id": "6700833e-5a8c-402d-9f86-f8762b6b5b0f",
+		"name": "BPMN-Pattern",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "TimerProcess",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f5108cde-c826-4a68-ae56-cea8cc40b0c4",
+						"exec": [
+							"pm.test(\"Status code is 201 and processInstanceID\", () => {",
+							"  pm.response.to.have.status(201);",
+							"  pm.expect(pm.response.json()).to.be.a(\"number\");",
+							"});",
+							"  "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"booleanIn\": {{$randomBoolean}},\n    \"integerIn\": {{$randomInt}},\n    \"stringIn\": \"TimerTestProcess {{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}\",\n    \"timerIn\": \"PT1M\"\n}"
+				},
+				"url": {
+					"raw": "{{KIE_URL}}/rest/server/containers/{{KIE_CONTAINER}}/processes/TimerTestProcess/instances",
+					"host": [
+						"{{KIE_URL}}"
+					],
+					"path": [
+						"rest",
+						"server",
+						"containers",
+						"{{KIE_CONTAINER}}",
+						"processes",
+						"TimerTestProcess",
+						"instances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "JavaScriptProcess",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2cf20d9a-0196-4a18-9c5a-240ad8bf61f1",
+						"exec": [
+							"pm.test(\"Status code is 201 and processInstanceID\", () => {",
+							"  pm.response.to.have.status(201);",
+							"  pm.expect(pm.response.json()).to.be.a(\"number\");",
+							"});",
+							"  "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"booleanIn\": {{$randomBoolean}}\n}"
+				},
+				"url": {
+					"raw": "{{KIE_URL}}/rest/server/containers/{{KIE_CONTAINER}}/processes/JavaScriptProcess/instances",
+					"host": [
+						"{{KIE_URL}}"
+					],
+					"path": [
+						"rest",
+						"server",
+						"containers",
+						"{{KIE_CONTAINER}}",
+						"processes",
+						"JavaScriptProcess",
+						"instances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MonitoringProcess",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f37efc34-a730-4b66-899b-2e355c66ff17",
+						"exec": [
+							"pm.test(\"Status code is 201 and processInstanceID\", () => {",
+							"  pm.response.to.have.status(201);",
+							"  pm.expect(pm.response.json()).to.be.a(\"number\");",
+							"});",
+							"  "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"booleanIn\": {{$randomBoolean}},\n    \"integerIn\": {{$randomInt}},\n    \"stringIn\": \"TimerTestProcess {{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}\",\n    \"timerIn\": \"PT{{$randomInt}}S\"\n}"
+				},
+				"url": {
+					"raw": "{{KIE_URL}}/rest/server/containers/{{KIE_CONTAINER}}/processes/MonitoringProcess/instances",
+					"host": [
+						"{{KIE_URL}}"
+					],
+					"path": [
+						"rest",
+						"server",
+						"containers",
+						"{{KIE_CONTAINER}}",
+						"processes",
+						"MonitoringProcess",
+						"instances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MonitoringProcess 42",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4e570de7-ca23-4def-ad24-2733174f08ba",
+						"exec": [
+							"pm.test(\"Status code is 201 and processInstanceID\", () => {",
+							"  pm.response.to.have.status(201);",
+							"  pm.expect(pm.response.json()).to.be.a(\"number\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"booleanIn\": {{$randomBoolean}},\n    \"integerIn\": 42,\n    \"stringIn\": \"TimerTestProcess {{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}\",\n    \"timerIn\": \"PT25S\"\n}"
+				},
+				"url": {
+					"raw": "{{KIE_URL}}/rest/server/containers/{{KIE_CONTAINER}}/processes/MonitoringProcess/instances",
+					"host": [
+						"{{KIE_URL}}"
+					],
+					"path": [
+						"rest",
+						"server",
+						"containers",
+						"{{KIE_CONTAINER}}",
+						"processes",
+						"MonitoringProcess",
+						"instances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AsyncProcess",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "13460456-2d5a-47e0-92cb-fbf8fa666f6a",
+						"exec": [
+							"pm.test(\"Status code is 201 and processInstanceID\", () => {",
+							"  pm.response.to.have.status(201);",
+							"  pm.expect(pm.response.json()).to.be.a(\"number\");",
+							"});",
+							"  "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"booleanIn\": true,\n    \"integerIn\": 123,\n    \"stringIn\": \"AsyncTestProcess {{$isoTimestamp}} {{$randomAlphaNumeric}}\"\n}"
+				},
+				"url": {
+					"raw": "{{KIE_URL}}/rest/server/containers/{{KIE_CONTAINER}}/processes/AsyncTestProcess/instances",
+					"host": [
+						"{{KIE_URL}}"
+					],
+					"path": [
+						"rest",
+						"server",
+						"containers",
+						"{{KIE_CONTAINER}}",
+						"processes",
+						"AsyncTestProcess",
+						"instances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SyncProcess",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7383040f-45ac-4547-afa8-ab3eaabadcac",
+						"exec": [
+							"pm.test(\"Status code is 201 and processInstanceID\", () => {",
+							"  pm.response.to.have.status(201);",
+							"  pm.expect(pm.response.json()).to.be.a(\"number\");",
+							"});",
+							"  "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"booleanIn\": true,\n    \"integerIn\": 123,\n    \"stringIn\": \"SyncTestProcess\"\n}"
+				},
+				"url": {
+					"raw": "{{KIE_URL}}/rest/server/containers/{{KIE_CONTAINER}}/processes/SyncTestProcess/instances",
+					"host": [
+						"{{KIE_URL}}"
+					],
+					"path": [
+						"rest",
+						"server",
+						"containers",
+						"{{KIE_CONTAINER}}",
+						"processes",
+						"SyncTestProcess",
+						"instances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SignalTestProcess",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a487d8ab-af57-4605-94b0-dadfa7e3b984",
+						"exec": [
+							"pm.test(\"Status code is 201 and processInstanceID\", () => {",
+							"  pm.response.to.have.status(201);",
+							"  pm.expect(pm.response.json()).to.be.a(\"number\");",
+							"});",
+							"  "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"booleanIn\": true,\n    \"integerIn\": 123,\n    \"stringIn\": \"SignalTestProcess\"\n}"
+				},
+				"url": {
+					"raw": "{{KIE_URL}}/rest/server/containers/{{KIE_CONTAINER}}/processes/SignalTestProcess/instances",
+					"host": [
+						"{{KIE_URL}}"
+					],
+					"path": [
+						"rest",
+						"server",
+						"containers",
+						"{{KIE_CONTAINER}}",
+						"processes",
+						"SignalTestProcess",
+						"instances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SignalTestProcess SendSignal",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9239cebb-38c5-4187-ba43-3adcb375509f",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\"MySignal {{$isoTimestamp}}\"",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{KIE_URL}}/rest/server/containers/{{KIE_CONTAINER}}/processes/instances/signal/ProcessSignal",
+					"host": [
+						"{{KIE_URL}}"
+					],
+					"path": [
+						"rest",
+						"server",
+						"containers",
+						"{{KIE_CONTAINER}}",
+						"processes",
+						"instances",
+						"signal",
+						"ProcessSignal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HumanTaskProcess",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "06642e92-66f9-40d1-a2ef-accdf9ba9284",
+						"exec": [
+							"pm.test(\"Status code is 201 and processInstanceID\", () => {",
+							"  pm.response.to.have.status(201);",
+							"  pm.expect(pm.response.json()).to.be.a(\"number\");",
+							"});",
+							"  "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"booleanIn\": {{$randomBoolean}},\n    \"integerIn\": {{$randomInt}},\n    \"stringIn\": \"HumanTaskTestProcess\"\n}"
+				},
+				"url": {
+					"raw": "{{KIE_URL}}/rest/server/containers/{{KIE_CONTAINER}}/processes/HumanTaskTestProcess/instances",
+					"host": [
+						"{{KIE_URL}}"
+					],
+					"path": [
+						"rest",
+						"server",
+						"containers",
+						"{{KIE_CONTAINER}}",
+						"processes",
+						"HumanTaskTestProcess",
+						"instances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HumanTaskProcess Task",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f2107669-2654-4e1c-9228-927a375f7a24",
+						"exec": [
+							"pm.globals.set(\"TASK_ID\",10);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "4d12a13f-dcd0-43de-abd7-97a812b124f5",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"booleanTask\": {{$randomBoolean}},\n    \"integerTask\": {{$randomInt}},   \n    \"stringTask\": \"HumanTaskTestProcess\"\n}"
+				},
+				"url": {
+					"raw": "{{KIE_URL}}/rest/server/containers/{{KIE_CONTAINER}}/tasks/{{TASK_ID}}/states/completed?auto-progress=true",
+					"host": [
+						"{{KIE_URL}}"
+					],
+					"path": [
+						"rest",
+						"server",
+						"containers",
+						"{{KIE_CONTAINER}}",
+						"tasks",
+						"{{TASK_ID}}",
+						"states",
+						"completed"
+					],
+					"query": [
+						{
+							"key": "auto-progress",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{KIE_PASSWORD}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{KIE_USER}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "2b0e20fb-e290-49de-bf4e-4d09bf50f37f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "f0ba21b2-3c02-4e91-b3cb-f667d00ace29",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "28e1a663-5d48-467d-b275-8c7b80dc5acc",
+			"key": "KIE_URL",
+			"value": "http://localhost:8090"
+		},
+		{
+			"id": "7dbe9c62-2752-4eff-bccc-a6720b63a725",
+			"key": "KIE_CONTAINER",
+			"value": "bpmn-pattern"
+		},
+		{
+			"id": "e06de563-a732-4bd3-89bc-a2da9a4d9653",
+			"key": "KIE_USER",
+			"value": "user"
+		},
+		{
+			"id": "a334fd77-b26c-4086-9f89-65033cc59cd6",
+			"key": "KIE_PASSWORD",
+			"value": "user"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
