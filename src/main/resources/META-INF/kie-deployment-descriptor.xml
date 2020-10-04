@@ -5,59 +5,12 @@
     <audit-mode>JPA</audit-mode>
     <persistence-mode>JPA</persistence-mode>
     <runtime-strategy>PER_PROCESS_INSTANCE</runtime-strategy>
-    <marshalling-strategies>
-        <marshalling-strategy>
-            <resolver>mvel</resolver>
-            <identifier>new org.drools.persistence.jpa.marshaller.JPAPlaceholderResolverStrategy("net.a.g.jbpm:pattern:3.0.0", classLoader)</identifier>
-            <parameters/>
-        </marshalling-strategy>
-    </marshalling-strategies>   
     <event-listeners/>
     <task-event-listeners/>
     <globals/>
-    <work-item-handlers>
-        <!-- <work-item-handler>
-            <resolver>mvel</resolver>
-            <identifier>new org.jbpm.process.instance.impl.demo.SystemOutWorkItemHandler()</identifier>
-            <parameters/>
-            <name>Log</name>
-        </work-item-handler>
-        <work-item-handler>
-            <resolver>mvel</resolver>
-            <identifier>new org.jbpm.process.workitem.bpmn2.ServiceTaskHandler(ksession, classLoader)</identifier>
-            <parameters/>
-            <name>Service Task</name>
-        </work-item-handler>
-        <work-item-handler>
-            <resolver>mvel</resolver>
-            <identifier>new org.jbpm.process.workitem.webservice.WebServiceWorkItemHandler(ksession, classLoader)</identifier>
-            <parameters/>
-            <name>WebService</name>
-        </work-item-handler>
-        <work-item-handler>
-            <resolver>mvel</resolver>
-            <identifier>new org.jbpm.process.workitem.rest.RESTWorkItemHandler(classLoader)</identifier>
-            <parameters/>
-            <name>Rest</name>
-        </work-item-handler> -->
-        <!-- <work-item-handler>
-            <resolver>mvel</resolver>
-            <identifier>new org.jbpm.bpmn2.handler.SignallingTaskHandlerDecorator(new org.jbpm.process.workitem.bpmn2.ServiceTaskHandler(ksession, classLoader),"Error-ExceptionError")</identifier>
-            <parameters/>
-            <name>Service Task</name>
-        </work-item-handler> -->
-        <work-item-handler>
-            <resolver>mvel</resolver>
-            <identifier>new org.jbpm.bpmn2.handler.SignallingTaskHandlerDecorator(new org.jbpm.process.workitem.bpmn2.ServiceTaskHandler(ksession, classLoader),"Error-ExceptionCode")</identifier>
-            <parameters/>
-            <name>Service Task</name>
-        </work-item-handler>
-    </work-item-handlers>
     <environment-entries/>
     <configurations/>
     <required-roles/>
-    <remoteable-classes>
-        <remoteable-class>net.a.g.jbpm.pattern.model.Person</remoteable-class>
-    </remoteable-classes>
+    <remoteable-classes/>
     <limit-serialization-classes>true</limit-serialization-classes>
 </deployment-descriptor>
