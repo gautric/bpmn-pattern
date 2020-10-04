@@ -73,7 +73,6 @@
 					</dependency>
 				</dependencies>
 			</dependencyManagement>
-
 		</profile>
 		<profile>
 			<id>redhat-product</id>
@@ -88,9 +87,6 @@
 					</dependency>
 				</dependencies>
 			</dependencyManagement>
-			<properties>
-
-			</properties>
 		</profile>
 		<profile>
 			<id>local</id>
