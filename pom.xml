@@ -14,6 +14,35 @@
 		<jpa.api.version>1.0.2.Final</jpa.api.version>
 		<ba-platform-bom.version>7.8.1.redhat-00002</ba-platform-bom.version>
 	</properties>
+	<dependencyManagement>   <!--  for jBPM Project -->
+		<dependencies>
+			<dependency>
+				<groupId>org.drools</groupId>
+				<artifactId>drools-bom</artifactId>
+				<version>${kie.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.jbpm</groupId>
+				<artifactId>jbpm-bom</artifactId>
+				<version>${kie.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<!-- <dependencyManagement>  For RHPAM Product
+		<dependencies>
+			<dependency>
+				<groupId>com.redhat.ba</groupId>
+				<artifactId>ba-platform-bom</artifactId>
+				<version>${ba-platform-bom.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement> -->
 	<dependencies>
 		<dependency>
 			<groupId>org.kie</groupId>
@@ -53,41 +82,6 @@
 		</plugins>
 	</build>
 	<profiles>
-		<profile>
-			<id>jbpm-community</id>
-			<dependencyManagement>
-				<dependencies>
-					<dependency>
-						<groupId>org.drools</groupId>
-						<artifactId>drools-bom</artifactId>
-						<version>${kie.version}</version>
-						<type>pom</type>
-						<scope>import</scope>
-					</dependency>
-					<dependency>
-						<groupId>org.jbpm</groupId>
-						<artifactId>jbpm-bom</artifactId>
-						<version>${kie.version}</version>
-						<type>pom</type>
-						<scope>import</scope>
-					</dependency>
-				</dependencies>
-			</dependencyManagement>
-		</profile>
-		<profile>
-			<id>redhat-product</id>
-			<dependencyManagement>
-				<dependencies>
-					<dependency>
-						<groupId>com.redhat.ba</groupId>
-						<artifactId>ba-platform-bom</artifactId>
-						<version>${ba-platform-bom.version}</version>
-						<scope>import</scope>
-						<type>pom</type>
-					</dependency>
-				</dependencies>
-			</dependencyManagement>
-		</profile>
 		<profile>
 			<id>local</id>
 			<distributionManagement>
