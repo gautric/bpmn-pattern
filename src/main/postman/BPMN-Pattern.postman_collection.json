@@ -16,6 +16,7 @@
 							"pm.test(\"Status code is 201 and processInstanceID\", () => {",
 							"  pm.response.to.have.status(201);",
 							"  pm.expect(pm.response.json()).to.be.a(\"number\");",
+							"  pm.globals.set(\"processInstanceId\",pm.response.json());",
 							"});",
 							"  "
 						],
@@ -60,6 +61,187 @@
 			"response": []
 		},
 		{
+			"name": "Get Variables {{processId}}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c5bb528c-b819-4b4d-a6f6-678ab19b2b36",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"  "
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b688dbea-d74b-4950-81e3-db16f892675d",
+						"exec": [
+							"",
+							"pm.variables.set(\"processId\",\"TimerTestProcess\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{KIE_URL}}/rest/server/containers/{{KIE_CONTAINER}}/processes/definitions/{{processId}}/variables",
+					"host": [
+						"{{KIE_URL}}"
+					],
+					"path": [
+						"rest",
+						"server",
+						"containers",
+						"{{KIE_CONTAINER}}",
+						"processes",
+						"definitions",
+						"{{processId}}",
+						"variables"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Variables Live {{processInstanceId}}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2d5f2dc0-80d4-4243-a1df-81ad8b118050",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "485c2d4d-f255-4a5b-b52a-7e14f1bc1bda",
+						"exec": [
+							"//pm.variables.set(\"processInstanceId\",1312);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{KIE_URL}}/rest/server/containers/{{KIE_CONTAINER}}/processes/instances/{{processInstanceId}}/variables",
+					"host": [
+						"{{KIE_URL}}"
+					],
+					"path": [
+						"rest",
+						"server",
+						"containers",
+						"{{KIE_CONTAINER}}",
+						"processes",
+						"instances",
+						"{{processInstanceId}}",
+						"variables"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Variables {{processInstanceId}}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fee552b1-cd82-4fdc-a935-161b17a87afd",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"  "
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cec2e760-57ea-4b8b-a97f-82e84669aa32",
+						"exec": [
+							"//pm.variables.set(\"processInstanceId\",1312);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{KIE_URL}}/rest/server/containers/{{KIE_CONTAINER}}/processes/instances/{{processInstanceId}}/variables/instances",
+					"host": [
+						"{{KIE_URL}}"
+					],
+					"path": [
+						"rest",
+						"server",
+						"containers",
+						"{{KIE_CONTAINER}}",
+						"processes",
+						"instances",
+						"{{processInstanceId}}",
+						"variables",
+						"instances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "JavaScriptProcess",
 			"event": [
 				{
@@ -70,6 +252,7 @@
 							"pm.test(\"Status code is 201 and processInstanceID\", () => {",
 							"  pm.response.to.have.status(201);",
 							"  pm.expect(pm.response.json()).to.be.a(\"number\");",
+							"  pm.globals.set(\"processInstanceId\",pm.response.json());",
 							"});",
 							"  "
 						],
@@ -124,6 +307,7 @@
 							"pm.test(\"Status code is 201 and processInstanceID\", () => {",
 							"  pm.response.to.have.status(201);",
 							"  pm.expect(pm.response.json()).to.be.a(\"number\");",
+							"  pm.globals.set(\"processInstanceId\",pm.response.json());",
 							"});",
 							"  "
 						],
@@ -178,6 +362,7 @@
 							"pm.test(\"Status code is 201 and processInstanceID\", () => {",
 							"  pm.response.to.have.status(201);",
 							"  pm.expect(pm.response.json()).to.be.a(\"number\");",
+							"  pm.globals.set(\"processInstanceId\",pm.response.json());",
 							"});",
 							""
 						],
@@ -232,6 +417,7 @@
 							"pm.test(\"Status code is 201 and processInstanceID\", () => {",
 							"  pm.response.to.have.status(201);",
 							"  pm.expect(pm.response.json()).to.be.a(\"number\");",
+							"  pm.globals.set(\"processInstanceId\",pm.response.json());",
 							"});",
 							"  "
 						],
@@ -286,6 +472,7 @@
 							"pm.test(\"Status code is 201 and processInstanceID\", () => {",
 							"  pm.response.to.have.status(201);",
 							"  pm.expect(pm.response.json()).to.be.a(\"number\");",
+							"  pm.globals.set(\"processInstanceId\",pm.response.json());",
 							"});",
 							"  "
 						],
@@ -340,6 +527,7 @@
 							"pm.test(\"Status code is 201 and processInstanceID\", () => {",
 							"  pm.response.to.have.status(201);",
 							"  pm.expect(pm.response.json()).to.be.a(\"number\");",
+							"  pm.globals.set(\"processInstanceId\",pm.response.json());",
 							"});",
 							"  "
 						],
@@ -450,6 +638,7 @@
 							"pm.test(\"Status code is 201 and processInstanceID\", () => {",
 							"  pm.response.to.have.status(201);",
 							"  pm.expect(pm.response.json()).to.be.a(\"number\");",
+							"  pm.globals.set(\"processInstanceId\",pm.response.json());",
 							"});",
 							"  "
 						],
@@ -499,9 +688,67 @@
 				{
 					"listen": "prerequest",
 					"script": {
+						"id": "55c0aa8d-0353-4f40-a89e-dd0765803643",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "e81c3698-8d52-4f55-9e2a-3ead1081164a",
+						"exec": [
+							"pm.test(\"Status code is 200 and taskId\", () => {",
+							"  pm.response.to.have.status(200);",
+							"  pm.globals.set(\"TASK_ID\",pm.response.json()[\"task-summary\"][0][\"task-id\"]);",
+							"});",
+							"  "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{KIE_URL}}/rest/server/queries/tasks/instances",
+					"host": [
+						"{{KIE_URL}}"
+					],
+					"path": [
+						"rest",
+						"server",
+						"queries",
+						"tasks",
+						"instances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "HumanTaskProcess Complete Task",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
 						"id": "f2107669-2654-4e1c-9228-927a375f7a24",
 						"exec": [
-							"pm.globals.set(\"TASK_ID\",10);"
+							"pm.globals.set(\"TASK_ID\",1);"
 						],
 						"type": "text/javascript"
 					}
@@ -600,22 +847,22 @@
 	],
 	"variable": [
 		{
-			"id": "28e1a663-5d48-467d-b275-8c7b80dc5acc",
+			"id": "9c7a396c-6404-455f-90de-a002bde64938",
 			"key": "KIE_URL",
 			"value": "http://localhost:8090"
 		},
 		{
-			"id": "7dbe9c62-2752-4eff-bccc-a6720b63a725",
+			"id": "7bc22bc3-12f1-4c36-9535-17cd82d02120",
 			"key": "KIE_CONTAINER",
 			"value": "bpmn-pattern"
 		},
 		{
-			"id": "e06de563-a732-4bd3-89bc-a2da9a4d9653",
+			"id": "d9c2e094-b414-4721-8de8-d9dc6145721f",
 			"key": "KIE_USER",
 			"value": "user"
 		},
 		{
-			"id": "a334fd77-b26c-4086-9f89-65033cc59cd6",
+			"id": "d91c9c38-6ea6-4aa8-9bcf-28c3ad5392b7",
 			"key": "KIE_PASSWORD",
 			"value": "user"
 		}
