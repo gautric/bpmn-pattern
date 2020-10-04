@@ -11,6 +11,8 @@ This project provides a lot of BPMN sample working with jBPM 7.X
 * SignalTestProcess
 * SyncTestProcess
 * TimerTestProcess
+* JavaScriptProcess
+* MonitoringProcess
 
 
 ### Build Maven Project
