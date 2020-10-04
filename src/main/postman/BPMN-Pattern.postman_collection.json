@@ -847,22 +847,22 @@
 	],
 	"variable": [
 		{
-			"id": "9c7a396c-6404-455f-90de-a002bde64938",
+			"id": "bd971a54-621f-4239-8b7b-c7f013cbf922",
 			"key": "KIE_URL",
 			"value": "http://localhost:8090"
 		},
 		{
-			"id": "7bc22bc3-12f1-4c36-9535-17cd82d02120",
+			"id": "d28c0625-f4fe-450f-89ee-69ae4bec2be2",
 			"key": "KIE_CONTAINER",
 			"value": "bpmn-pattern"
 		},
 		{
-			"id": "d9c2e094-b414-4721-8de8-d9dc6145721f",
+			"id": "08366aa5-31ce-4d61-9853-a445bfcb5971",
 			"key": "KIE_USER",
 			"value": "user"
 		},
 		{
-			"id": "d91c9c38-6ea6-4aa8-9bcf-28c3ad5392b7",
+			"id": "5985d764-f279-446e-adee-536671de47c4",
 			"key": "KIE_PASSWORD",
 			"value": "user"
 		}
