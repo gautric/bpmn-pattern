@@ -7,6 +7,7 @@ This project provides a lot of BPMN sample working with jBPM 7.X
 
 * AsyncTestProcess
 * ExceptionTestProcess
+* ExceptionToErrorProcess
 * HumanTaskTestProcess
 * SignalTestProcess
 * SyncTestProcess
@@ -84,8 +85,15 @@ curl -u ${KIE_AUTH} -X POST "${KIE_URL}/rest/server/containers/${KIE_CONTAINER}/
 ```
 curl -u ${KIE_AUTH} -X POST "${KIE_URL}/rest/server/containers/${KIE_CONTAINER}/processes/instances/signal/ProcessSignal" -H "accept: application/json" -H "content-type: application/json" -d "\"migrationSignal\""
 ```
+
 ##### PersonProcess
 
 ```
 curl -u ${KIE_AUTH} -X POST "${KIE_URL}/rest/server/containers/${KIE_CONTAINER}/processes/PersonTestProcess/instances" -H "accept: application/json" -H "content-type: application/json" -d "{ \"personIn\": {\"net.a.g.jbpm.pattern.model.Person\" : { \"name\" : \"Jean Paul\", \"country\" : \"France\" , \"email\" : \"jean@paul.net\" } } } " 
+```
+
+##### ExceptionToErrorProcess
+
+```
+curl -u ${KIE_AUTH} -X POST "${KIE_URL}/rest/server/containers/${KIE_CONTAINER}/processes/ExceptionToErrorProcess/instances" -H "accept: application/json" -H "content-type: application/json"
 ```
