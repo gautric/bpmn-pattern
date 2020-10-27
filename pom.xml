@@ -10,7 +10,7 @@
 	<packaging>kjar</packaging>
 	<name>pattern</name>
 	<properties>
-		<kie.version>7.43.1.Final</kie.version>
+		<kie.version>7.44.0.Final</kie.version>
 		<jpa.api.version>1.0.2.Final</jpa.api.version>
 		<ba-platform-bom.version>7.8.1.redhat-00002</ba-platform-bom.version>
 	</properties>
