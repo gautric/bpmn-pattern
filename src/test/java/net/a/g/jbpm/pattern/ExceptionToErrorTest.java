@@ -84,7 +84,8 @@ public class ExceptionToErrorTest extends JbpmJUnitBaseTestCase {
 
         assertProcessInstanceNotActive(processInstance.getId(), kieSession);
         assertNodeTriggered(processInstance.getId(), "ScriptTask");
-        
+		assertNodeTriggered(processInstance.getId(), "Error End");
+
         runtimeManager.disposeRuntimeEngine(runtimeEngine);
         runtimeManager.close();
     }
