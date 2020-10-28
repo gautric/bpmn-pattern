@@ -11,13 +11,14 @@ public class WorkItemHandler implements org.kie.api.runtime.process.WorkItemHand
 
 	@Override
 	public void executeWorkItem(WorkItem workItem, WorkItemManager manager) {
-		LOG.info("Nominal WIH");
+		LOG.info("Nominal {}", WorkItemHandler.class);
 		throw new net.a.g.jbpm.pattern.util.Exception();
 	}
 
 	@Override
 	public void abortWorkItem(WorkItem workItem, WorkItemManager manager) {
-		LOG.info("Abort WIH");
+		LOG.info("Abort {}", WorkItemHandler.class);
+
 	}
 
 }
