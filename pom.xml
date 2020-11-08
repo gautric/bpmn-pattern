@@ -5,10 +5,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.a.g.jbpm</groupId>
-	<artifactId>pattern</artifactId>
+	<artifactId>bpmn-pattern</artifactId>
 	<version>3.0.0</version>
 	<packaging>kjar</packaging>
-	<name>pattern</name>
+	<name>bpmn-pattern</name>
 	<properties>
 		<kie.version>7.45.0.Final</kie.version>
 		<jpa.api.version>1.0.2.Final</jpa.api.version>
