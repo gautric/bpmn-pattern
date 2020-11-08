@@ -82,9 +82,9 @@ public class ExceptionToErrorSubProcessTest extends JbpmJUnitBaseTestCase {
         final ProcessInstance processInstance = kieSession.startProcess("ExceptionToErrorWithSubProcess");
 
 		assertProcessInstanceNotActive(processInstance.getId(), kieSession);
-		//assertProcessInstanceAborted(processInstance.getId());
 
         assertNodeTriggered(processInstance.getId(), "ScriptTask");
+		assertNodeTriggered(processInstance.getId(), "Error End");
         
         runtimeManager.disposeRuntimeEngine(runtimeEngine);
         runtimeManager.close();
