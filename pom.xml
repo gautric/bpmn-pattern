@@ -10,11 +10,11 @@
 	<packaging>kjar</packaging>
 	<name>pattern</name>
 	<properties>
-		<kie.version>7.44.0.Final</kie.version>
+		<kie.version>7.45.0.Final</kie.version>
 		<jpa.api.version>1.0.2.Final</jpa.api.version>
-		<ba-platform-bom.version>7.8.1.redhat-00002</ba-platform-bom.version>
+		<ba-platform-bom.version>7.9.0.redhat-00002</ba-platform-bom.version>
 	</properties>
-	<dependencyManagement>   <!-- for jBPM Project -->
+ 	<dependencyManagement>  <!--  for jBPM Project -->
 		<dependencies>
 			<dependency>
 				<groupId>org.drools</groupId>
@@ -32,17 +32,17 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	<!-- dependencyManagement> For RHPAM Product
-		<dependencies>
-			<dependency>
-				<groupId>com.redhat.ba</groupId>
-				<artifactId>ba-platform-bom</artifactId>
-				<version>${ba-platform-bom.version}</version>
-				<scope>import</scope>
-				<type>pom</type>
-			</dependency>
-		</dependencies>
-	</dependencyManagement-->
+<!-- 	<dependencyManagement>  -->
+<!-- 		<dependencies> -->
+<!-- 			<dependency> -->
+<!-- 				<groupId>com.redhat.ba</groupId> -->
+<!-- 				<artifactId>ba-platform-bom</artifactId> -->
+<!-- 				<version>${ba-platform-bom.version}</version> -->
+<!-- 				<scope>import</scope> -->
+<!-- 				<type>pom</type> -->
+<!-- 			</dependency> -->
+<!-- 		</dependencies> -->
+<!-- 	</dependencyManagement> -->
 	<dependencies>
 		<dependency>
 			<groupId>org.kie</groupId>
@@ -136,6 +136,39 @@
 				<extensions>true</extensions>
 			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.kie</groupId>
+										<artifactId>
+											kie-maven-plugin
+										</artifactId>
+										<versionRange>
+											[7.45.0.t20201014,)
+										</versionRange>
+										<goals>
+											<goal>injectreactive</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 	<profiles>
 		<profile>
