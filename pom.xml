@@ -4,16 +4,27 @@
 	xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
+	
 	<groupId>net.a.g.jbpm</groupId>
-	<artifactId>bpmn-pattern</artifactId>
+	<artifactId>bpmn-pattern-project</artifactId>
 	<version>3.0.0</version>
-	<packaging>kjar</packaging>
-	<name>bpmn-pattern</name>
+	<packaging>pom</packaging>
+	<name>BPMN : PATTERN</name>
+
 	<properties>
 		<kie.version>7.46.0.Final</kie.version>
 		<jpa.api.version>1.0.2.Final</jpa.api.version>
 		<ba-platform-bom.version>7.9.0.redhat-00002</ba-platform-bom.version>
+		<java.version>11</java.version>
+    	<maven.compiler.source>${java.version}</maven.compiler.source>
+    	<maven.compiler.target>${java.version}</maven.compiler.target>
 	</properties>
+ 	
+	<modules>
+        <module>bpmn-pattern-process</module>
+        <module>bpmn-pattern-test</module>
+    </modules>
+
  	<dependencyManagement>  <!--  for jBPM Project -->
 		<dependencies>
 			<dependency>
@@ -43,150 +54,5 @@
 <!-- 			</dependency> -->
 <!-- 		</dependencies> -->
 <!-- 	</dependencyManagement> -->
-	<dependencies>
-		<dependency>
-			<groupId>org.kie</groupId>
-			<artifactId>kie-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.kie</groupId>
-			<artifactId>kie-internal</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.drools</groupId>
-			<artifactId>drools-persistence-jpa</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.1-api</artifactId>
-			<version>${jpa.api.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- -->
-		<dependency>
-			<groupId>org.drools</groupId>
-			<artifactId>drools-core</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jbpm</groupId>
-			<artifactId>jbpm-bpmn2</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jbpm</groupId>
-			<artifactId>jbpm-audit</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jbpm</groupId>
-			<artifactId>jbpm-flow</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jbpm</groupId>
-			<artifactId>jbpm-runtime-manager</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jbpm</groupId>
-			<artifactId>jbpm-human-task-core</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jbpm</groupId>
-			<artifactId>jbpm-test</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jbpm</groupId>
-			<artifactId>jbpm-test-util</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.kie</groupId>
-			<artifactId>kie-test-util</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.kie</groupId>
-			<artifactId>kie-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.kie</groupId>
-			<artifactId>kie-internal</artifactId>
-			<scope>provided</scope>
-		</dependency>
-	</dependencies>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.kie</groupId>
-				<artifactId>kie-maven-plugin</artifactId>
-				<extensions>true</extensions>
-			</plugin>
-		</plugins>
-		<pluginManagement>
-			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.kie</groupId>
-										<artifactId>
-											kie-maven-plugin
-										</artifactId>
-										<versionRange>
-											[7.45.0.t20201014,)
-										</versionRange>
-										<goals>
-											<goal>injectreactive</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
-	<profiles>
-		<profile>
-			<id>local</id>
-			<distributionManagement>
-				<repository>
-					<id>m2.local.distribution.repository</id>
-					<name>M2 Local Repository</name>
-					<url>file://${HOME}/.m2/local.distribution.repository.release</url>
-					<uniqueVersion>true</uniqueVersion>
-				</repository>
-				<snapshotRepository>
-					<id>m2.local.distribution.repository.snapshot</id>
-					<name>M2 Local Repository Snapshot</name>
-					<url>file://${HOME}/.m2/local.distribution.repository.snapshot</url>
-					<uniqueVersion>false</uniqueVersion>
-				</snapshotRepository>
-			</distributionManagement>
-		</profile>
-	</profiles>
+
 </project>

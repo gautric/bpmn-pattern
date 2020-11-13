@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.a.g.jbpm</groupId>
+		<artifactId>bpmn-pattern-project</artifactId>
+		<version>3.0.0</version>
+	</parent>
+	
+	<artifactId>bpmn-pattern-process</artifactId>
+	<packaging>kjar</packaging>
+	<name>BPMN : PATTERN : PROCESS</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.kie</groupId>
+			<artifactId>kie-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.kie</groupId>
+				<artifactId>kie-maven-plugin</artifactId>
+				<extensions>true</extensions>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.kie</groupId>
+										<artifactId>
+											kie-maven-plugin
+										</artifactId>
+										<versionRange>
+											[7.45.0.t20201014,)
+										</versionRange>
+										<goals>
+											<goal>injectreactive</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	<profiles>
+		<profile>
+			<id>local</id>
+			<distributionManagement>
+				<repository>
+					<id>m2.local.distribution.repository</id>
+					<name>M2 Local Repository</name>
+					<url>file://${HOME}/.m2/local.distribution.repository.release</url>
+					<uniqueVersion>true</uniqueVersion>
+				</repository>
+				<snapshotRepository>
+					<id>m2.local.distribution.repository.snapshot</id>
+					<name>M2 Local Repository Snapshot</name>
+					<url>file://${HOME}/.m2/local.distribution.repository.snapshot</url>
+					<uniqueVersion>false</uniqueVersion>
+				</snapshotRepository>
+			</distributionManagement>
+		</profile>
+	</profiles>
+</project>

@@ -8,6 +8,7 @@ This project provides a lot of BPMN sample working with jBPM 7.X
 * AsyncTestProcess
 * ExceptionTestProcess
 * ExceptionToErrorProcess
+* ExceptionToErrorWithSubProcess
 * HumanTaskTestProcess
 * SignalTestProcess
 * SyncTestProcess
@@ -79,7 +80,7 @@ curl -u ${KIE_AUTH} -X PUT "${KIE_URL}/rest/server/containers/${KIE_CONTAINER}/t
 
 ##### SignalProcess
 ```
-curl -u ${KIE_AUTH} -X POST "${KIE_URL}/rest/server/containers/${KIE_CONTAINER}/processes/SignalTestProcess/instances" -H "accept: application/json" -H "content-type: application/json" -d "{ \"booleanIn\": true, \"integerIn\": 123, \"stringIn\": \"SignalTestProcess\" }"
+	curl -u ${KIE_AUTH} -X POST "${KIE_URL}/rest/server/containers/${KIE_CONTAINER}/processes/SignalTestProcess/instances" -H "accept: application/json" -H "content-type: application/json" -d "{ \"booleanIn\": true, \"integerIn\": 123, \"stringIn\": \"SignalTestProcess\" }"
 ```
 
 ```
