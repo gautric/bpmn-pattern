@@ -41,12 +41,12 @@ public class PatternProcessListener implements ProcessEventListener, RuleRuntime
 
 	@Override
 	public void afterProcessStarted(ProcessStartedEvent event) {
-		LOG.info("End Processus : {}", event.getProcessInstance().getProcessName());
-
 	}
 
 	@Override
 	public void afterProcessCompleted(ProcessCompletedEvent event) {
+		LOG.info("End Process Completed : {}", event.getProcessInstance().getProcessName());
+
 	}
 
 	@Override
