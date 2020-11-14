@@ -2,20 +2,13 @@ package net.a.g.jbpm.pattern;
 
 import org.jbpm.test.JbpmJUnitBaseTestCase;
 import org.junit.Test;
+import org.kie.api.event.process.ProcessEventListener;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.api.runtime.process.ProcessInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.kie.api.event.process.ProcessCompletedEvent;
-import org.kie.api.event.process.ProcessEventListener;
-import org.kie.api.event.process.ProcessNodeLeftEvent;
-import org.kie.api.event.process.ProcessNodeTriggeredEvent;
-import org.kie.api.event.process.ProcessStartedEvent;
-import org.kie.api.event.process.ProcessVariableChangedEvent;
-
-import net.a.g.jbpm.pattern.wih.WorkItemHandler;
 
 public class ExceptionToErrorSubProcessTest extends JbpmJUnitBaseTestCase {
     private static final Logger LOG = LoggerFactory.getLogger(ExceptionToErrorSubProcessTest.class);

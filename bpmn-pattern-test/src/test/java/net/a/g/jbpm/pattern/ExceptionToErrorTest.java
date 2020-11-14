@@ -15,7 +15,7 @@ import org.kie.api.event.process.ProcessNodeTriggeredEvent;
 import org.kie.api.event.process.ProcessStartedEvent;
 import org.kie.api.event.process.ProcessVariableChangedEvent;
 
-import net.a.g.jbpm.pattern.wih.WorkItemHandler;
+import net.a.g.jbpm.pattern.wih.WorkItemHandlerThrowingException;
 
 public class ExceptionToErrorTest extends JbpmJUnitBaseTestCase {
     private static final Logger LOG = LoggerFactory.getLogger(ExceptionToErrorTest.class);
@@ -27,7 +27,7 @@ public class ExceptionToErrorTest extends JbpmJUnitBaseTestCase {
         final RuntimeManager runtimeManager = createRuntimeManager("net/a/g/jbpm/pattern/ExceptionToErrorProcess.bpmn");
         final RuntimeEngine runtimeEngine = getRuntimeEngine(null);
         final KieSession kieSession = runtimeEngine.getKieSession();
-        kieSession.getWorkItemManager().registerWorkItemHandler("WorkItemHandler", new WorkItemHandler());
+        kieSession.getWorkItemManager().registerWorkItemHandler("WorkItemHandler", new WorkItemHandlerThrowingException());
 
         kieSession.addEventListener(new ProcessEventListener() {
 

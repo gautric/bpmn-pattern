@@ -5,19 +5,19 @@ import org.kie.api.runtime.process.WorkItemManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class WorkItemHandler implements org.kie.api.runtime.process.WorkItemHandler {
+public class WorkItemHandlerThrowingException implements org.kie.api.runtime.process.WorkItemHandler {
 
-	private static Logger LOG = LoggerFactory.getLogger(WorkItemHandler.class);
+	private static Logger LOG = LoggerFactory.getLogger(WorkItemHandlerThrowingException.class);
 
 	@Override
 	public void executeWorkItem(WorkItem workItem, WorkItemManager manager) {
-		LOG.info("Nominal {}", WorkItemHandler.class);
+		LOG.info("Nominal {}", WorkItemHandlerThrowingException.class);
 		throw new net.a.g.jbpm.pattern.util.Exception();
 	}
 
 	@Override
 	public void abortWorkItem(WorkItem workItem, WorkItemManager manager) {
-		LOG.info("Abort {}", WorkItemHandler.class);
+		LOG.info("Abort {}", WorkItemHandlerThrowingException.class);
 
 	}
 

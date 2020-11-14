@@ -39,7 +39,7 @@ import org.kie.api.runtime.process.ProcessInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.a.g.jbpm.pattern.wih.WorkItemHandler;
+import net.a.g.jbpm.pattern.wih.WorkItemHandlerThrowingException;
 
 public class ExceptionToError {
 
@@ -52,7 +52,7 @@ public class ExceptionToError {
 
 		ksession.addEventListener((ProcessEventListener) new PatternProcessListener());
 
-		ksession.getWorkItemManager().registerWorkItemHandler("WorkItemHandler", new WorkItemHandler());
+		ksession.getWorkItemManager().registerWorkItemHandler("WorkItemHandler", new WorkItemHandlerThrowingException());
 
 		Map<String, Object> params = new HashMap<String, Object>();
 		ProcessInstance processInstance = ksession.startProcess("ExceptionToErrorProcess", params);
