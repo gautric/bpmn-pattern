@@ -27,7 +27,7 @@
       <bpmn2:outMessageRef>_2_OutMessage</bpmn2:outMessageRef>
     </bpmn2:operation>
   </bpmn2:interface>
-  <bpmn2:process id="ExceptionTestProcess" drools:packageName="net.a.g.jbpm.pattern" drools:version="1" drools:adHoc="false" name="ExceptionTestProcess" isExecutable="true" processType="Private">
+  <bpmn2:process id="HandlingExceptionProcess" drools:packageName="net.a.g.jbpm.pattern" drools:version="1" drools:adHoc="false" name="HandlingExceptionProcess" isExecutable="true" processType="Public">
     <bpmn2:property id="stringIn" itemSubjectRef="_stringInItem" name="stringIn"/>
     <bpmn2:property id="exceptionInputItem" itemSubjectRef="_exceptionInputItemItem" name="exceptionInputItem"/>
     <bpmn2:sequenceFlow id="_2-_3" drools:priority="1" sourceRef="_2" targetRef="_3"/>
