@@ -50,67 +50,16 @@ public class ExceptionToError {
 		RuntimeManager manager = createManager();
 		KieSession ksession = manager.getRuntimeEngine(null).getKieSession();
 
-		ksession.addEventListener(new ProcessEventListener() {
-
-			private  Logger LOG = LoggerFactory.getLogger("net.a.g.jbpm.pattern.ProcessEventListener");
-
-
-			@Override
-			public void beforeProcessStarted(ProcessStartedEvent event) {
-				LOG.info("Start Processus : "+event.getProcessInstance().getProcessName());
-			}
-
-			@Override
-			public void beforeProcessCompleted(ProcessCompletedEvent event) {
-			}
-
-			@Override
-			public void beforeNodeTriggered(ProcessNodeTriggeredEvent event) {
-				LOG.info(">> " + event.getNodeInstance().getNodeName());
-			}
-
-			@Override
-			public void beforeNodeLeft(ProcessNodeLeftEvent event) {
-			}
-
-			@Override
-			public void afterVariableChanged(ProcessVariableChangedEvent event) {
-			}
-
-			@Override
-			public void afterProcessStarted(ProcessStartedEvent event) {
-				LOG.info("End Processus : "+event.getProcessInstance().getProcessName());
-
-			}
-
-			@Override
-			public void afterProcessCompleted(ProcessCompletedEvent event) {
-			}
-
-			@Override
-			public void afterNodeTriggered(ProcessNodeTriggeredEvent event) {
-			}
-
-			@Override
-			public void afterNodeLeft(ProcessNodeLeftEvent event) {
-			}
-
-			@Override
-			public void beforeVariableChanged(ProcessVariableChangedEvent event) {
-				
-			}
-		});
+		ksession.addEventListener((ProcessEventListener) new PatternProcessListener());
 
 		ksession.getWorkItemManager().registerWorkItemHandler("WorkItemHandler", new WorkItemHandler());
 
 		Map<String, Object> params = new HashMap<String, Object>();
 		ProcessInstance processInstance = ksession.startProcess("ExceptionToErrorProcess", params);
-		
+
 		manager.close();
 
 		System.out.println(processInstance.getState());
-		
-		
 
 	}
 

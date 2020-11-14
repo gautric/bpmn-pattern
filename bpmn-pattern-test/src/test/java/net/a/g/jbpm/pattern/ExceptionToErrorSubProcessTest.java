@@ -27,57 +27,7 @@ public class ExceptionToErrorSubProcessTest extends JbpmJUnitBaseTestCase {
         final RuntimeManager runtimeManager = createRuntimeManager("net/a/g/jbpm/pattern/ExceptionToErrorWithSubProcess.bpmn","net/a/g/jbpm/pattern/SubWithErrorProcess.bpmn");
         final RuntimeEngine runtimeEngine = getRuntimeEngine(null);
         final KieSession kieSession = runtimeEngine.getKieSession();
-		kieSession.addEventListener(new ProcessEventListener() {
-
-			private  Logger LOG = LoggerFactory.getLogger("net.a.g.jbpm.pattern.ProcessEventListener");
-
-			@Override
-			public void beforeProcessStarted(ProcessStartedEvent event) {
-				LOG.info("Start Processus : {}", event.getProcessInstance().getProcessName());
-			}
-
-			@Override
-			public void beforeProcessCompleted(ProcessCompletedEvent event) {
-			}
-
-			@Override
-			public void beforeNodeTriggered(ProcessNodeTriggeredEvent event) {
-				LOG.info("Node Called : {}", event.getNodeInstance().getNodeName());
-			}
-
-			@Override
-			public void beforeNodeLeft(ProcessNodeLeftEvent event) {
-			}
-
-			@Override
-			public void afterVariableChanged(ProcessVariableChangedEvent event) {
-			}
-
-			@Override
-			public void afterProcessStarted(ProcessStartedEvent event) {
-				LOG.info("End Processus : {}", event.getProcessInstance().getProcessName());
-
-			}
-
-			@Override
-			public void afterProcessCompleted(ProcessCompletedEvent event) {
-			}
-
-			@Override
-			public void afterNodeTriggered(ProcessNodeTriggeredEvent event) {
-			}
-
-			@Override
-			public void afterNodeLeft(ProcessNodeLeftEvent event) {
-			}
-
-			@Override
-			public void beforeVariableChanged(ProcessVariableChangedEvent event) {
-				
-			}
-		});
-
-
+        kieSession.addEventListener((ProcessEventListener) new PatternProcessListener());
 
         final ProcessInstance processInstance = kieSession.startProcess("ExceptionToErrorWithSubProcess");
 
