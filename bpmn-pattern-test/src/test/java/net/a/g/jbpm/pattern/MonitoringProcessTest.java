@@ -18,7 +18,7 @@ public class MonitoringProcessTest extends JbpmJUnitBaseTestCase {
     private static final Logger LOG = LoggerFactory.getLogger(MonitoringProcessTest.class);
 
     @Test
-    public void testInterger() {
+    public void testInteger() {
         MonitoringProcessTest.LOG.debug("jBPM unit test sample");
 
         final RuntimeManager runtimeManager = createRuntimeManager("net/a/g/jbpm/pattern/MonitoringProcess.bpmn");
@@ -116,6 +116,43 @@ public class MonitoringProcessTest extends JbpmJUnitBaseTestCase {
 		assertNodeTriggered(processInstance.getId(), "First Step Task");
 		assertNodeTriggered(processInstance.getId(), "Timer Waiting");
 		assertNodeTriggered(processInstance.getId(), "Signal Task");
+
+		
+        assertProcessInstanceNotActive(processInstance.getId(), kieSession);
+
+		
+        runtimeManager.disposeRuntimeEngine(runtimeEngine);
+        runtimeManager.close();
+    }
+    
+    @Test
+    public void testMessage() {
+        MonitoringProcessTest.LOG.debug("jBPM unit test sample");
+
+        final RuntimeManager runtimeManager = createRuntimeManager("net/a/g/jbpm/pattern/MonitoringProcess.bpmn");
+        final RuntimeEngine runtimeEngine = getRuntimeEngine(null);
+        final KieSession kieSession = runtimeEngine.getKieSession();
+
+        kieSession.addEventListener((ProcessEventListener)new PatternProcessListener());
+
+
+		Map<String, Object> params = new HashMap<String, Object>();
+		
+		params.put("booleanIn", true);
+		params.put("stringIn", UUID.randomUUID().toString());
+		params.put("integerIn", 24);
+		params.put("timerIn", "PT60S");
+		
+	
+		ProcessInstance processInstance = kieSession.startProcess("MonitoringProcess", params);
+
+		processInstance.signalEvent("Message-monitoringMessage","hello");
+		
+		
+		assertNodeTriggered(processInstance.getId(), "Monitoring");
+		assertNodeTriggered(processInstance.getId(), "First Step Task");
+		assertNodeTriggered(processInstance.getId(), "Timer Waiting");
+		assertNodeTriggered(processInstance.getId(), "Message Task");
 
 		
         assertProcessInstanceNotActive(processInstance.getId(), kieSession);
