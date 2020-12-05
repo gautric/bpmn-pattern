@@ -14,6 +14,7 @@ import org.kie.api.runtime.process.ProcessInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.a.g.jbpm.pattern.util.Exception;
 import net.a.g.jbpm.pattern.wih.WorkItemHandlerThrowingException;
 
 public class ExceptionToErrorTest extends JbpmJUnitBaseTestCase {
@@ -23,10 +24,12 @@ public class ExceptionToErrorTest extends JbpmJUnitBaseTestCase {
     public void test() {
         ExceptionToErrorTest.LOG.debug("jBPM unit test sample");
 
+        addWorkItemHandler("WorkItemHandler", new WorkItemHandlerThrowingException(new Exception()));
+
+        
         final RuntimeManager runtimeManager = createRuntimeManager("net/a/g/jbpm/pattern/ExceptionToErrorProcess.bpmn");
         final RuntimeEngine runtimeEngine = getRuntimeEngine(null);
         final KieSession kieSession = runtimeEngine.getKieSession();
-        kieSession.getWorkItemManager().registerWorkItemHandler("WorkItemHandler", new WorkItemHandlerThrowingException());
 
         kieSession.addEventListener((ProcessEventListener)new PatternProcessListener());
 
