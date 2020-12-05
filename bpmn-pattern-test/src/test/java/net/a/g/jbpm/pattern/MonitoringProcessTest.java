@@ -27,7 +27,6 @@ public class MonitoringProcessTest extends JbpmJUnitBaseTestCase {
 
         kieSession.addEventListener((ProcessEventListener)new PatternProcessListener());
 
-
 		Map<String, Object> params = new HashMap<String, Object>();
 		
 		params.put("booleanIn", true);
