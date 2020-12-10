@@ -12,7 +12,7 @@
 	<name>BPMN : PATTERN</name>
 
 	<properties>
-		<kie.version>7.46.0.Final</kie.version>
+		<kie.version>7.47.0.Final</kie.version>
 		<jpa.api.version>1.0.2.Final</jpa.api.version>
 		<ba-platform-bom.version>7.9.0.redhat-00002</ba-platform-bom.version>
 		<java.version>11</java.version>
@@ -41,6 +41,18 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			<dependency>
+				<groupId>org.jboss.spec.javax.jms</groupId>
+				<artifactId>jboss-jms-api_2.0_spec</artifactId>
+				<version>2.0.0.Final</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>1.7.26</version>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 <!-- 	<dependencyManagement>  -->
