@@ -1,5 +1,7 @@
 package net.a.g.jbpm.pattern;
 
+import org.jbpm.executor.AsynchronousJobEvent;
+import org.jbpm.executor.AsynchronousJobListener;
 import org.kie.api.event.process.ProcessCompletedEvent;
 import org.kie.api.event.process.ProcessEventListener;
 import org.kie.api.event.process.ProcessNodeLeftEvent;
@@ -13,7 +15,7 @@ import org.kie.api.event.rule.RuleRuntimeEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PatternProcessListener implements ProcessEventListener, RuleRuntimeEventListener {
+public class PatternProcessListener implements ProcessEventListener, RuleRuntimeEventListener, AsynchronousJobListener  {
 	private Logger LOG = LoggerFactory.getLogger("net.a.g.jbpm.pattern.ProcessEventListener");
 
 
@@ -78,5 +80,34 @@ public class PatternProcessListener implements ProcessEventListener, RuleRuntime
 	public void objectDeleted(ObjectDeletedEvent event) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void beforeJobScheduled(AsynchronousJobEvent event) {
+		LOG.info("Before Job Scheduled  : {}", event.getJob());
+
+		
+	}
+
+	@Override
+	public void afterJobScheduled(AsynchronousJobEvent event) {
+		
+	}
+
+	@Override
+	public void beforeJobExecuted(AsynchronousJobEvent event) {
+		LOG.info("Before Job Executed  : {}", event.getJob());	
+	}
+
+	@Override
+	public void afterJobExecuted(AsynchronousJobEvent event) {
+	}
+
+	@Override
+	public void beforeJobCancelled(AsynchronousJobEvent event) {
+	}
+
+	@Override
+	public void afterJobCancelled(AsynchronousJobEvent event) {
 	}
 }
