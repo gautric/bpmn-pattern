@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class PatternProcessListener implements ProcessEventListener, RuleRuntimeEventListener, AsynchronousJobListener  {
-	private Logger LOG = LoggerFactory.getLogger("net.a.g.jbpm.pattern.ProcessEventListener");
+	private Logger LOG = LoggerFactory.getLogger("net.a.g.jbpm.pattern.PatternProcessListener");
 
 
 	@Override
@@ -85,8 +85,6 @@ public class PatternProcessListener implements ProcessEventListener, RuleRuntime
 	@Override
 	public void beforeJobScheduled(AsynchronousJobEvent event) {
 		LOG.info("Before Job Scheduled  : {}", event.getJob());
-
-		
 	}
 
 	@Override
