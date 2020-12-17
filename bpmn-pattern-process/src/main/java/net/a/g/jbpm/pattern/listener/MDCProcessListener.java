@@ -75,7 +75,7 @@ public class MDCProcessListener implements ProcessEventListener, RuleRuntimeEven
 	@Override
 	public void beforeProcessStarted(ProcessStartedEvent event) {
 		injectMDC(event.getProcessInstance(), ((KieRuntime) event.getKieRuntime()));
-		LOG.info("Processus Start : {}", event.getProcessInstance().getProcessName());
+		LOG.info("Processus Start - {}", event.getProcessInstance().getProcessName());
 		removeMDC(event.getProcessInstance());
 	}
 
@@ -88,7 +88,7 @@ public class MDCProcessListener implements ProcessEventListener, RuleRuntimeEven
 		injectMDC(event.getProcessInstance(), ((KieRuntime) event.getKieRuntime()));
 		org.slf4j.MDC.put(NODE_NAME, event.getNodeInstance().getNodeName());
 		org.slf4j.MDC.put(NODE_TYPE, event.getNodeInstance().getNode().getNodeType().name());
-		LOG.info("Node Called : {}", event.getNodeInstance().getNodeName());
+		LOG.info("Node Called - {}", event.getNodeInstance().getNodeName());
 		org.slf4j.MDC.remove(NODE_TYPE);
 		org.slf4j.MDC.remove(NODE_NAME);
 		removeMDC(event.getProcessInstance());
@@ -109,7 +109,7 @@ public class MDCProcessListener implements ProcessEventListener, RuleRuntimeEven
 	@Override
 	public void afterProcessCompleted(ProcessCompletedEvent event) {
 		injectMDC(event.getProcessInstance(), ((KieRuntime) event.getKieRuntime()));
-		LOG.info("Processus End : {}", event.getProcessInstance().getProcessName());
+		LOG.info("Processus End - {}", event.getProcessInstance().getProcessName());
 		removeMDC(event.getProcessInstance());
 	}
 
