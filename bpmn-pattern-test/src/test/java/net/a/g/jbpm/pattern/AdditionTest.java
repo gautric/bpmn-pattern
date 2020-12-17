@@ -14,6 +14,8 @@ import org.kie.api.runtime.process.ProcessInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.a.g.jbpm.pattern.listener.MDCProcessListener;
+
 public class AdditionTest extends JbpmJUnitBaseTestCase {
 
 	private static final Logger LOG = LoggerFactory.getLogger(AdditionTest.class);
@@ -35,6 +37,7 @@ public class AdditionTest extends JbpmJUnitBaseTestCase {
 
 		final RuntimeEngine runtimeEngine = getRuntimeEngine(null);
 		final KieSession kieSession = runtimeEngine.getKieSession();
+		kieSession.addEventListener((ProcessEventListener)new MDCProcessListener());
 
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("a", 1);
