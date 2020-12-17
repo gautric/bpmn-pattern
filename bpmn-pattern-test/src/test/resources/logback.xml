@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<appender name="CONSOLE"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<!-- %l lowers performance -->
+			<!--<pattern>%d [%t] %-5p %l%n %m%n</pattern> -->
+			<pattern>%d %-5p [%t] %c - %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<!--  https://github.com/logstash/logstash-logback-encoder -->
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>process-logback.log</file>
+		<append>true</append>
+		<immediateFlush>true</immediateFlush>
+		<encoder class="net.logstash.logback.encoder.LogstashEncoder">
+			<customFields>{"app":"JBPMApp","environment":"pre-prod","partitionId":"part-123"}</customFields>
+		</encoder>
+	</appender>
+
+	<appender name="TCP"
+		class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+		<destination>127.0.0.1:5000</destination>
+		<encoder class="net.logstash.logback.encoder.LogstashEncoder">
+			<customFields>{"app":"JBPMApp","environment":"pre-prod","partitionId":"part-123"}</customFields>
+		</encoder>
+	</appender>
+
+	<logger name="org.jbpm" level="info" />
+	<logger name="com.arjuna" level="error" />
+	<logger name="org.hibernate" level="warn" />
+	<!-- <logger name="org.hibernate.SQL" level="debug" /> -->
+	<!-- <logger name="org.hibernate.type" level="trace" /> -->
+
+	<logger name="org.jbpm.workflow.instance.impl" level="debug" />
+
+	<logger name="org.jbpm.executor.impl" level="debug" />
+	
+	<logger name="org.drools.core.xml" level="none" />
+	
+	<logger name="org.jbpm.runtime.manager.impl.error" level="trace" />
+
+	<logger name="net.a.g.jbpm.pattern.Logger" level="debug" additivity="false">
+		<appender-ref ref="FILE" />
+		<appender-ref ref="TCP" />
+	</logger>
+
+	<logger
+		name="org.hibernate.tool.schema.internal.ExceptionHandlerLoggedImpl"
+		level="error" />
+
+	<root level="info">
+		<appender-ref ref="CONSOLE" />
+	</root>
+
+</configuration>
