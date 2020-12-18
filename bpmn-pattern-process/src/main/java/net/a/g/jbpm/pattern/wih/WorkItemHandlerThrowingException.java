@@ -2,6 +2,7 @@ package net.a.g.jbpm.pattern.wih;
 
 import org.kie.api.runtime.process.WorkItem;
 import org.kie.api.runtime.process.WorkItemManager;
+//import org.drools.core.process.instance.impl.
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +13,6 @@ public class WorkItemHandlerThrowingException implements org.kie.api.runtime.pro
 	private java.lang.Exception exceptionToThrow;
 
 	public WorkItemHandlerThrowingException() {
-		
 	}
 	
 	public WorkItemHandlerThrowingException(java.lang.Exception exceptionToThrow) {
