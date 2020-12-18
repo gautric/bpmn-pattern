@@ -14,6 +14,7 @@ import org.kie.api.runtime.process.ProcessInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.a.g.jbpm.pattern.listener.MDCProcessListener;
 import net.a.g.jbpm.pattern.util.Exception;
 import net.a.g.jbpm.pattern.wih.WorkItemHandlerThrowingException;
 
@@ -21,7 +22,7 @@ public class ExceptionToErrorTest extends JbpmJUnitBaseTestCase {
     private static final Logger LOG = LoggerFactory.getLogger(ExceptionToErrorTest.class);
 
     @Test
-    public void test() {
+    public void testWIHThrowingException() {
         ExceptionToErrorTest.LOG.debug("jBPM unit test sample");
 
         addWorkItemHandler("WorkItemHandler", new WorkItemHandlerThrowingException(new Exception()));
@@ -32,7 +33,7 @@ public class ExceptionToErrorTest extends JbpmJUnitBaseTestCase {
         final KieSession kieSession = runtimeEngine.getKieSession();
 
         kieSession.addEventListener((ProcessEventListener)new PatternProcessListener());
-
+        kieSession.addEventListener((ProcessEventListener)new MDCProcessListener());
 
 		Map<String, Object> params = new HashMap<String, Object>();
 		
@@ -40,7 +41,6 @@ public class ExceptionToErrorTest extends JbpmJUnitBaseTestCase {
 		params.put("stringIn", UUID.randomUUID().toString());
 		params.put("integerIn", 42);
 
-	
 		ProcessInstance processInstance = kieSession.startProcess("ExceptionToErrorProcess", params);
 
         assertProcessInstanceNotActive(processInstance.getId(), kieSession);

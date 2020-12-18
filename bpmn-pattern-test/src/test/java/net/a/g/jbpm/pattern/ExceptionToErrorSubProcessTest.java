@@ -10,6 +10,8 @@ import org.kie.api.runtime.process.ProcessInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.a.g.jbpm.pattern.listener.MDCProcessListener;
+
 public class ExceptionToErrorSubProcessTest extends JbpmJUnitBaseTestCase {
     private static final Logger LOG = LoggerFactory.getLogger(ExceptionToErrorSubProcessTest.class);
 
@@ -20,7 +22,8 @@ public class ExceptionToErrorSubProcessTest extends JbpmJUnitBaseTestCase {
         final RuntimeManager runtimeManager = createRuntimeManager("net/a/g/jbpm/pattern/ExceptionToErrorWithSubProcess.bpmn","net/a/g/jbpm/pattern/SubWithErrorProcess.bpmn");
         final RuntimeEngine runtimeEngine = getRuntimeEngine(null);
         final KieSession kieSession = runtimeEngine.getKieSession();
-        kieSession.addEventListener((ProcessEventListener) new PatternProcessListener());
+        kieSession.addEventListener((ProcessEventListener)new PatternProcessListener());
+        kieSession.addEventListener((ProcessEventListener)new MDCProcessListener());
 
         final ProcessInstance processInstance = kieSession.startProcess("ExceptionToErrorWithSubProcess");
 
