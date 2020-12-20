@@ -50,4 +50,38 @@ public class ExceptionToErrorTest extends JbpmJUnitBaseTestCase {
         runtimeManager.disposeRuntimeEngine(runtimeEngine);
         runtimeManager.close();
     }
+    
+    @Test
+	public void testWithUniqueId() {
+		LOG.debug("jBPM unit test sample");
+
+		addWorkItemHandler("WorkItemHandler", new org.jbpm.bpmn2.handler.SignallingTaskHandlerDecorator(
+				new WorkItemHandlerThrowingException(new Exception()), "Error-_72474602-751C-43FD-9D4F-2598A16468D1-ExceptionCode"));				
+		//		new WorkItemHandlerThrowingException(new Exception()), "Error-ExceptionCode"));				
+		
+		final RuntimeManager runtimeManager = createRuntimeManager(
+				"net/a/g/jbpm/pattern/ExceptionToErrorV2Process.bpmn");
+		final RuntimeEngine runtimeEngine = getRuntimeEngine(null);
+		final KieSession kieSession = runtimeEngine.getKieSession();
+
+		kieSession.addEventListener((ProcessEventListener) new PatternProcessListener());
+		kieSession.addEventListener((ProcessEventListener) new MDCProcessListener());
+
+
+		Map<String, Object> params = new HashMap<String, Object>();
+
+		params.put("booleanIn", true);
+		params.put("stringIn", UUID.randomUUID().toString());
+		params.put("integerIn", 42);
+
+		ProcessInstance processInstance = kieSession.startProcess("ExceptionToErrorV2Process", params);
+
+		assertProcessInstanceNotActive(processInstance.getId(), kieSession);
+		assertNodeTriggered(processInstance.getId(), "ScriptTask");
+		assertNodeTriggered(processInstance.getId(), "Error End");
+
+		runtimeManager.disposeRuntimeEngine(runtimeEngine);
+		runtimeManager.close();
+	}
+    
 }
