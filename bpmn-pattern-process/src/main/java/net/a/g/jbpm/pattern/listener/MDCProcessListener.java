@@ -86,8 +86,9 @@ public class MDCProcessListener implements ProcessEventListener, RuleRuntimeEven
 	@Override
 	public void beforeNodeTriggered(ProcessNodeTriggeredEvent event) {
 		injectMDC(event.getProcessInstance(), ((KieRuntime) event.getKieRuntime()));
-		org.slf4j.MDC.put(NODE_NAME, event.getNodeInstance().getNodeName());
-		org.slf4j.MDC.put(NODE_TYPE, event.getNodeInstance().getNode().getNodeType().name());
+		if(event.getNodeInstance().getNodeName() != null)
+			org.slf4j.MDC.put(NODE_NAME, event.getNodeInstance().getNodeName());
+		//JBPM 7.47 ++ org.slf4j.MDC.put(NODE_TYPE, event.getNodeInstance().getNode().getNodeType().name());
 		LOG.info("Node Called - {}", event.getNodeInstance().getNodeName());
 		org.slf4j.MDC.remove(NODE_TYPE);
 		org.slf4j.MDC.remove(NODE_NAME);
