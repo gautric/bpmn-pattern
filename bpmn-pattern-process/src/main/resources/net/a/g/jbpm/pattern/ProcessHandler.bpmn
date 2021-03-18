@@ -1,0 +1,110 @@
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:bpsim="http://www.bpsim.org/schemas/1.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:drools="http://www.jboss.org/drools" id="_5f2s4GosEDmapeofkmbbAA" exporter="jBPM Process Modeler" exporterVersion="2.0" targetNamespace="http://www.omg.org/bpmn20">
+  <bpmn2:itemDefinition id="_paramItem" structureRef="Object"/>
+  <bpmn2:process id="ProcessHandler" drools:packageName="com.example" drools:version="1.0" drools:adHoc="false" name="ProcessHandler" isExecutable="true" processType="Public">
+    <bpmn2:property id="param" itemSubjectRef="_paramItem" name="param"/>
+    <bpmn2:sequenceFlow id="_45F15B61-644F-4AD2-B1CF-9959317853D4" sourceRef="_026C28DD-D127-49C6-B9AB-75791F47F93D" targetRef="_2756BC74-1CBC-42EB-A6A4-81F2EFB8DC0A">
+      <bpmn2:extensionElements>
+        <drools:metaData name="isAutoConnection.source">
+          <drools:metaValue><![CDATA[true]]></drools:metaValue>
+        </drools:metaData>
+        <drools:metaData name="isAutoConnection.target">
+          <drools:metaValue><![CDATA[true]]></drools:metaValue>
+        </drools:metaData>
+      </bpmn2:extensionElements>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="_94CCF88C-C0D1-4960-911E-7FA9C7531F78" sourceRef="_D8FEBBAC-B109-4553-A645-09ADBB6E8B58" targetRef="_026C28DD-D127-49C6-B9AB-75791F47F93D">
+      <bpmn2:extensionElements>
+        <drools:metaData name="isAutoConnection.source">
+          <drools:metaValue><![CDATA[true]]></drools:metaValue>
+        </drools:metaData>
+        <drools:metaData name="isAutoConnection.target">
+          <drools:metaValue><![CDATA[true]]></drools:metaValue>
+        </drools:metaData>
+      </bpmn2:extensionElements>
+    </bpmn2:sequenceFlow>
+    <bpmn2:endEvent id="_2756BC74-1CBC-42EB-A6A4-81F2EFB8DC0A" name="Handler End">
+      <bpmn2:extensionElements>
+        <drools:metaData name="elementname">
+          <drools:metaValue><![CDATA[Handler End]]></drools:metaValue>
+        </drools:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>_45F15B61-644F-4AD2-B1CF-9959317853D4</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:task id="_026C28DD-D127-49C6-B9AB-75791F47F93D" name="Handler Log" drools:taskName="HandlerWIH">
+      <bpmn2:extensionElements>
+        <drools:metaData name="elementname">
+          <drools:metaValue><![CDATA[Handler Log]]></drools:metaValue>
+        </drools:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>_94CCF88C-C0D1-4960-911E-7FA9C7531F78</bpmn2:incoming>
+      <bpmn2:outgoing>_45F15B61-644F-4AD2-B1CF-9959317853D4</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:startEvent id="_D8FEBBAC-B109-4553-A645-09ADBB6E8B58" name="Handler Start">
+      <bpmn2:extensionElements>
+        <drools:metaData name="elementname">
+          <drools:metaValue><![CDATA[Handler Start]]></drools:metaValue>
+        </drools:metaData>
+      </bpmn2:extensionElements>
+      <bpmn2:outgoing>_94CCF88C-C0D1-4960-911E-7FA9C7531F78</bpmn2:outgoing>
+    </bpmn2:startEvent>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram>
+    <bpmndi:BPMNPlane bpmnElement="ProcessHandler">
+      <bpmndi:BPMNShape id="shape__D8FEBBAC-B109-4553-A645-09ADBB6E8B58" bpmnElement="_D8FEBBAC-B109-4553-A645-09ADBB6E8B58">
+        <dc:Bounds height="56" width="56" x="255" y="300"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape__026C28DD-D127-49C6-B9AB-75791F47F93D" bpmnElement="_026C28DD-D127-49C6-B9AB-75791F47F93D">
+        <dc:Bounds height="102" width="154" x="391" y="277"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape__2756BC74-1CBC-42EB-A6A4-81F2EFB8DC0A" bpmnElement="_2756BC74-1CBC-42EB-A6A4-81F2EFB8DC0A">
+        <dc:Bounds height="56" width="56" x="625" y="300"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge_shape__D8FEBBAC-B109-4553-A645-09ADBB6E8B58_to_shape__026C28DD-D127-49C6-B9AB-75791F47F93D" bpmnElement="_94CCF88C-C0D1-4960-911E-7FA9C7531F78">
+        <di:waypoint x="311" y="328"/>
+        <di:waypoint x="391" y="328"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_shape__026C28DD-D127-49C6-B9AB-75791F47F93D_to_shape__2756BC74-1CBC-42EB-A6A4-81F2EFB8DC0A" bpmnElement="_45F15B61-644F-4AD2-B1CF-9959317853D4">
+        <di:waypoint x="545" y="328"/>
+        <di:waypoint x="625" y="328"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmn2:relationship type="BPSimData">
+    <bpmn2:extensionElements>
+      <bpsim:BPSimData>
+        <bpsim:Scenario id="default" name="Simulationscenario">
+          <bpsim:ScenarioParameters/>
+          <bpsim:ElementParameters elementRef="_D8FEBBAC-B109-4553-A645-09ADBB6E8B58">
+            <bpsim:TimeParameters>
+              <bpsim:ProcessingTime>
+                <bpsim:NormalDistribution mean="0" standardDeviation="0"/>
+              </bpsim:ProcessingTime>
+            </bpsim:TimeParameters>
+          </bpsim:ElementParameters>
+          <bpsim:ElementParameters elementRef="_026C28DD-D127-49C6-B9AB-75791F47F93D">
+            <bpsim:TimeParameters>
+              <bpsim:ProcessingTime>
+                <bpsim:NormalDistribution mean="0" standardDeviation="0"/>
+              </bpsim:ProcessingTime>
+            </bpsim:TimeParameters>
+            <bpsim:ResourceParameters>
+              <bpsim:Availability>
+                <bpsim:FloatingParameter value="0"/>
+              </bpsim:Availability>
+              <bpsim:Quantity>
+                <bpsim:FloatingParameter value="0"/>
+              </bpsim:Quantity>
+            </bpsim:ResourceParameters>
+            <bpsim:CostParameters>
+              <bpsim:UnitCost>
+                <bpsim:FloatingParameter value="0"/>
+              </bpsim:UnitCost>
+            </bpsim:CostParameters>
+          </bpsim:ElementParameters>
+        </bpsim:Scenario>
+      </bpsim:BPSimData>
+    </bpmn2:extensionElements>
+    <bpmn2:source>_5f2s4GosEDmapeofkmbbAA</bpmn2:source>
+    <bpmn2:target>_5f2s4GosEDmapeofkmbbAA</bpmn2:target>
+  </bpmn2:relationship>
+</bpmn2:definitions>
