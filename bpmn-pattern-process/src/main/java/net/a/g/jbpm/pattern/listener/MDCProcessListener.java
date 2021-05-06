@@ -16,11 +16,12 @@ import org.kie.api.runtime.KieRuntime;
 import org.kie.api.runtime.manager.RuntimeManager;
 import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.internal.process.CorrelationKey;
+import org.kie.internal.runtime.manager.deploy.DeploymentDescriptorManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class MDCProcessListener implements ProcessEventListener, RuleRuntimeEventListener {
-	
+
 	private static final String NODE_TYPE = "NodeType";
 	private static final String NODE_NAME = "NodeName";
 	private static final String NEUTRAL = "";
@@ -51,7 +52,7 @@ public class MDCProcessListener implements ProcessEventListener, RuleRuntimeEven
 		if (correlationKey != null)
 			org.slf4j.MDC.put(CORRELATION_KEY, correlationKey.getName());
 
-		org.slf4j.MDC.put(VERSION,pi.getProcess().getVersion());
+		org.slf4j.MDC.put(VERSION, pi.getProcess().getVersion());
 		org.slf4j.MDC.put(EXTERNAL_ID, ((RuleFlowProcessInstance) pse).getDeploymentId());
 
 		if (kieSession != null) {
@@ -86,9 +87,10 @@ public class MDCProcessListener implements ProcessEventListener, RuleRuntimeEven
 	@Override
 	public void beforeNodeTriggered(ProcessNodeTriggeredEvent event) {
 		injectMDC(event.getProcessInstance(), ((KieRuntime) event.getKieRuntime()));
-		if(event.getNodeInstance().getNodeName() != null)
+		if (event.getNodeInstance().getNodeName() != null) {
 			org.slf4j.MDC.put(NODE_NAME, event.getNodeInstance().getNodeName());
-		//JBPM 7.47 ++ org.slf4j.MDC.put(NODE_TYPE, event.getNodeInstance().getNode().getNodeType().name());
+			org.slf4j.MDC.put(NODE_TYPE, event.getNodeInstance().getNode().getNodeType().name());
+		}
 		LOG.info("Node Called - {}", event.getNodeInstance().getNodeName());
 		org.slf4j.MDC.remove(NODE_TYPE);
 		org.slf4j.MDC.remove(NODE_NAME);
