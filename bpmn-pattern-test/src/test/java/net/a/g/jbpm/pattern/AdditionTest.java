@@ -55,4 +55,36 @@ public class AdditionTest extends JbpmJUnitBaseTestCase {
 		runtimeManager.disposeRuntimeEngine(runtimeEngine);
 		runtimeManager.close();
 	}
+	
+	@Test
+	public void testAdditionParent() {
+		LOG.debug("jBPM unit test sample");
+
+		Map<String, ResourceType> app = new HashMap<String, ResourceType>();
+		app.put("net/a/g/jbpm/pattern/AdditionParentProcess.bpmn", ResourceType.BPMN2);
+		app.put("net/a/g/jbpm/pattern/AdditionProcess.bpmn", ResourceType.BPMN2);
+		app.put("net/a/g/jbpm/pattern/AdditionRule.dmn", ResourceType.DMN);
+
+		final RuntimeManager runtimeManager = createRuntimeManager(app);
+
+		final RuntimeEngine runtimeEngine = getRuntimeEngine(null);
+		final KieSession kieSession = runtimeEngine.getKieSession();
+		kieSession.addEventListener((ProcessEventListener)new MDCProcessListener());
+
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("a", 1);
+		params.put("b", 2);
+
+		final ProcessInstance processInstance = kieSession.startProcess("AdditionParentProcess", params);
+
+		assertProcessInstanceNotActive(processInstance.getId(), kieSession);
+		assertNodeTriggered(processInstance.getId(), "Addition DMN");
+		assertNodeTriggered(processInstance.getId(), "Print Result");
+		assertNodeTriggered(processInstance.getId(), "Addition");
+		assertNodeTriggered(processInstance.getId(), "Addition done");
+		assertProcessVarExists(processInstance, "result", "a", "b");
+
+		runtimeManager.disposeRuntimeEngine(runtimeEngine);
+		runtimeManager.close();
+	}
 }
