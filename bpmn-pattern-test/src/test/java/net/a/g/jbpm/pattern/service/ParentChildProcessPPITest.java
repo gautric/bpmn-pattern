@@ -34,7 +34,7 @@ import org.kie.internal.runtime.conf.NamedObjectModel;
 import org.kie.internal.runtime.conf.ObjectModel;
 import org.kie.internal.runtime.conf.RuntimeStrategy;
 
-import net.a.g.jbpm.pattern.wih.WorkItemHandlerWaitException;
+import net.a.g.jbpm.pattern.wih.WaitWorkItemHandler;
 
 public class ParentChildProcessPPITest extends AbstractKieServicesTest {
 
@@ -56,7 +56,7 @@ public class ParentChildProcessPPITest extends AbstractKieServicesTest {
 		NamedObjectModel om = new NamedObjectModel();
 		om.setName("Human Task");
 		om.setResolver("mvel");
-		om.setIdentifier("new " + WorkItemHandlerWaitException.class.getName() + "()");
+		om.setIdentifier("new " + WaitWorkItemHandler.class.getName() + "()");
 		processes.add(om);
 
 		return processes;
@@ -67,7 +67,7 @@ public class ParentChildProcessPPITest extends AbstractKieServicesTest {
 		List<String> processes = new ArrayList<String>();
 
 		processes.add("net/a/g/jbpm/pattern/parentchild/ParentProcess.bpmn");
-		processes.add("net/a/g/jbpm/pattern/parentchild/ChildProcess2.bpmn");
+		processes.add("net/a/g/jbpm/pattern/parentchild/ChildProcess.bpmn");
 
 		return processes;
 	}
@@ -97,23 +97,28 @@ public class ParentChildProcessPPITest extends AbstractKieServicesTest {
 	public void testAbortAlreadyAbortedParentProcess() throws InterruptedException {
 
 		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("a", 9);
-		param.put("b", 9);
-		param.put("result", 11);
+		param.put("a", 42);
+		param.put("b", 128);
+		param.put("result", 1);
 		param.put("timer", "10s");
 
 		ExecutorService executor = Executors.newFixedThreadPool(10);
 
 		Runnable runnableTask = () -> {
-			long processInstanceId = processService.startProcess(deploymentUnit.getIdentifier(), "ParentProcess",
+			long	processInstanceId = processService.startProcess(deploymentUnit.getIdentifier(), "ParentProcess",
 					param);
 		};
 
 		executor.execute(runnableTask);
+		
+		
+		Thread.sleep(1000);
+
+		processService.signalProcessInstance(deploymentUnit.getIdentifier(),1l,"CustomAbort", null);
 
 
 
-		Thread.sleep(15000);
+		Thread.sleep(150000);
 
 		try {
 			// processService.abortProcessInstance(processInstanceId);
