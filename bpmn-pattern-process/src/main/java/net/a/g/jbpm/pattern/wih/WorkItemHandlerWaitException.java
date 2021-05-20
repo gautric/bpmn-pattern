@@ -20,7 +20,7 @@ public class WorkItemHandlerWaitException implements org.kie.api.runtime.process
 	public void executeWorkItem(WorkItem workItem, WorkItemManager manager) {
 		LOG.info("Calling Nominal {}", WorkItemHandlerWaitException.class);
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(2500);
 		} catch (InterruptedException e) {
 		}
 
@@ -29,15 +29,16 @@ public class WorkItemHandlerWaitException implements org.kie.api.runtime.process
 		int b = (int) workItem.getParameter("b");
 		int r = (int) workItem.getParameter("result");
 
-		r = r +1;
-		
-		LOG.info(" a {} b {} result {}", a,b,r);
+		r = r + 1;
 
+		LOG.info(" a {} b {} result {}", a, b, r);
+
+		System.out.println("" + a + " " + b + " " + r);
 		
 		result.put("result", r);
-		manager.completeWorkItem(workItem.getId(), result);
 		LOG.info("End Nominal {}", WorkItemHandlerWaitException.class);
 
+		manager.completeWorkItem(workItem.getId(), result);
 	}
 
 	@Override
