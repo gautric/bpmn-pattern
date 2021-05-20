@@ -16,9 +16,6 @@
 
 package net.a.g.jbpm.pattern.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -28,20 +25,14 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.drools.core.command.runtime.process.GetProcessInstanceCommand;
 import org.jbpm.kie.services.impl.KModuleDeploymentUnit;
 import org.jbpm.services.api.ProcessInstanceNotFoundException;
 import org.jbpm.services.api.model.DeploymentUnit;
 import org.jbpm.test.services.AbstractKieServicesTest;
 import org.junit.Test;
-import org.kie.api.runtime.process.ProcessInstance;
-import org.kie.api.runtime.process.WorkItem;
-import org.kie.internal.KieInternalServices;
-import org.kie.internal.process.CorrelationKey;
 import org.kie.internal.runtime.conf.NamedObjectModel;
 import org.kie.internal.runtime.conf.ObjectModel;
 import org.kie.internal.runtime.conf.RuntimeStrategy;
-import org.kie.internal.runtime.manager.context.ProcessInstanceIdContext;
 
 import net.a.g.jbpm.pattern.wih.WorkItemHandlerWaitException;
 
@@ -50,9 +41,6 @@ public class ParentChildProcessPPITest extends AbstractKieServicesTest {
 	protected static final String ARTIFACT_ID = "test-module";
 	protected static final String GROUP_ID = "org.jbpm.test";
 	protected static final String VERSION = "1.0.0";
-
-	private static final String PROCESS_ID_HUMAN_TASK = "org.jbpm.writedocument";
-	private static final String PROCESS_ID_SIGNAL = "org.jbpm.signal";
 
 	@Override
 	protected DeploymentUnit createDeploymentUnit(String groupId, String artifactid, String version) throws Exception {
@@ -78,8 +66,8 @@ public class ParentChildProcessPPITest extends AbstractKieServicesTest {
 	protected List<String> getProcessDefinitionFiles() {
 		List<String> processes = new ArrayList<String>();
 
-		processes.add("net/a/g/jbpm/pattern/ParentProcess.bpmn");
-		processes.add("net/a/g/jbpm/pattern/ChildProcess.bpmn");
+		processes.add("net/a/g/jbpm/pattern/parentchild/ParentProcess.bpmn");
+		processes.add("net/a/g/jbpm/pattern/parentchild/ChildProcess2.bpmn");
 
 		return processes;
 	}
@@ -94,7 +82,7 @@ public class ParentChildProcessPPITest extends AbstractKieServicesTest {
 
 		ObjectModel om = new ObjectModel();
 		om.setResolver("mvel");
-		om.setIdentifier("new " + net.a.g.jbpm.pattern.PatternProcessListener.class.getName() + "()");
+		om.setIdentifier("new " + net.a.g.jbpm.pattern.listener.ContextListener.class.getName() + "()");
 		processes.add(om);
 
 		return processes;
@@ -123,13 +111,9 @@ public class ParentChildProcessPPITest extends AbstractKieServicesTest {
 
 		executor.execute(runnableTask);
 
-		// long processInstanceId =
-		// processService.startProcess(deploymentUnit.getIdentifier(), "ParentProcess",
-		// param);
-		// assertNotNull(processInstanceId);
-		// processService.abortProcessInstance(processInstanceId);
 
-		Thread.sleep(100000);
+
+		Thread.sleep(15000);
 
 		try {
 			// processService.abortProcessInstance(processInstanceId);
