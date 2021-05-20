@@ -26,7 +26,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.jbpm.kie.services.impl.KModuleDeploymentUnit;
-import org.jbpm.runtime.manager.impl.lock.FreeRuntimeManagerLockStrategy;
+import org.jbpm.runtime.manager.impl.lock.DebugRuntimeManagerLockFactory;
 import org.jbpm.services.api.ProcessInstanceNotFoundException;
 import org.jbpm.services.api.model.DeploymentUnit;
 import org.jbpm.test.services.AbstractKieServicesTest;
@@ -44,8 +44,20 @@ public class ParentChildProcessPPITest extends AbstractKieServicesTest {
 	protected static final String VERSION = "1.0.0";
 
 	static {
+	
+	// Only with 7.11 RHPAM
+		
+	// System.setProperty("org.kie.jbpm.runtime.manager.lock.factory", DebugRuntimeManagerLockFactory.class.getCanonicalName());
+	
 		
 	//	System.setProperty("org.kie.jbpm.runtime.manager.lock.strategy", FreeRuntimeManagerLockStrategy.class.getCanonicalName());
+		
+	//	System.setProperty("org.kie.jbpm.runtime.manager.lock.strategy",TimeoutRuntimeManagerLockStrategy.class.getCanonicalName());
+	//	System.setProperty("org.kie.jbpm.runtime.manager.lock.timeout", "3000");
+		
+	//	System.setProperty("org.kie.jbpm.runtime.manager.lock.strategy",InterruptibleRuntimeManagerLockStrategy.class.getCanonicalName());
+	//	System.setProperty("org.kie.jbpm.runtime.manager.lock.strategy",SerializableRuntimeManagerLockStrategy.class.getCanonicalName());
+
 	}
 	
 	@Override
