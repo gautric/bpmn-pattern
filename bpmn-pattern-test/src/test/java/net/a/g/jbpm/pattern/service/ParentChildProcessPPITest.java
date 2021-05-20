@@ -26,6 +26,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.jbpm.kie.services.impl.KModuleDeploymentUnit;
+import org.jbpm.runtime.manager.impl.lock.FreeRuntimeManagerLockStrategy;
 import org.jbpm.services.api.ProcessInstanceNotFoundException;
 import org.jbpm.services.api.model.DeploymentUnit;
 import org.jbpm.test.services.AbstractKieServicesTest;
@@ -42,6 +43,11 @@ public class ParentChildProcessPPITest extends AbstractKieServicesTest {
 	protected static final String GROUP_ID = "org.jbpm.test";
 	protected static final String VERSION = "1.0.0";
 
+	static {
+		
+	//	System.setProperty("org.kie.jbpm.runtime.manager.lock.strategy", FreeRuntimeManagerLockStrategy.class.getCanonicalName());
+	}
+	
 	@Override
 	protected DeploymentUnit createDeploymentUnit(String groupId, String artifactid, String version) throws Exception {
 		DeploymentUnit unit = super.createDeploymentUnit(groupId, artifactid, version);
