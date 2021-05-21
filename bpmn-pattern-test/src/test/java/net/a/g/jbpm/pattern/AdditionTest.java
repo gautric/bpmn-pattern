@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.a.g.jbpm.pattern.listener.MDCProcessListener;
+import net.a.g.jbpm.pattern.listener.ContextListener;
 
 public class AdditionTest extends JbpmJUnitBaseTestCase {
 
@@ -37,11 +38,11 @@ public class AdditionTest extends JbpmJUnitBaseTestCase {
 
 		final RuntimeEngine runtimeEngine = getRuntimeEngine(null);
 		final KieSession kieSession = runtimeEngine.getKieSession();
-		kieSession.addEventListener((ProcessEventListener)new MDCProcessListener());
+		kieSession.addEventListener((ProcessEventListener) new MDCProcessListener());
 
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("a", 1);
-		params.put("b", 2);
+		params.put("b", 1);
 
 		final ProcessInstance processInstance = kieSession.startProcess("AdditionProcess", params);
 
@@ -55,9 +56,9 @@ public class AdditionTest extends JbpmJUnitBaseTestCase {
 		runtimeManager.disposeRuntimeEngine(runtimeEngine);
 		runtimeManager.close();
 	}
-	
+
 	@Test
-	public void testAdditionParent() {
+	public void testAdditionParent() throws InterruptedException {
 		LOG.debug("jBPM unit test sample");
 
 		Map<String, ResourceType> app = new HashMap<String, ResourceType>();
@@ -69,13 +70,17 @@ public class AdditionTest extends JbpmJUnitBaseTestCase {
 
 		final RuntimeEngine runtimeEngine = getRuntimeEngine(null);
 		final KieSession kieSession = runtimeEngine.getKieSession();
-		kieSession.addEventListener((ProcessEventListener)new MDCProcessListener());
+		kieSession.addEventListener((ProcessEventListener) new ContextListener());
+		kieSession.addEventListener((ProcessEventListener) new MDCProcessListener());
 
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("a", 1);
 		params.put("b", 2);
+		params.put("timer", "PT1S");
 
 		final ProcessInstance processInstance = kieSession.startProcess("AdditionParentProcess", params);
+
+		Thread.sleep(1500);
 
 		assertProcessInstanceNotActive(processInstance.getId(), kieSession);
 		assertNodeTriggered(processInstance.getId(), "Addition DMN");
