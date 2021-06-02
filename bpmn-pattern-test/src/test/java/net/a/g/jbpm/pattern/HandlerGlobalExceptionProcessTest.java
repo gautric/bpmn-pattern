@@ -115,7 +115,47 @@ public class HandlerGlobalExceptionProcessTest extends JbpmJUnitBaseTestCase {
 		// assert
 		// assertNodeTriggered(processInstance.getId(), "ScriptTask");
 		assertNodeTriggered(processInstance.getId(), "Nominal End");
+		org.jbpm.workflow.instance.impl.WorkflowProcessInstanceImpl oo;
+		runtimeManager.disposeRuntimeEngine(runtimeEngine);
+		runtimeManager.close();
+	}
+	
+	
+	@Test
+	public void testAbortWithSignal() throws InterruptedException {
+		HandlerGlobalExceptionProcessTest.LOG.debug("jBPM unit test sample");
 
+		addWorkItemHandler("WorkItemHandler", new WorkItemHandlerThrowingException(new ProcessWorkItemHandlerException(
+				"HandlerGlobalExceptionProcessWithSignal", "ABORT", new RuntimeException("Exception inside Test Case"))));
+
+		final RuntimeManager runtimeManager = createRuntimeManager("net/a/g/jbpm/pattern/ExceptionToErrorProcess.bpmn",
+				"net/a/g/jbpm/pattern/HandlerGlobalExceptionProcessWithSignal.bpmn");
+		final RuntimeEngine runtimeEngine = getRuntimeEngine(null);
+		final KieSession kieSession = runtimeEngine.getKieSession();
+
+		kieSession.addEventListener((ProcessEventListener) new PatternProcessListener());
+
+		Map<String, Object> params = new HashMap<String, Object>();
+
+		params.put("booleanIn", true);
+		params.put("stringIn", UUID.randomUUID().toString());
+		params.put("integerIn", 42);
+
+		ProcessInstance processInstance = kieSession.startProcess("ExceptionToErrorProcess", params);
+
+		Thread.sleep(1000);
+		assertProcessInstanceActive(processInstance.getId(), kieSession);
+
+		
+		kieSession.signalEvent("Resolution", new Integer(42));
+		
+		//Resolution
+		
+		assertProcessInstanceNotActive(processInstance.getId(), kieSession);
+		// assert
+		// assertNodeTriggered(processInstance.getId(), "ScriptTask");
+		assertNodeTriggered(processInstance.getId(), "Nominal End");
+		org.jbpm.workflow.instance.impl.WorkflowProcessInstanceImpl oo;
 		runtimeManager.disposeRuntimeEngine(runtimeEngine);
 		runtimeManager.close();
 	}
