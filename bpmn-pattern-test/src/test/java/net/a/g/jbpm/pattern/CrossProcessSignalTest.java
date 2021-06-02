@@ -21,12 +21,12 @@ public class CrossProcessSignalTest extends JbpmJUnitBaseTestCase {
 	private static final Logger LOG = LoggerFactory.getLogger(CrossProcessSignalTest.class);
 
 	public CrossProcessSignalTest() {
-		super(false, false);
+		super(true, true);
 
 	}
 
 	@Test
-	public void testAddition() {
+	public void testCrossSignal() {
 		LOG.debug("jBPM unit test sample");
 
 		Map<String, ResourceType> app = new HashMap<String, ResourceType>();
