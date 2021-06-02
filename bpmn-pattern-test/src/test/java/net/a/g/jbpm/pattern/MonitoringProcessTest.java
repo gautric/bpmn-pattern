@@ -160,4 +160,44 @@ public class MonitoringProcessTest extends JbpmJUnitBaseTestCase {
         runtimeManager.disposeRuntimeEngine(runtimeEngine);
         runtimeManager.close();
     }
+    
+    @Test
+    public void testTimer3ms() {
+        MonitoringProcessTest.LOG.debug("jBPM unit test sample");
+
+        final RuntimeManager runtimeManager = createRuntimeManager("net/a/g/jbpm/pattern/MonitoringProcess.bpmn");
+        final RuntimeEngine runtimeEngine = getRuntimeEngine(null);
+        final KieSession kieSession = runtimeEngine.getKieSession();
+
+        kieSession.addEventListener((ProcessEventListener)new PatternProcessListener());
+
+
+		Map<String, Object> params = new HashMap<String, Object>();
+		
+		params.put("booleanIn", true);
+		params.put("stringIn", UUID.randomUUID().toString());
+		params.put("integerIn", 24);
+		params.put("timerIn", "50");
+		ProcessInstance processInstance = kieSession.startProcess("MonitoringProcess", params);
+
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		
+		assertNodeTriggered(processInstance.getId(), "Monitoring");
+		assertNodeTriggered(processInstance.getId(), "First Step Task");
+		assertNodeTriggered(processInstance.getId(), "Timer Waiting");
+		assertNodeTriggered(processInstance.getId(), "Timer Task");
+
+		
+        assertProcessInstanceNotActive(processInstance.getId(), kieSession);
+
+		
+        runtimeManager.disposeRuntimeEngine(runtimeEngine);
+        runtimeManager.close();
+    }
+    
 }
