@@ -25,7 +25,7 @@ public class ExceptionToErrorTest extends JbpmJUnitBaseTestCase {
     public void testWIHThrowingException() {
         ExceptionToErrorTest.LOG.debug("jBPM unit test sample");
 
-        addWorkItemHandler("WorkItemHandler", new WorkItemHandlerThrowingException(new Exception()));
+        addWorkItemHandler("WorkItemHandler", new WorkItemHandlerThrowingException(new Exception("For Demonstration")));
 
         
         final RuntimeManager runtimeManager = createRuntimeManager("net/a/g/jbpm/pattern/ExceptionToErrorProcess.bpmn");
@@ -57,7 +57,7 @@ public class ExceptionToErrorTest extends JbpmJUnitBaseTestCase {
 
 		addWorkItemHandler("WorkItemHandler", new org.jbpm.bpmn2.handler.SignallingTaskHandlerDecorator(
 				new WorkItemHandlerThrowingException(new Exception()), "Error-_72474602-751C-43FD-9D4F-2598A16468D1-ExceptionCode"));				
-		//		new WorkItemHandlerThrowingException(new Exception()), "Error-ExceptionCode"));				
+	//			new WorkItemHandlerThrowingException(new Exception()), "Error-ExceptionCode"));				
 		
 		final RuntimeManager runtimeManager = createRuntimeManager(
 				"net/a/g/jbpm/pattern/ExceptionToErrorV2Process.bpmn");
