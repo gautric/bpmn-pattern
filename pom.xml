@@ -12,10 +12,10 @@
 	<name>BPMN : PATTERN</name>
 
 	<properties>
-		<kie.version>7.47.0.Final</kie.version>
+		<kie.version>7.54.0.Final</kie.version>
 		<jpa.api.version>1.0.2.Final</jpa.api.version>
-		<ba-platform-bom.version>7.9.0.redhat-00002</ba-platform-bom.version>
-		<java.version>11</java.version>
+		<ba-platform-bom.version>7.10.1.redhat-00001</ba-platform-bom.version>
+		<java.version>8</java.version>
     	<maven.compiler.source>${java.version}</maven.compiler.source>
     	<maven.compiler.target>${java.version}</maven.compiler.target>
 	</properties>
@@ -25,9 +25,9 @@
         <module>bpmn-pattern-test</module>
     </modules>
 
- 	<dependencyManagement>  <!--  for jBPM Project -->
+ 	 <dependencyManagement>   
 		<dependencies>
-			<dependency>
+		   <dependency>
 				<groupId>org.drools</groupId>
 				<artifactId>drools-bom</artifactId>
 				<version>${kie.version}</version>
@@ -55,16 +55,45 @@
 
 		</dependencies>
 	</dependencyManagement>
-<!-- 	<dependencyManagement>  -->
-<!-- 		<dependencies> -->
-<!-- 			<dependency> -->
-<!-- 				<groupId>com.redhat.ba</groupId> -->
-<!-- 				<artifactId>ba-platform-bom</artifactId> -->
-<!-- 				<version>${ba-platform-bom.version}</version> -->
-<!-- 				<scope>import</scope> -->
-<!-- 				<type>pom</type> -->
+<!-- 	<dependencyManagement>   -->
+<!--  		<dependencies>  -->
+<!--  			<dependency> -->
+<!--  				<groupId>com.redhat.ba</groupId>  -->
+<!--  				<artifactId>ba-platform-bom</artifactId>  -->
+<!--  				<version>${ba-platform-bom.version}</version>  -->
+<!--  				<scope>import</scope>  -->
+<!--  				<type>pom</type>  -->
+<!--  			</dependency>  -->
+<!-- 			 <dependency> -->
+<!-- 				<groupId>org.jboss.spec.javax.jms</groupId> -->
+<!-- 				<artifactId>jboss-jms-api_2.0_spec</artifactId> -->
+<!-- 				<version>2.0.0.Final</version> -->
+<!-- 				<scope>provided</scope> -->
 <!-- 			</dependency> -->
-<!-- 		</dependencies> -->
-<!-- 	</dependencyManagement> -->
-
+<!-- 			<dependency> -->
+<!-- 				<groupId>org.slf4j</groupId> -->
+<!-- 				<artifactId>slf4j-api</artifactId> -->
+<!-- 				<version>1.7.26</version> -->
+<!-- 			</dependency> -->
+<!--  		</dependencies>  -->
+<!--  	</dependencyManagement> -->
+	<profiles>
+		<profile>
+			<id>local</id>
+			<distributionManagement>
+				<repository>
+					<id>m2.local.distribution.repository</id>
+					<name>M2 Local Repository</name>
+					<url>file://${HOME}/.m2/local.distribution.repository.release</url>
+					<uniqueVersion>true</uniqueVersion>
+				</repository>
+				<snapshotRepository>
+					<id>m2.local.distribution.repository.snapshot</id>
+					<name>M2 Local Repository Snapshot</name>
+					<url>file://${HOME}/.m2/local.distribution.repository.snapshot</url>
+					<uniqueVersion>false</uniqueVersion>
+				</snapshotRepository>
+			</distributionManagement>
+		</profile>
+	</profiles>
 </project>

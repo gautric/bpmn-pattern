@@ -68,23 +68,5 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-	<profiles>
-		<profile>
-			<id>local</id>
-			<distributionManagement>
-				<repository>
-					<id>m2.local.distribution.repository</id>
-					<name>M2 Local Repository</name>
-					<url>file://${HOME}/.m2/local.distribution.repository.release</url>
-					<uniqueVersion>true</uniqueVersion>
-				</repository>
-				<snapshotRepository>
-					<id>m2.local.distribution.repository.snapshot</id>
-					<name>M2 Local Repository Snapshot</name>
-					<url>file://${HOME}/.m2/local.distribution.repository.snapshot</url>
-					<uniqueVersion>false</uniqueVersion>
-				</snapshotRepository>
-			</distributionManagement>
-		</profile>
-	</profiles>
+	
 </project>

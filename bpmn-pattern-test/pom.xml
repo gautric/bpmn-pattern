@@ -80,7 +80,7 @@
 		<dependency>
 			<groupId>org.jbpm</groupId>
 			<artifactId>jbpm-test</artifactId>
-			<scope>provided</scope>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jbpm</groupId>
@@ -158,6 +158,14 @@
 			<type>test-jar</type>
 		</dependency>
 
+		<dependency>
+			<groupId>org.jbpm</groupId>
+			<artifactId>jbpm-test-coverage</artifactId>
+			<version>${kie.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -184,40 +192,6 @@
 				<extensions>true</extensions>
 			</plugin>
 		</plugins>
-		<pluginManagement>
-			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.kie</groupId>
-										<artifactId>
-											kie-maven-plugin
-										</artifactId>
-										<versionRange>
-											[7.47.0.Final,)
-										</versionRange>
-										<goals>
-											<goal>injectreactive</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 	<profiles>
 		<profile>
