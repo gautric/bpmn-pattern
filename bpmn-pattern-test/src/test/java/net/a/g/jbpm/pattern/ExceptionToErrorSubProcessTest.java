@@ -31,7 +31,7 @@ public class ExceptionToErrorSubProcessTest extends JbpmJUnitBaseTestCase {
 
         assertNodeTriggered(processInstance.getId(), "ScriptTask");
 		assertNodeTriggered(processInstance.getId(), "Error End");
-        
+		
         runtimeManager.disposeRuntimeEngine(runtimeEngine);
         runtimeManager.close();
     }
