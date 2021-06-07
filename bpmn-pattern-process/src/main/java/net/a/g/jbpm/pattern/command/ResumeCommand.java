@@ -1,12 +1,11 @@
 package net.a.g.jbpm.pattern.command;
 
-import org.jbpm.process.instance.command.SuspendProcessInstanceCommand;
+import org.jbpm.process.instance.command.ResumeProcessInstanceCommand;
 import org.kie.api.executor.Command;
 import org.kie.api.executor.CommandContext;
 import org.kie.api.executor.ExecutionResults;
 import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;
-import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.internal.runtime.manager.RuntimeManagerRegistry;
 import org.kie.internal.runtime.manager.context.ProcessInstanceIdContext;
 import org.slf4j.Logger;
@@ -44,7 +43,7 @@ public class ResumeCommand implements Command {
 			engine = runtimeManager.getRuntimeEngine(ProcessInstanceIdContext.get(processInstanceId));
 
 			
-			SuspendProcessInstanceCommand spic = new SuspendProcessInstanceCommand();
+			ResumeProcessInstanceCommand spic = new ResumeProcessInstanceCommand();
 			spic.setProcessInstanceId(processInstanceId);
 			
 			engine.getKieSession().execute(spic);

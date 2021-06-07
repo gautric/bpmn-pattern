@@ -1,6 +1,6 @@
 package net.a.g.jbpm.pattern.command;
 
-import org.jbpm.process.instance.command.ResumeProcessInstanceCommand;
+import org.jbpm.process.instance.command.SuspendProcessInstanceCommand;
 import org.kie.api.executor.Command;
 import org.kie.api.executor.CommandContext;
 import org.kie.api.executor.ExecutionResults;
@@ -42,7 +42,7 @@ public class SuspendCommand implements Command {
 
 			engine = runtimeManager.getRuntimeEngine(ProcessInstanceIdContext.get(processInstanceId));
 			
-			ResumeProcessInstanceCommand spic = new ResumeProcessInstanceCommand();
+			SuspendProcessInstanceCommand spic = new SuspendProcessInstanceCommand();
 			spic.setProcessInstanceId(processInstanceId);
 			
 			engine.getKieSession().execute(spic);
