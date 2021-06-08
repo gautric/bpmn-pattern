@@ -47,10 +47,13 @@ public class SuspendCommand implements Command {
 			spic.setProcessInstanceId(processInstanceId);
 			
 			engine.getKieSession().execute(spic);
+			ret.setData(ctx.getData());
+			ret.setData("status", "OK");
 			
 		} catch (Exception e) {
 			LOG.warn("SuspendCommand {}", e);
 			ret.setData("exception", e);
+			ret.setData("status", "KO");
 		} finally {
 			runtimeManager.disposeRuntimeEngine(engine);
 		}
