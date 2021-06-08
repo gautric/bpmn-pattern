@@ -1,0 +1,12 @@
+[
+    {
+      "query-name": "jbpmProcessInstancesWithTimer",
+      "query-source": "${org.kie.server.persistence.ds}",
+      "query-expression": "SELECT log.processInstanceId, log.processId, log.start_date, log.end_date, log.status, log.parentProcessInstanceId, log.outcome, log.duration, log.user_identity, log.processVersion, log.processName, log.correlationKey, log.externalId, log.processInstanceDescription, log.sla_due_date, log.slaCompliance,  log.end_date as lastModificationDate, (select COUNT(errInfo.id) from ExecutionErrorInfo errInfo WHERE  errInfo.PROCESS_INST_ID=log.processInstanceId   AND errInfo.ERROR_ACK=0) as errorCount FROM ProcessInstanceLog log, EVENTTYPES e WHERE e.INSTANCEID=log.processInstanceId AND e.ELEMENT IS 'timer'",
+      "query-target": "PROCESS",
+      "query-columns": {}
+    }
+]
+
+
+
