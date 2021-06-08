@@ -17,8 +17,9 @@ public class ResumeCommand implements Command {
 
 	@Override
 	public ExecutionResults execute(CommandContext ctx) throws Exception {
+		ExecutionResults ret =  new ExecutionResults();
 
-		LOG.warn("SuspendCommand {}", ctx);
+		LOG.warn("ResumeCommand {}", ctx);
 
 		String deploymentId = (String) ctx.getData("deploymentId");
 		if (deploymentId == null) {
@@ -30,7 +31,7 @@ public class ResumeCommand implements Command {
 		}
 
 		if (deploymentId == null || processInstanceId == null) {
-			throw new IllegalArgumentException("Deployment id and signal name is required");
+			throw new IllegalArgumentException("Deployment id and processInstanceId is required");
 		}
 
 		RuntimeManager runtimeManager = RuntimeManagerRegistry.get().getManager(deploymentId);
@@ -42,20 +43,18 @@ public class ResumeCommand implements Command {
 
 			engine = runtimeManager.getRuntimeEngine(ProcessInstanceIdContext.get(processInstanceId));
 
-			
 			ResumeProcessInstanceCommand spic = new ResumeProcessInstanceCommand();
 			spic.setProcessInstanceId(processInstanceId);
 			
 			engine.getKieSession().execute(spic);
 			
-			return new ExecutionResults();
 		} catch (Exception e) {
-			LOG.warn("SuspendCommand {}", e);
-
+			LOG.warn("ResumeCommand {}", e);
+			ret.setData("exception", e);
 		} finally {
 			runtimeManager.disposeRuntimeEngine(engine);
 		}
-		return new ExecutionResults();
+		return ret;
 	}
 
 }

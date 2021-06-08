@@ -17,6 +17,7 @@ public class SuspendCommand implements Command {
 
 	@Override
 	public ExecutionResults execute(CommandContext ctx) throws Exception {
+		ExecutionResults ret =  new ExecutionResults();
 
 		LOG.warn("SuspendCommand {}", ctx);
 
@@ -30,7 +31,7 @@ public class SuspendCommand implements Command {
 		}
 
 		if (deploymentId == null || processInstanceId == null) {
-			throw new IllegalArgumentException("Deployment id and signal name is required");
+			throw new IllegalArgumentException("Deployment id and processInstanceId is required");
 		}
 
 		RuntimeManager runtimeManager = RuntimeManagerRegistry.get().getManager(deploymentId);
@@ -47,14 +48,13 @@ public class SuspendCommand implements Command {
 			
 			engine.getKieSession().execute(spic);
 			
-			return new ExecutionResults();
 		} catch (Exception e) {
 			LOG.warn("SuspendCommand {}", e);
-
+			ret.setData("exception", e);
 		} finally {
 			runtimeManager.disposeRuntimeEngine(engine);
 		}
-		return new ExecutionResults();
+		return ret;
 	}
 
 }
