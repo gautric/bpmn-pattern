@@ -6,6 +6,108 @@
 	},
 	"item": [
 		{
+			"name": "Get Container",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201 and processInstanceID\", () => {",
+							"  pm.response.to.have.status(201);",
+							"  pm.expect(pm.response.json()).to.be.a(\"number\");",
+							"  pm.globals.set(\"processInstanceId\",pm.response.json());",
+							"});",
+							"  "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"container-id\" : \"{{KIE_CONTAINER}}\",\n    \"release-id\" : {\n        \"group-id\" : \"net.a.g.jbpm\",\n        \"artifact-id\" : \"bpmn-pattern-process\",\n        \"version\" : \"3.0.0\"\n    }\n}"
+				},
+				"url": {
+					"raw": "{{KIE_URL}}/rest/server/containers/{{KIE_CONTAINER}}",
+					"host": [
+						"{{KIE_URL}}"
+					],
+					"path": [
+						"rest",
+						"server",
+						"containers",
+						"{{KIE_CONTAINER}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deploy Pattern Kjar",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201 and processInstanceID\", () => {",
+							"  pm.response.to.have.status(201);",
+							"  pm.expect(pm.response.json()).to.be.a(\"number\");",
+							"  pm.globals.set(\"processInstanceId\",pm.response.json());",
+							"});",
+							"  "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"container-id\" : \"{{KIE_CONTAINER}}\",\n    \"release-id\" : {\n        \"group-id\" : \"net.a.g.jbpm\",\n        \"artifact-id\" : \"bpmn-pattern-process\",\n        \"version\" : \"3.0.0\"\n    }\n}"
+				},
+				"url": {
+					"raw": "{{KIE_URL}}/rest/server/containers/{{KIE_CONTAINER}}",
+					"host": [
+						"{{KIE_URL}}"
+					],
+					"path": [
+						"rest",
+						"server",
+						"containers",
+						"{{KIE_CONTAINER}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "TimerProcess",
 			"event": [
 				{
@@ -38,8 +140,8 @@
 					}
 				],
 				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"booleanIn\": {{$randomBoolean}},\n    \"integerIn\": {{$randomInt}},\n    \"stringIn\": \"TimerTestProcess {{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}\",\n    \"timerIn\": \"PT1M\"\n}"
+					"mode": "urlencoded",
+					"urlencoded": []
 				},
 				"url": {
 					"raw": "{{KIE_URL}}/rest/server/containers/{{KIE_CONTAINER}}/processes/TimerTestProcess/instances",
@@ -787,6 +889,74 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "SuspendCommand",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"job-command\" : \"net.a.g.jbpm.pattern.command.SuspendCommand\",\n  \"request-data\" : {\n    \"processInstanceId\" :{{processInstanceId}},\n    \"deploymentId\" : \"{{KIE_CONTAINER}}\"\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{KIE_URL}}/rest/server/jobs?containerId={{KIE_CONTAINER}}",
+					"host": [
+						"{{KIE_URL}}"
+					],
+					"path": [
+						"rest",
+						"server",
+						"jobs"
+					],
+					"query": [
+						{
+							"key": "containerId",
+							"value": "{{KIE_CONTAINER}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ResumeCommand",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"job-command\" : \"net.a.g.jbpm.pattern.command.ResumeCommand\",\n  \"request-data\" : {\n    \"processInstanceId\" :{{processInstanceId}},\n    \"deploymentId\" : \"{{KIE_CONTAINER}}\"\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{KIE_URL}}/rest/server/jobs?containerId={{KIE_CONTAINER}}",
+					"host": [
+						"{{KIE_URL}}"
+					],
+					"path": [
+						"rest",
+						"server",
+						"jobs"
+					],
+					"query": [
+						{
+							"key": "containerId",
+							"value": "{{KIE_CONTAINER}}"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {
@@ -827,19 +997,23 @@
 	"variable": [
 		{
 			"key": "KIE_URL",
-			"value": "http://localhost:8090"
+			"value": "http://localhost:8090",
+			"disabled": true
 		},
 		{
 			"key": "KIE_CONTAINER",
-			"value": "bpmn-pattern"
+			"value": "bpmn-pattern",
+			"disabled": true
 		},
 		{
 			"key": "KIE_USER",
-			"value": "user"
+			"value": "user",
+			"disabled": true
 		},
 		{
 			"key": "KIE_PASSWORD",
-			"value": "user"
+			"value": "user",
+			"disabled": true
 		}
 	]
 }
