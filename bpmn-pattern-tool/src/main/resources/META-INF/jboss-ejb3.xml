@@ -1,0 +1,15 @@
+<jboss xmlns="http://www.jboss.com/xml/ns/javaee"
+       xmlns:jee="http://java.sun.com/xml/ns/javaee"
+       xmlns:ci ="urn:container-interceptors:1.0">
+    <jee:assembly-descriptor>
+        <ci:container-interceptors>
+            <jee:interceptor-binding>
+                <ejb-name>EJBTimerScheduler</ejb-name>
+                <interceptor-class>net.a.g.jbpm.pattern.interceptor.MethodSpecificContainerInterceptor</interceptor-class>
+                 <method>
+                    <method-name>internalSchedule</method-name>
+                </method>
+            </jee:interceptor-binding>
+        </ci:container-interceptors>
+    </jee:assembly-descriptor>
+</jboss>
