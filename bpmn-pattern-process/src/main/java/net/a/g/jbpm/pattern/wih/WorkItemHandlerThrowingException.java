@@ -28,7 +28,7 @@ public class WorkItemHandlerThrowingException implements org.kie.api.runtime.pro
 	@Override
 	public void abortWorkItem(WorkItem workItem, WorkItemManager manager) {
 		LOG.info("Abort {}", WorkItemHandlerThrowingException.class);
-
+		manager.abortWorkItem(workItem.getId());
 	}
 
 }
