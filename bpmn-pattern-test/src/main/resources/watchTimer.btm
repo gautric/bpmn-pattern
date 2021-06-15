@@ -1,0 +1,30 @@
+RULE trace TimerInstance.setDelay
+CLASS org.jbpm.process.instance.timer.TimerInstance
+METHOD setDelay
+IF TRUE
+DO 
+	org.slf4j.LoggerFactory.getLogger("net.a.g.jbpm.pattern.Logger").error("setDelay " + $0  + " " + $1);
+ENDRULE
+
+
+RULE trace TimerInstance.setProcessInstanceId
+CLASS org.jbpm.process.instance.timer.TimerInstance
+METHOD setProcessInstanceId
+AT LINE 107
+IF TRUE
+DO 
+	org.slf4j.LoggerFactory.getLogger("net.a.g.jbpm.pattern.Logger").error("setProcessInstanceId " + $0)
+ENDRULE
+
+
+RULE trace TimerManager
+CLASS org.jbpm.process.instance.timer.TimerManager
+METHOD registerTimer
+BIND timer:TimerInstance = $1;
+     processInstance:ProcessInstance  = $2;
+     delay:long = timer.getDelay();
+     pid:long = processInstance.getId();
+IF delay < 100
+DO  
+	org.slf4j.LoggerFactory.getLogger("net.a.g.jbpm.pattern.Logger").error("Timer trop court {} ms : {} PID ", delay, pid);
+ENDRULE
