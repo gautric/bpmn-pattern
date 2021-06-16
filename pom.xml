@@ -21,11 +21,12 @@
 	</properties>
  	
 	<modules>
+	    <module>bpmn-pattern-tool</module>
         <module>bpmn-pattern-process</module>
         <module>bpmn-pattern-test</module>
     </modules>
 
- 	 <dependencyManagement>   
+ 	 <!-- <dependencyManagement>   
 		<dependencies>
 		   <dependency>
 				<groupId>org.drools</groupId>
@@ -54,29 +55,29 @@
 			</dependency>
 
 		</dependencies>
-	</dependencyManagement>
-<!-- 	<dependencyManagement>   -->
-<!--  		<dependencies>  -->
-<!--  			<dependency> -->
-<!--  				<groupId>com.redhat.ba</groupId>  -->
-<!--  				<artifactId>ba-platform-bom</artifactId>  -->
-<!--  				<version>${ba-platform-bom.version}</version>  -->
-<!--  				<scope>import</scope>  -->
-<!--  				<type>pom</type>  -->
-<!--  			</dependency>  -->
-<!-- 			 <dependency> -->
-<!-- 				<groupId>org.jboss.spec.javax.jms</groupId> -->
-<!-- 				<artifactId>jboss-jms-api_2.0_spec</artifactId> -->
-<!-- 				<version>2.0.0.Final</version> -->
-<!-- 				<scope>provided</scope> -->
-<!-- 			</dependency> -->
-<!-- 			<dependency> -->
-<!-- 				<groupId>org.slf4j</groupId> -->
-<!-- 				<artifactId>slf4j-api</artifactId> -->
-<!-- 				<version>1.7.26</version> -->
-<!-- 			</dependency> -->
-<!--  		</dependencies>  -->
-<!--  	</dependencyManagement> -->
+	</dependencyManagement> -->
+	 <dependencyManagement>   
+  		<dependencies>  
+  			<dependency> 
+  				<groupId>com.redhat.ba</groupId>  
+  				<artifactId>ba-platform-bom</artifactId>  
+  				<version>${ba-platform-bom.version}</version>  
+  				<scope>import</scope>  
+  				<type>pom</type>  
+  			</dependency>  
+ 			 <dependency> 
+ 				<groupId>org.jboss.spec.javax.jms</groupId> 
+ 				<artifactId>jboss-jms-api_2.0_spec</artifactId> 
+ 				<version>2.0.0.Final</version> 
+ 				<scope>provided</scope> 
+ 			</dependency> 
+ 			<dependency> 
+ 				<groupId>org.slf4j</groupId> 
+ 				<artifactId>slf4j-api</artifactId> 
+ 				<version>1.7.26</version> 
+ 			</dependency> 
+  		</dependencies>  
+  	</dependencyManagement> 
 	<profiles>
 		<profile>
 			<id>local</id>
