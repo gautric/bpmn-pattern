@@ -45,8 +45,8 @@ public class AdditionTest extends JbpmJUnitBaseTestCase {
 		kieSession.addEventListener((ProcessEventListener) new MDCProcessListener());
 
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("a", 1);
-		params.put("b", 1);
+		params.put("a", 21);
+		params.put("b", 21);
 
 		final ProcessInstance processInstance = kieSession.startProcess("AdditionProcess", params);
 
@@ -57,7 +57,7 @@ public class AdditionTest extends JbpmJUnitBaseTestCase {
 		assertNodeTriggered(processInstance.getId(), "Addition done");
 		assertProcessVarExists(processInstance, "result", "a", "b");
 		
-		assertEquals(2, ((BigDecimal) ((WorkflowProcessInstanceImpl) processInstance).getVariable("result")).intValue());
+		assertEquals(42, ((BigDecimal) ((WorkflowProcessInstanceImpl) processInstance).getVariable("result")).intValue());
 
 		runtimeManager.disposeRuntimeEngine(runtimeEngine);
 		runtimeManager.close();
@@ -80,8 +80,8 @@ public class AdditionTest extends JbpmJUnitBaseTestCase {
 		kieSession.addEventListener((ProcessEventListener) new MDCProcessListener());
 
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("a", 1);
-		params.put("b", 2);
+		params.put("a", 41);
+		params.put("b", 1);
 		params.put("timer", "PT1S");
 
 		final ProcessInstance processInstance = kieSession.startProcess("AdditionParentProcess", params);
@@ -95,7 +95,7 @@ public class AdditionTest extends JbpmJUnitBaseTestCase {
 		assertNodeTriggered(processInstance.getId(), "Addition done");
 		assertProcessVarExists(processInstance, "result", "a", "b");
 
-		assertEquals(3, ((BigDecimal) ((WorkflowProcessInstanceImpl) processInstance).getVariable("result")).intValue());
+		assertEquals(42, ((BigDecimal) ((WorkflowProcessInstanceImpl) processInstance).getVariable("result")).intValue());
 
 		
 		runtimeManager.disposeRuntimeEngine(runtimeEngine);
