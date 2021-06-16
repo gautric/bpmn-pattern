@@ -66,17 +66,23 @@
 		</dependency>
 	</dependencies>
 
+	<profiles>
+		<profile>
+			<id>copy-kie-server</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jar-plugin</artifactId>
+						<configuration>
+							<outputDirectory>${kie.server.directory}/WEB-INF/lib</outputDirectory>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<configuration>
-					<outputDirectory>/Users/gautric/Applications/redhat/jboss-rhpam-7.3/rhpam/deployments/kie-server.war/WEB-INF/lib</outputDirectory>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+
 
 </project>
