@@ -162,7 +162,7 @@ public class MonitoringProcessTest extends JbpmJUnitBaseTestCase {
     }
     
     @Test
-    public void testTimer3ms() {
+    public void testTimer50ms() {
         MonitoringProcessTest.LOG.debug("jBPM unit test sample");
 
         final RuntimeManager runtimeManager = createRuntimeManager("net/a/g/jbpm/pattern/MonitoringProcess.bpmn");
