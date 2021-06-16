@@ -1,9 +1,13 @@
 package net.a.g.jbpm.pattern;
 
+import static org.junit.Assert.assertEquals;
+
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.jbpm.test.JbpmJUnitBaseTestCase;
+import org.jbpm.workflow.instance.impl.WorkflowProcessInstanceImpl;
 import org.junit.Test;
 import org.kie.api.event.process.ProcessEventListener;
 import org.kie.api.io.ResourceType;
@@ -14,8 +18,8 @@ import org.kie.api.runtime.process.ProcessInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.a.g.jbpm.pattern.listener.MDCProcessListener;
 import net.a.g.jbpm.pattern.listener.ContextListener;
+import net.a.g.jbpm.pattern.listener.MDCProcessListener;
 
 public class AdditionTest extends JbpmJUnitBaseTestCase {
 
@@ -52,6 +56,8 @@ public class AdditionTest extends JbpmJUnitBaseTestCase {
 		assertNodeTriggered(processInstance.getId(), "Addition");
 		assertNodeTriggered(processInstance.getId(), "Addition done");
 		assertProcessVarExists(processInstance, "result", "a", "b");
+		
+		assertEquals(2, ((BigDecimal) ((WorkflowProcessInstanceImpl) processInstance).getVariable("result")).intValue());
 
 		runtimeManager.disposeRuntimeEngine(runtimeEngine);
 		runtimeManager.close();
@@ -89,6 +95,9 @@ public class AdditionTest extends JbpmJUnitBaseTestCase {
 		assertNodeTriggered(processInstance.getId(), "Addition done");
 		assertProcessVarExists(processInstance, "result", "a", "b");
 
+		assertEquals(3, ((BigDecimal) ((WorkflowProcessInstanceImpl) processInstance).getVariable("result")).intValue());
+
+		
 		runtimeManager.disposeRuntimeEngine(runtimeEngine);
 		runtimeManager.close();
 	}
