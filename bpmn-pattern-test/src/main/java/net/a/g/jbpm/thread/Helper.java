@@ -12,7 +12,7 @@ public class Helper {
 
 		System.setProperty("net.a.g.jbpm.filter", "");
 		
-		Arrays.stream(Thread.currentThread().getStackTrace()).map(e -> e.toString())
+		Arrays.stream(Thread.currentThread().getStackTrace()).map(e -> "STRACKTRACE " + e.toString())
 				.filter(e -> e.contains(System.getProperty("net.a.g.jbpm.filter", "net.a"))).forEach(LOG::error);
 	}
 }
