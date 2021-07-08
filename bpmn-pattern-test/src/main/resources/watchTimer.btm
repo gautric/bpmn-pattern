@@ -31,6 +31,4 @@ DO
 	org.slf4j.LoggerFactory.getLogger("net.a.g.jbpm.pattern.Logger").error("Timer trop court {} ms : {} PID ", delay, pid);
 	strackTrace();
 ENDRULE
-
-#Arrays.stream(Thread.currentThread().getStackTrace()).map(e -> e.toString()).filter(e -> e.startsWith("net.a") ).forEach(System.out::println);
 	
