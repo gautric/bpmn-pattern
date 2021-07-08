@@ -4,6 +4,7 @@ METHOD setDelay
 IF TRUE
 DO 
 	org.slf4j.LoggerFactory.getLogger("net.a.g.jbpm.pattern.Logger").error("setDelay " + $0  + " " + $1);
+
 ENDRULE
 
 
@@ -20,6 +21,7 @@ ENDRULE
 RULE trace TimerManager
 CLASS org.jbpm.process.instance.timer.TimerManager
 METHOD registerTimer
+HELPER net.a.g.jbpm.thread.Helper
 BIND timer:TimerInstance = $1;
      processInstance:ProcessInstance  = $2;
      delay:long = timer.getDelay();
@@ -27,4 +29,8 @@ BIND timer:TimerInstance = $1;
 IF delay < 100
 DO  
 	org.slf4j.LoggerFactory.getLogger("net.a.g.jbpm.pattern.Logger").error("Timer trop court {} ms : {} PID ", delay, pid);
+	strackTrace();
 ENDRULE
+
+#Arrays.stream(Thread.currentThread().getStackTrace()).map(e -> e.toString()).filter(e -> e.startsWith("net.a") ).forEach(System.out::println);
+	
