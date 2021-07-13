@@ -47,31 +47,32 @@ public class HumanTaskExample {
 			KieSession ksession = runtime.getKieSession();
 			ksession.addEventListener((ProcessEventListener) new MDCProcessListener());
 
-			// start a new process instance
+			
 			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("userId", "krisv");
-			params.put("description", "Need a new laptop computer");
-			params.put("timerIn", "2a");
+		
+			params.put("timerIn", "PT5S");
+			params.put("taskUserIn","john");
+			params.put("reassignmentsUserIn","mary");
 			ProcessInstance pi = ksession.startProcess("HumanTaskTestProcess", params);
 
 			// "sales-rep" reviews request
 			TaskService taskService = runtime.getTaskService();
-			TaskSummary task1 = taskService.getTasksAssignedAsPotentialOwner("sales-rep", "en-UK").get(0);
-			System.out.println("Sales-rep executing task " + task1.getName() + "(" + task1.getId() + ": "
+			TaskSummary task1 = taskService.getTasksAssignedAsPotentialOwner("john", "en-UK").get(0);
+			System.err.println("Sales-rep executing task " + task1.getName() + "(" + task1.getId() + ": "
 					+ task1.getDescription() + ")");
 			
-			Thread.sleep(1000*80);
+			Thread.sleep(10*1000);
 			try {
-				taskService.claim(task1.getId(), "sales-rep");
-				taskService.start(task1.getId(), "sales-rep");
+				taskService.claim(task1.getId(), "john");
+				taskService.start(task1.getId(), "john");
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
 			
-			 task1 = taskService.getTasksAssignedAsPotentialOwner("john", "en-UK").get(0);
+			 task1 = taskService.getTasksAssignedAsPotentialOwner("mary", "en-UK").get(0);
 			
-			taskService.claim(task1.getId(), "john");
-			taskService.start(task1.getId(), "john");
+			taskService.claim(task1.getId(), "mary");
+			taskService.start(task1.getId(), "mary");
 			
 			Map<String, Object> results = new HashMap<String, Object>();
 
@@ -79,7 +80,8 @@ public class HumanTaskExample {
 			results.put("booleanTask", true);
 			results.put("integerTask", 42);
 
-			taskService.complete(task1.getId(), "john", results);
+			taskService.complete(task1.getId(), "mary", results);
+			Thread.sleep(1000);
 			
 			System.out.println("Process instance completed   " + pi.getState());
 
