@@ -12,9 +12,9 @@
 	<name>BPMN : PATTERN</name>
 
 	<properties>
-		<kie.version>7.54.0.Final</kie.version>
+		<kie.version>7.56.0.Final</kie.version>
 		<jpa.api.version>1.0.2.Final</jpa.api.version>
-		<ba-platform-bom.version>7.10.1.redhat-00001</ba-platform-bom.version>
+		<ba-platform-bom.version>7.11.0.redhat-00005</ba-platform-bom.version>
 		<java.version>8</java.version>
     	<maven.compiler.source>${java.version}</maven.compiler.source>
     	<maven.compiler.target>${java.version}</maven.compiler.target>
