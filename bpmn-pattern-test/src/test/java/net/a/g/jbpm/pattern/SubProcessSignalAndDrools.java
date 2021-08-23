@@ -110,4 +110,52 @@ public class SubProcessSignalAndDrools extends JbpmJUnitBaseTestCase {
     }
     
     
+    @Test
+    public void testDirectSignal() {
+        SubProcessSignalAndDrools.LOG.debug("jBPM unit test sample");
+
+        final RuntimeManager runtimeManager = createRuntimeManager("net/a/g/jbpm/pattern/SubProcessSignalAndDrools.bpmn");
+        final RuntimeEngine runtimeEngine = getRuntimeEngine(null);
+        final KieSession kieSession = runtimeEngine.getKieSession();
+
+        kieSession.addEventListener((ProcessEventListener)new PatternProcessListener());
+
+		Map<String, Object> params = new HashMap<String, Object>();
+		
+		params.put("booleanIn", true);
+		params.put("stringIn", UUID.randomUUID().toString());
+		params.put("integerIn", 42);
+		params.put("timerIn", "PT2S");
+		
+	
+		ProcessInstance processInstance = kieSession.startProcess("SubProcessSignalAndDrools", params);
+
+		try {
+			Thread.sleep(3000);
+			kieSession.signalEvent("DirectSignal", "DirectSignalData");
+			Thread.sleep(1000);
+
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+        assertProcessInstanceNotActive(processInstance.getId(), kieSession);
+		assertNodeTriggered(processInstance.getId(), "Start Processus");
+        assertNodeTriggered(processInstance.getId(), "Script");
+		assertNodeTriggered(processInstance.getId(), "Wait Timer");
+		
+		assertNodeTriggered(processInstance.getId(), "Event Switch");
+		assertNodeTriggered(processInstance.getId(), "Signal Step");
+		assertNodeTriggered(processInstance.getId(), "Delay Step");
+		assertNodeTriggered(processInstance.getId(), "Drools Step");
+		
+		assertNodeTriggered(processInstance.getId(), "Signal Path");
+		assertNodeTriggered(processInstance.getId(), "Path Fusion");
+		assertNodeTriggered(processInstance.getId(), "Process End");
+		
+        runtimeManager.disposeRuntimeEngine(runtimeEngine);
+        runtimeManager.close();
+    }
+    
+    
 }
