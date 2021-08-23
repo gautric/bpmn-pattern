@@ -63,7 +63,7 @@ public class SubProcessSignalAndDrools extends JbpmJUnitBaseTestCase {
     
     
     @Test
-    public void testSignal() {
+    public void testSubProcessSignal() {
         SubProcessSignalAndDrools.LOG.debug("jBPM unit test sample");
 
         final RuntimeManager runtimeManager = createRuntimeManager("net/a/g/jbpm/pattern/SubProcessSignalAndDrools.bpmn");
