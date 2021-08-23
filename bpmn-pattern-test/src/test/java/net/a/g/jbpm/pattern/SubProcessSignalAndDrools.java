@@ -18,7 +18,7 @@ public class SubProcessSignalAndDrools extends JbpmJUnitBaseTestCase {
     private static final Logger LOG = LoggerFactory.getLogger(SubProcessSignalAndDrools.class);
 
     @Test
-    public void testInteger() {
+    public void testNominalCasewDelay() {
         SubProcessSignalAndDrools.LOG.debug("jBPM unit test sample");
 
         final RuntimeManager runtimeManager = createRuntimeManager("net/a/g/jbpm/pattern/SubProcessSignalAndDrools.bpmn");
