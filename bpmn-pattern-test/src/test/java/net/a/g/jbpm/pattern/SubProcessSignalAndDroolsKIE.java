@@ -104,7 +104,7 @@ public class SubProcessSignalAndDroolsKIE extends AbstractKieServicesTest {
 	}
 	
 	@Test
-	public void testSubProcessSignal() {
+	public void testSubProcessSignalandDrools() {
 
 		Map<String, Object> params = new HashMap<String, Object>();
 
@@ -130,8 +130,38 @@ public class SubProcessSignalAndDroolsKIE extends AbstractKieServicesTest {
 			System.out.println(nodeInstanceDesc);
 		}
 		 
+		assertNotNull(history.stream().filter(o -> o.getName().compareTo("Drools Path")==0).findFirst()); 
+
+	}
+	
+	@Test
+	public void testSubProcessSignalandDrools_2() {
+
+		Map<String, Object> params = new HashMap<String, Object>();
+
+		params.put("timerIn", "PT2S");
+
+		long processInstanceId = processService.startProcess(deploymentUnit.getIdentifier(), PROCESS, params);
+		assertNotNull(processInstanceId);
+
+
+		
+		try {
+			Thread.sleep(3000);
+			processService.signalEvent(deploymentUnit.getIdentifier(),"SubProcessSignal", "SubProcessSignalData");
+			Thread.sleep(1000);
+
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+				
+		 Collection<NodeInstanceDesc> history = runtimeDataService.getProcessInstanceFullHistory(processInstanceId, null);
 		 
-		 assertNotNull(history.stream().filter(o -> o.getName().compareTo("Drools Path")==0).findFirst()); 
+		 for (NodeInstanceDesc nodeInstanceDesc : history) {
+			System.out.println(nodeInstanceDesc);
+		}
+		 
+		assertNotNull(history.stream().filter(o -> o.getName().compareTo("Drools Path")==0).findFirst()); 
 
 	}
 
