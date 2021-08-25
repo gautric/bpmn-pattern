@@ -260,7 +260,7 @@ System.out.println(" " + signalIn);]]></bpmn2:script>
         <bpmn2:incoming>_35DA2304-A670-498F-9264-CC26F12C5019</bpmn2:incoming>
         <bpmn2:outgoing>_F8C40941-1DE8-4173-B675-420ED29AEDE4</bpmn2:outgoing>
         <bpmn2:script><![CDATA[kcontext.getKieRuntime().insert("SubProcessSignal");
-kcontext.setVariable("signalIn", "SubProcessSignal");
+kcontext.setVariable("signalIn", "SubProcessSignal " + Thread.currentThread().getName() + " in ScriptNode");
 System.out.println(" " + Thread.currentThread().getName());
 ]]></bpmn2:script>
       </bpmn2:scriptTask>
