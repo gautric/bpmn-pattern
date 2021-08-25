@@ -1,0 +1,14 @@
+package net.a.g.jbpm.pattern.service;
+
+public class ThrowService {
+
+	public Object callMethod(Boolean throwIn) {
+
+		if (throwIn != null && throwIn) {
+			throw new RuntimeException("Exception inside a Service Call " + this.getClass().getCanonicalName());
+
+		}
+		System.out.println("Call " +  this.getClass().getCanonicalName());
+		return "RESULT";
+	}
+}

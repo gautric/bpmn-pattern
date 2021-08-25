@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.jbpm.process.workitem.bpmn2.ServiceTaskHandler;
 import org.jbpm.test.JbpmJUnitBaseTestCase;
 import org.junit.Test;
 import org.kie.api.event.process.ProcessEventListener;
@@ -25,6 +26,7 @@ public class SubProcessSignalAndDrools extends JbpmJUnitBaseTestCase {
         final RuntimeEngine runtimeEngine = getRuntimeEngine(null);
         final KieSession kieSession = runtimeEngine.getKieSession();
 
+        kieSession.getWorkItemManager().registerWorkItemHandler("Service Task", new ServiceTaskHandler());
         kieSession.addEventListener((ProcessEventListener)new PatternProcessListener());
 
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -54,7 +56,7 @@ public class SubProcessSignalAndDrools extends JbpmJUnitBaseTestCase {
 		assertNodeTriggered(processInstance.getId(), "Drools Step");
 		
 		assertNodeTriggered(processInstance.getId(), "Delay Path");
-		assertNodeTriggered(processInstance.getId(), "Path Fusion");
+		assertNodeTriggered(processInstance.getId(), "Join");
 		assertNodeTriggered(processInstance.getId(), "Process End");
 		
         runtimeManager.disposeRuntimeEngine(runtimeEngine);
@@ -70,6 +72,7 @@ public class SubProcessSignalAndDrools extends JbpmJUnitBaseTestCase {
         final RuntimeEngine runtimeEngine = getRuntimeEngine(null);
         final KieSession kieSession = runtimeEngine.getKieSession();
 
+        kieSession.getWorkItemManager().registerWorkItemHandler("Service Task", new ServiceTaskHandler());
         kieSession.addEventListener((ProcessEventListener)new PatternProcessListener());
 
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -102,7 +105,7 @@ public class SubProcessSignalAndDrools extends JbpmJUnitBaseTestCase {
 		assertNodeTriggered(processInstance.getId(), "Drools Step");
 		
 		assertNodeTriggered(processInstance.getId(), "Drools Path");
-		assertNodeTriggered(processInstance.getId(), "Path Fusion");
+		assertNodeTriggered(processInstance.getId(), "Join");
 		assertNodeTriggered(processInstance.getId(), "Process End");
 		
         runtimeManager.disposeRuntimeEngine(runtimeEngine);
@@ -118,6 +121,7 @@ public class SubProcessSignalAndDrools extends JbpmJUnitBaseTestCase {
         final RuntimeEngine runtimeEngine = getRuntimeEngine(null);
         final KieSession kieSession = runtimeEngine.getKieSession();
 
+        kieSession.getWorkItemManager().registerWorkItemHandler("Service Task", new ServiceTaskHandler());
         kieSession.addEventListener((ProcessEventListener)new PatternProcessListener());
 
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -150,7 +154,7 @@ public class SubProcessSignalAndDrools extends JbpmJUnitBaseTestCase {
 		assertNodeTriggered(processInstance.getId(), "Drools Step");
 		
 		assertNodeTriggered(processInstance.getId(), "Signal Path");
-		assertNodeTriggered(processInstance.getId(), "Path Fusion");
+		assertNodeTriggered(processInstance.getId(), "Join");
 		assertNodeTriggered(processInstance.getId(), "Process End");
 		
         runtimeManager.disposeRuntimeEngine(runtimeEngine);
