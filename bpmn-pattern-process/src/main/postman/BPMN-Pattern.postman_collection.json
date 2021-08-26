@@ -140,8 +140,8 @@
 					}
 				],
 				"body": {
-					"mode": "urlencoded",
-					"urlencoded": []
+					"mode": "raw",
+					"raw": "{\n    \"booleanIn\": {{$randomBoolean}},\n    \"integerIn\": {{$randomInt}},\n    \"stringIn\": \"TimerTestProcess {{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}{{$randomAlphaNumeric}}\",\n    \"timerIn\": \"PT10S\"\n}"
 				},
 				"url": {
 					"raw": "{{KIE_URL}}/rest/server/containers/{{KIE_CONTAINER}}/processes/TimerTestProcess/instances",
@@ -749,7 +749,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"booleanIn\": {{$randomBoolean}},\n    \"integerIn\": {{$randomInt}},\n    \"stringIn\": \"HumanTaskTestProcess\"\n}"
+					"raw": "{\n    \"booleanIn\": {{$randomBoolean}},\n    \"integerIn\": {{$randomInt}},\n    \"stringIn\": \"HumanTaskTestProcess\",\n    \"timerIn\": \"PT2M\"\n}"
 				},
 				"url": {
 					"raw": "{{KIE_URL}}/rest/server/containers/{{KIE_CONTAINER}}/processes/HumanTaskTestProcess/instances",
@@ -957,6 +957,284 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "SubProcessSignalAndDrools",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201 and processInstanceID\", () => {",
+							"  pm.response.to.have.status(201);",
+							"  pm.expect(pm.response.json()).to.be.a(\"number\");",
+							"  pm.globals.set(\"processInstanceId\",pm.response.json());",
+							"});",
+							"  "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n    \"timerIn\": \"PT1S\",\n    \"throwIn\" : false\n}"
+				},
+				"url": {
+					"raw": "{{KIE_URL}}/rest/server/containers/{{KIE_CONTAINER}}/processes/SubProcessSignalAndDrools/instances",
+					"host": [
+						"{{KIE_URL}}"
+					],
+					"path": [
+						"rest",
+						"server",
+						"containers",
+						"{{KIE_CONTAINER}}",
+						"processes",
+						"SubProcessSignalAndDrools",
+						"instances"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SubProcessSignalAndDrools {{correlationKey}}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201 and processInstanceID\", () => {",
+							"  pm.response.to.have.status(201);",
+							"  pm.expect(pm.response.json()).to.be.a(\"number\");",
+							"  pm.globals.set(\"processInstanceId\",pm.response.json());",
+							"});",
+							"  "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n    \"timerIn\": \"PT20S\",\n    \"throwIn\" : false\n}"
+				},
+				"url": {
+					"raw": "{{KIE_URL}}/rest/server/containers/{{KIE_CONTAINER}}/processes/SubProcessSignalAndDrools/instances/correlation/{{correlationKey}}",
+					"host": [
+						"{{KIE_URL}}"
+					],
+					"path": [
+						"rest",
+						"server",
+						"containers",
+						"{{KIE_CONTAINER}}",
+						"processes",
+						"SubProcessSignalAndDrools",
+						"instances",
+						"correlation",
+						"{{correlationKey}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SubProcessSignal Send \"SubProcessSignal\"",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\"MySignal {{$isoTimestamp}}\"",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{KIE_URL}}/rest/server/containers/{{KIE_CONTAINER}}/processes/instances/signal/SubProcessSignal",
+					"host": [
+						"{{KIE_URL}}"
+					],
+					"path": [
+						"rest",
+						"server",
+						"containers",
+						"{{KIE_CONTAINER}}",
+						"processes",
+						"instances",
+						"signal",
+						"SubProcessSignal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SubProcessSignal Send \"SubProcessSignal\" {{processInstanceId}}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\"MySignal {{$isoTimestamp}}\"",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{KIE_URL}}/rest/server/containers/{{KIE_CONTAINER}}/processes/instances/{{processInstanceId}}/signal/SubProcessSignal",
+					"host": [
+						"{{KIE_URL}}"
+					],
+					"path": [
+						"rest",
+						"server",
+						"containers",
+						"{{KIE_CONTAINER}}",
+						"processes",
+						"instances",
+						"{{processInstanceId}}",
+						"signal",
+						"SubProcessSignal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SubProcessSignal Send \"SubProcessSignal\" {{processInstanceId}}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\"SubProcessSignal {{$isoTimestamp}} with {{correlationKey}} from SignalData\"",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{KIE_URL}}/rest/server/containers/{{KIE_CONTAINER}}/processes/instances/correlation/{{correlationKey}}/signal/SubProcessSignal",
+					"host": [
+						"{{KIE_URL}}"
+					],
+					"path": [
+						"rest",
+						"server",
+						"containers",
+						"{{KIE_CONTAINER}}",
+						"processes",
+						"instances",
+						"correlation",
+						"{{correlationKey}}",
+						"signal",
+						"SubProcessSignal"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"auth": {
@@ -1014,6 +1292,10 @@
 			"key": "KIE_PASSWORD",
 			"value": "user",
 			"disabled": true
+		},
+		{
+			"key": "correlationKey",
+			"value": "test-1234"
 		}
 	]
 }
