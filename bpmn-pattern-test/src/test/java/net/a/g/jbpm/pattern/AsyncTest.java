@@ -1,6 +1,5 @@
 package net.a.g.jbpm.pattern;
 
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -52,161 +51,210 @@ import org.slf4j.LoggerFactory;
 import net.a.g.jbpm.pattern.listener.MDCProcessListener;
 
 /**
- * Sub sample : https://github.com/kiegroup/jbpm/blob/master/jbpm-services/jbpm-executor/src/test/java/org/jbpm/executor/impl/wih/AsyncContinuationSupportTest.java
+ * Sub sample :
+ * https://github.com/kiegroup/jbpm/blob/master/jbpm-services/jbpm-executor/src/test/java/org/jbpm/executor/impl/wih/AsyncContinuationSupportTest.java
  * 
  */
 public class AsyncTest extends AbstractExecutorBaseTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(AsyncTest.class);
-    
-    private PoolingDataSourceWrapper pds;
-    private UserGroupCallback userGroupCallback;
-    private RuntimeManager manager;
-    private ExecutorService executorService;
-    private EntityManagerFactory emf = null;
+	private static final Logger logger = LoggerFactory.getLogger(AsyncTest.class);
 
-    
-    @Before
-    public void setup() {
-        ExecutorTestUtil.cleanupSingletonSessionId();
-        pds = ExecutorTestUtil.setupPoolingDataSource();
-        Properties properties= new Properties();
-        properties.setProperty("mary", "HR");
-        properties.setProperty("john", "HR");
-        userGroupCallback = new JBossUserGroupCallbackImpl(properties);
-        executorService = buildExecutorService();
-    }
+	private PoolingDataSourceWrapper pds;
+	private UserGroupCallback userGroupCallback;
+	private RuntimeManager manager;
+	private ExecutorService executorService;
+	private EntityManagerFactory emf = null;
 
-    @After
-    public void teardown() {
-        executorService.destroy();
-        if (manager != null) {
-            RuntimeManagerRegistry.get().remove(manager.getIdentifier());
-            manager.close();
-        }
-        if (emf != null) {
-        	emf.close();
-        }
-        pds.close();
-    }
+	@Before
+	public void setup() {
+		ExecutorTestUtil.cleanupSingletonSessionId();
+		pds = ExecutorTestUtil.setupPoolingDataSource();
+		Properties properties = new Properties();
+		properties.setProperty("mary", "HR");
+		properties.setProperty("john", "HR");
+		userGroupCallback = new JBossUserGroupCallbackImpl(properties);
+		executorService = buildExecutorService();
+	}
 
-   
-    
-    
-    @Test(timeout = 1000000)
-    public void myTaskExec() throws Exception {
-        // JBPM-7414 // there are two paths for end process , therefore it is executed twice
-        final NodeLeftCountDownProcessEventListener countDownListener = new NodeLeftCountDownProcessEventListener("Process Async Executé", 1);
-        final NodeTriggerCountListener Async = new NodeTriggerCountListener("Task Async");
+	@After
+	public void teardown() {
+		executorService.destroy();
+		if (manager != null) {
+			RuntimeManagerRegistry.get().remove(manager.getIdentifier());
+			manager.close();
+		}
+		if (emf != null) {
+			emf.close();
+		}
+		pds.close();
+	}
 
-        final NodeTriggerCountListener Sync = new NodeTriggerCountListener("Task Sync");
+	@Test(timeout = 1000000)
+	public void fullAsyncTest() throws Exception {
+		// JBPM-7414 // there are two paths for end process , therefore it is executed
+		// twice
+		final NodeLeftCountDownProcessEventListener countDownListener = new NodeLeftCountDownProcessEventListener(
+				"Process Async Executé", 1);
+		final NodeTriggerCountListener Async = new NodeTriggerCountListener("Task Async");
 
-        
-//      /  new AsyncEventNodeInstance();
-        
-        RuntimeEnvironment environment = RuntimeEnvironmentBuilder.Factory.get().newDefaultBuilder()
-                .userGroupCallback(userGroupCallback)
-                .addAsset(ResourceFactory.newClassPathResource("net/a/g/jbpm/pattern/AsyncTestProcess.bpmn"), ResourceType.BPMN2)
-                .addEnvironmentEntry("ExecutorService", executorService)
-                .addEnvironmentEntry("AsyncMode", "true")
-                .registerableItemsFactory(new DefaultRegisterableItemsFactory() {
-                    
+		final NodeTriggerCountListener Sync = new NodeTriggerCountListener("Task Sync");
 
-                    @Override
-                    public List<ProcessEventListener> getProcessEventListeners(RuntimeEngine runtime) {
-                        List<ProcessEventListener> listeners = super.getProcessEventListeners(runtime);
-                        listeners.add(countDownListener);
-                        listeners.add(Sync);
-                        listeners.add(Async);
-                        listeners.add(new PatternProcessListener());
-                        listeners.add(new MDCProcessListener());
+		RuntimeEnvironment environment = RuntimeEnvironmentBuilder.Factory.get().newDefaultBuilder()
+				.userGroupCallback(userGroupCallback)
+				.addAsset(ResourceFactory.newClassPathResource("net/a/g/jbpm/pattern/AsyncTestProcess.bpmn"),
+						ResourceType.BPMN2)
+				.addEnvironmentEntry("ExecutorService", executorService).addEnvironmentEntry("AsyncMode", "true")
+				.registerableItemsFactory(new DefaultRegisterableItemsFactory() {
 
-                        return listeners;
-                    }
-                    
-                    
-             
-                })
-                .get();
+					@Override
+					public List<ProcessEventListener> getProcessEventListeners(RuntimeEngine runtime) {
+						List<ProcessEventListener> listeners = super.getProcessEventListeners(runtime);
+						listeners.add(countDownListener);
+						listeners.add(Sync);
+						listeners.add(Async);
+						listeners.add(new PatternProcessListener());
+						listeners.add(new MDCProcessListener());
 
-        manager = RuntimeManagerFactory.Factory.get().newSingletonRuntimeManager(environment);
-        assertNotNull(manager);
+						return listeners;
+					}
 
-        RuntimeEngine runtime = manager.getRuntimeEngine(EmptyContext.get());
-        KieSession ksession = runtime.getKieSession();
-        assertNotNull(ksession);
+				}).get();
 
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("stringIn", "AAA");
-        params.put("booleanIn", true);
-        params.put("integerIn", 321);
-         
-        ProcessInstance processInstance = ksession.startProcess("AsyncTestProcess", params);
+		manager = RuntimeManagerFactory.Factory.get().newSingletonRuntimeManager(environment);
+		assertNotNull(manager);
 
-        assertEquals(ProcessInstance.STATE_ACTIVE, processInstance.getState());
-        long processInstanceId = processInstance.getId();
+		RuntimeEngine runtime = manager.getRuntimeEngine(EmptyContext.get());
+		KieSession ksession = runtime.getKieSession();
+		assertNotNull(ksession);
 
-        countDownListener.waitTillCompleted();
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("stringIn", "AAA");
+		params.put("booleanIn", true);
+		params.put("integerIn", 321);
 
-        processInstance = runtime.getKieSession().getProcessInstance(processInstanceId);
-        assertNull(processInstance);
+		ProcessInstance processInstance = ksession.startProcess("AsyncTestProcess", params);
 
-        assertEquals(1, Async.getCount().intValue());
-        assertEquals(2, Sync.getCount().intValue());
+		assertEquals(ProcessInstance.STATE_ACTIVE, processInstance.getState());
+		long processInstanceId = processInstance.getId();
 
-    }
-    
+		countDownListener.waitTillCompleted();
 
-    private static class NodeTriggerCountListener extends DefaultProcessEventListener {
-        private AtomicInteger count = new AtomicInteger(0);
-        private String nodeName;
+		processInstance = runtime.getKieSession().getProcessInstance(processInstanceId);
+		assertNull(processInstance);
 
-        private NodeTriggerCountListener(String nodeName) {
-            this.nodeName = nodeName;
-        }
+		assertEquals(1, Async.getCount().intValue());
+		assertEquals(1, Sync.getCount().intValue());
+	}
+	
+	@Test(timeout = 1000000)
+	public void onlyAsyncTest() throws Exception {
+		// JBPM-7414 // there are two paths for end process , therefore it is executed
+		// twice
+		final NodeLeftCountDownProcessEventListener countDownListener = new NodeLeftCountDownProcessEventListener(
+				"Process Async Executé", 1);
+		final NodeTriggerCountListener Async = new NodeTriggerCountListener("Task Async");
 
-        @Override
-        public void afterNodeTriggered(ProcessNodeTriggeredEvent event) {
-            if (event.getNodeInstance().getNodeName().equals(nodeName)) {
-                count.getAndIncrement();
-            }
-        }
+		final NodeTriggerCountListener Sync = new NodeTriggerCountListener("Task Sync");
 
-        public AtomicInteger getCount() {
-            return count;
-        }
-    };
+		RuntimeEnvironment environment = RuntimeEnvironmentBuilder.Factory.get().newDefaultBuilder()
+				.userGroupCallback(userGroupCallback)
+				.addAsset(ResourceFactory.newClassPathResource("net/a/g/jbpm/pattern/AsyncTestProcess.bpmn"),
+						ResourceType.BPMN2)
+				.addEnvironmentEntry("ExecutorService", executorService)
+				//.addEnvironmentEntry("AsyncMode", "true")
+				.registerableItemsFactory(new DefaultRegisterableItemsFactory() {
 
-    private boolean waitForAllJobsToComplete() throws Exception {
-        int attempts = 10;
-        do {
-            List<RequestInfo> runningOrQueued = executorService.getRequestsByStatus(Arrays.asList(STATUS.RUNNING, STATUS.QUEUED), new QueryContext());
-            attempts--;
-            
-            if (runningOrQueued.isEmpty()) {
-                return true;
-            }
-            
-            Thread.sleep(500);
-            
-        } while (attempts > 0);
-        
-        return false;
-    }
+					@Override
+					public List<ProcessEventListener> getProcessEventListeners(RuntimeEngine runtime) {
+						List<ProcessEventListener> listeners = super.getProcessEventListeners(runtime);
+						listeners.add(countDownListener);
+						listeners.add(Sync);
+						listeners.add(Async);
+						listeners.add(new PatternProcessListener());
+						listeners.add(new MDCProcessListener());
 
-    private ExecutorService buildExecutorService() {
-        emf = Persistence.createEntityManagerFactory("org.jbpm.executor");
+						return listeners;
+					}
 
-        executorService = ExecutorServiceFactory.newExecutorService(emf);
-        executorService.setThreadPoolSize(2);
-        executorService.setInterval(1);
-        executorService.setTimeunit(TimeUnit.MINUTES);
-        executorService.setRetries(3);
-        
-        ((ExecutorServiceImpl) executorService).addAsyncJobListener(new PatternProcessListener());
-        
-        executorService.init();
+				}).get();
 
-        return executorService;
-    }
+		manager = RuntimeManagerFactory.Factory.get().newSingletonRuntimeManager(environment);
+		assertNotNull(manager);
+
+		RuntimeEngine runtime = manager.getRuntimeEngine(EmptyContext.get());
+		KieSession ksession = runtime.getKieSession();
+		assertNotNull(ksession);
+
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("stringIn", "AAA");
+		params.put("booleanIn", true);
+		params.put("integerIn", 321);
+
+		ProcessInstance processInstance = ksession.startProcess("AsyncTestProcess", params);
+
+		assertEquals(ProcessInstance.STATE_ACTIVE, processInstance.getState());
+		long processInstanceId = processInstance.getId();
+
+		countDownListener.waitTillCompleted();
+
+		processInstance = runtime.getKieSession().getProcessInstance(processInstanceId);
+		assertNull(processInstance);
+
+		assertEquals(1, Async.getCount().intValue());
+		assertEquals(1, Sync.getCount().intValue());
+	}
+
+	private static class NodeTriggerCountListener extends DefaultProcessEventListener {
+		private AtomicInteger count = new AtomicInteger(0);
+		private String nodeName;
+
+		private NodeTriggerCountListener(String nodeName) {
+			this.nodeName = nodeName;
+		}
+
+		@Override
+		public void afterNodeTriggered(ProcessNodeTriggeredEvent event) {
+			if (event.getNodeInstance().getNodeName().equals(nodeName)) {
+				count.getAndIncrement();
+			}
+		}
+
+		public AtomicInteger getCount() {
+			return count;
+		}
+	};
+
+	private boolean waitForAllJobsToComplete() throws Exception {
+		int attempts = 10;
+		do {
+			List<RequestInfo> runningOrQueued = executorService
+					.getRequestsByStatus(Arrays.asList(STATUS.RUNNING, STATUS.QUEUED), new QueryContext());
+			attempts--;
+
+			if (runningOrQueued.isEmpty()) {
+				return true;
+			}
+
+			Thread.sleep(500);
+
+		} while (attempts > 0);
+
+		return false;
+	}
+
+	private ExecutorService buildExecutorService() {
+		emf = Persistence.createEntityManagerFactory("org.jbpm.executor");
+
+		executorService = ExecutorServiceFactory.newExecutorService(emf);
+		executorService.setThreadPoolSize(2);
+		executorService.setInterval(1);
+		executorService.setTimeunit(TimeUnit.MINUTES);
+		executorService.setRetries(3);
+
+		((ExecutorServiceImpl) executorService).addAsyncJobListener(new PatternProcessListener());
+
+		executorService.init();
+
+		return executorService;
+	}
 }
