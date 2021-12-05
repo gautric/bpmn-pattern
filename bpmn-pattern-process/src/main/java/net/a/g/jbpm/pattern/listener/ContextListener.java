@@ -22,20 +22,20 @@ import org.slf4j.LoggerFactory;
 
 public class ContextListener implements ProcessEventListener, RuleRuntimeEventListener {
 
-	private static final String NODE_TYPE =  "NodeType";
-	private static final String NODE_NAME =  "NodeName";
+	private static final String NODE_TYPE = "NodeType";
+	private static final String NODE_NAME = "NodeName";
 	private static final String NEUTRAL = "";
-	private static final String RUNTIME_MANAGER =  "RuntimeManager";
-	private static final String RUNTIME_STRATEGY =  "RuntimeStrategy";
-	private static final String EXTERNAL_ID =  "ExternalId";
-	private static final String VERSION =  "Version";
-	private static final String CORRELATION_KEY =  "CorrelationKey";
-	private static final String STATE =  "State";
-	private static final String PARENT_PROCESS_INSTANCE_ID =  "ParentProcessInstanceId";
-	private static final String PROCESS_INSTANCE_ID =  "ProcessInstanceId";
-	private static final String PROCESS_NAME =  "ProcessName";
-	private static final String PROCESS_ID =  "ProcessId";
-	private static final String ASYNC =  "Async";
+	private static final String RUNTIME_MANAGER = "RuntimeManager";
+	private static final String RUNTIME_STRATEGY = "RuntimeStrategy";
+	private static final String EXTERNAL_ID = "ExternalId";
+	private static final String VERSION = "Version";
+	private static final String CORRELATION_KEY = "CorrelationKey";
+	private static final String STATE = "State";
+	private static final String PARENT_PROCESS_INSTANCE_ID = "ParentProcessInstanceId";
+	private static final String PROCESS_INSTANCE_ID = "ProcessInstanceId";
+	private static final String PROCESS_NAME = "ProcessName";
+	private static final String PROCESS_ID = "ProcessId";
+	private static final String ASYNC = "Async";
 
 	private Logger LOG = LoggerFactory.getLogger("net.a.g.jbpm.pattern.Context");
 
@@ -62,7 +62,9 @@ public class ContextListener implements ProcessEventListener, RuleRuntimeEventLi
 		}
 
 		org.slf4j.MDC.put(ASYNC, NEUTRAL + AsyncExecutionMarker.isAsync());
-
+		
+		org.slf4j.MDC.remove(NODE_TYPE);
+		org.slf4j.MDC.remove(NODE_NAME);
 	}
 
 	private void removeMDC(Object l) {
@@ -90,7 +92,19 @@ public class ContextListener implements ProcessEventListener, RuleRuntimeEventLi
 	}
 
 	@Override
+	public void afterProcessStarted(ProcessStartedEvent event) {
+	}
+
+	@Override
 	public void beforeProcessCompleted(ProcessCompletedEvent event) {
+	}
+
+	@Override
+	public void afterProcessCompleted(ProcessCompletedEvent event) {
+		injectMDC(event.getProcessInstance(), ((KieRuntime) event.getKieRuntime()));
+		LOG.info("Processus End ({}) - {}", event.getProcessInstance().getId(),
+				event.getProcessInstance().getProcessName());
+		removeMDC(event.getProcessInstance());
 	}
 
 	@Override
@@ -105,21 +119,6 @@ public class ContextListener implements ProcessEventListener, RuleRuntimeEventLi
 
 	@Override
 	public void beforeNodeLeft(ProcessNodeLeftEvent event) {
-	}
-
-	@Override
-	public void afterVariableChanged(ProcessVariableChangedEvent event) {
-	}
-
-	@Override
-	public void afterProcessStarted(ProcessStartedEvent event) {
-	}
-
-	@Override
-	public void afterProcessCompleted(ProcessCompletedEvent event) {
-		injectMDC(event.getProcessInstance(), ((KieRuntime) event.getKieRuntime()));
-		LOG.info("Processus End ({}) - {}", event.getProcessInstance().getId(),
-				event.getProcessInstance().getProcessName());
 		removeMDC(event.getProcessInstance());
 	}
 
@@ -139,6 +138,10 @@ public class ContextListener implements ProcessEventListener, RuleRuntimeEventLi
 		LOG.info("Update Variable ({}) - {} = {} <- {}", event.getProcessInstance().getId(), event.getVariableId(),
 				event.getNewValue(), event.getOldValue());
 		removeMDC(event.getProcessInstance());
+	}
+
+	@Override
+	public void afterVariableChanged(ProcessVariableChangedEvent event) {
 	}
 
 	@Override
