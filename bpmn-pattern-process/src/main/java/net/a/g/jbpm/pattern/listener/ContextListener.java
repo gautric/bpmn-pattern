@@ -22,21 +22,20 @@ import org.slf4j.LoggerFactory;
 
 public class ContextListener implements ProcessEventListener, RuleRuntimeEventListener {
 
-	private static final String JBPM_MDC_PREFIX = System.getProperty("jbpm.mdc.prefix", "jbpm") + ".";
-	private static final String NODE_TYPE = JBPM_MDC_PREFIX + "NodeType";
-	private static final String NODE_NAME = JBPM_MDC_PREFIX + "NodeName";
+	private static final String NODE_TYPE =  "NodeType";
+	private static final String NODE_NAME =  "NodeName";
 	private static final String NEUTRAL = "";
-	private static final String RUNTIME_MANAGER = JBPM_MDC_PREFIX + "RuntimeManager";
-	private static final String RUNTIME_STRATEGY = JBPM_MDC_PREFIX + "RuntimeStrategy";
-	private static final String EXTERNAL_ID = JBPM_MDC_PREFIX + "ExternalId";
-	private static final String VERSION = JBPM_MDC_PREFIX + "Version";
-	private static final String CORRELATION_KEY = JBPM_MDC_PREFIX + "CorrelationKey";
-	private static final String STATE = JBPM_MDC_PREFIX + "State";
-	private static final String PARENT_PROCESS_INSTANCE_ID = JBPM_MDC_PREFIX + "ParentProcessInstanceId";
-	private static final String PROCESS_INSTANCE_ID = JBPM_MDC_PREFIX + "ProcessInstanceId";
-	private static final String PROCESS_NAME = JBPM_MDC_PREFIX + "ProcessName";
-	private static final String PROCESS_ID = JBPM_MDC_PREFIX + "ProcessId";
-	private static final String ASYNC = JBPM_MDC_PREFIX + "Async";
+	private static final String RUNTIME_MANAGER =  "RuntimeManager";
+	private static final String RUNTIME_STRATEGY =  "RuntimeStrategy";
+	private static final String EXTERNAL_ID =  "ExternalId";
+	private static final String VERSION =  "Version";
+	private static final String CORRELATION_KEY =  "CorrelationKey";
+	private static final String STATE =  "State";
+	private static final String PARENT_PROCESS_INSTANCE_ID =  "ParentProcessInstanceId";
+	private static final String PROCESS_INSTANCE_ID =  "ProcessInstanceId";
+	private static final String PROCESS_NAME =  "ProcessName";
+	private static final String PROCESS_ID =  "ProcessId";
+	private static final String ASYNC =  "Async";
 
 	private Logger LOG = LoggerFactory.getLogger("net.a.g.jbpm.pattern.Context");
 
