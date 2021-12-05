@@ -2,13 +2,18 @@ package net.a.g.jbpm.pattern.wih;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.jbpm.process.workitem.core.AbstractWorkItemHandler;
+import org.jbpm.ruleflow.instance.RuleFlowProcessInstance;
+import org.jbpm.workflow.core.node.BoundaryEventNode;
 import org.jbpm.workflow.instance.impl.NodeInstanceImpl;
+import org.kie.api.definition.process.Node;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.api.runtime.process.WorkItem;
 import org.kie.api.runtime.process.WorkItemManager;
-//import org.drools.core.process.instance.impl.
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,14 +45,28 @@ public class MainProcessWIH extends AbstractWorkItemHandler implements org.kie.a
 
 		resultParam.put("result", result);
 		LOG.info("End Nominal {}", MainProcessWIH.class);
-		
+
 		NodeInstanceImpl ni = (NodeInstanceImpl) this.getNodeInstance(workItem);
-		
-		String uuid = (String) ni.getMetaData("UniqueId");
-		
-		String eventType = "Error-" +uuid+ "-BondaryError";
-		
-        ((org.drools.core.process.instance.WorkItemManager) manager).signalEvent(eventType, (org.drools.core.process.instance.WorkItem) workItem, workItem.getProcessInstanceId());
+
+		String uuid = (String) ni.getNode().getNodeUniqueId();
+
+		String toto = ni.getNode().getNodeUniqueId();
+
+		ProcessInstance pi = this.getProcessInstance(workItem);
+
+		Optional<BoundaryEventNode> boundary = Stream.of(((RuleFlowProcessInstance) pi).getNodeContainer().getNodes())
+				.filter(e -> e instanceof BoundaryEventNode).map(e -> (BoundaryEventNode) e)
+				.filter(e -> e.getAttachedToNodeId().compareTo(uuid) == 0).findFirst();
+
+		String errorName = null;
+		if (boundary.isPresent()) {
+			errorName = (String) boundary.get().getMetaData("ErrorEvent");
+		}
+
+		String eventType = "Error-" + uuid + "-" + errorName;
+
+		((org.drools.core.process.instance.WorkItemManager) manager).signalEvent(eventType,
+				(org.drools.core.process.instance.WorkItem) workItem, workItem.getProcessInstanceId());
 
 		manager.completeWorkItem(workItem.getId(), resultParam);
 	}
