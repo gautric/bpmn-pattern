@@ -136,4 +136,24 @@ public class MainProcessPPITest extends AbstractKieServicesTest {
 
 	}
 
+	@Test
+	public void mainProcessus2NominalTest() throws InterruptedException {
+
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("integerIn", 41);
+		param.put("booleanIn", true);
+		param.put("stringIn", "machaine");
+
+		long processInstanceId = processService.startProcess(deploymentUnit.getIdentifier(), "MainProcessus", param);
+
+		processService.signalProcessInstance(deploymentUnit.getIdentifier(), processInstanceId, "SignalMainProcessus",
+				null);
+
+		Collection<VariableDesc> c = this.runtimeDataService.getVariablesCurrentState(processInstanceId);
+
+		assertEquals((int) ProcessInstance.STATE_COMPLETED,
+				(int) this.runtimeDataService.getProcessInstanceById(processInstanceId).getState());
+
+	}
+
 }

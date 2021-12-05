@@ -9,7 +9,6 @@ import org.jbpm.process.workitem.core.AbstractWorkItemHandler;
 import org.jbpm.ruleflow.instance.RuleFlowProcessInstance;
 import org.jbpm.workflow.core.node.BoundaryEventNode;
 import org.jbpm.workflow.instance.impl.NodeInstanceImpl;
-import org.kie.api.definition.process.Node;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.process.ProcessInstance;
 import org.kie.api.runtime.process.WorkItem;
@@ -46,27 +45,26 @@ public class MainProcessWIH extends AbstractWorkItemHandler implements org.kie.a
 		resultParam.put("result", result);
 		LOG.info("End Nominal {}", MainProcessWIH.class);
 
-		NodeInstanceImpl ni = (NodeInstanceImpl) this.getNodeInstance(workItem);
+		if (b == 42) {
+			NodeInstanceImpl ni = (NodeInstanceImpl) this.getNodeInstance(workItem);
 
-		String uuid = (String) ni.getNode().getNodeUniqueId();
+			String uuid = (String) ni.getNode().getNodeUniqueId();
 
-		String toto = ni.getNode().getNodeUniqueId();
+			ProcessInstance pi = this.getProcessInstance(workItem);
 
-		ProcessInstance pi = this.getProcessInstance(workItem);
+			Optional<Object> boundary = Stream.of(((RuleFlowProcessInstance) pi).getNodeContainer().getNodes())
+					.filter(e -> e instanceof BoundaryEventNode).map(e -> (BoundaryEventNode) e)
+					.filter(e -> e.getAttachedToNodeId().compareTo(uuid) == 0)
+					.filter(e -> e.getMetaData().containsKey("ErrorEvent"))
+					.map(e -> e.getMetaData("ErrorEvent"))
+					.findFirst();
 
-		Optional<BoundaryEventNode> boundary = Stream.of(((RuleFlowProcessInstance) pi).getNodeContainer().getNodes())
-				.filter(e -> e instanceof BoundaryEventNode).map(e -> (BoundaryEventNode) e)
-				.filter(e -> e.getAttachedToNodeId().compareTo(uuid) == 0).findFirst();
-
-		String errorName = null;
-		if (boundary.isPresent()) {
-			errorName = (String) boundary.get().getMetaData("ErrorEvent");
+			if (boundary.isPresent()) {
+				String eventType = "Error-" + uuid + "-" + boundary.get();
+				((org.drools.core.process.instance.WorkItemManager) manager).signalEvent(eventType,
+						(org.drools.core.process.instance.WorkItem) workItem, workItem.getProcessInstanceId());
+			}
 		}
-
-		String eventType = "Error-" + uuid + "-" + errorName;
-
-		((org.drools.core.process.instance.WorkItemManager) manager).signalEvent(eventType,
-				(org.drools.core.process.instance.WorkItem) workItem, workItem.getProcessInstanceId());
 
 		manager.completeWorkItem(workItem.getId(), resultParam);
 	}
