@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import org.jbpm.test.JbpmJUnitBaseTestCase;
 import org.jbpm.workflow.instance.WorkflowRuntimeException;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.kie.api.event.process.ProcessEventListener;
 import org.kie.api.runtime.KieSession;
@@ -18,6 +19,7 @@ import org.kie.api.runtime.process.ProcessWorkItemHandlerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.a.g.jbpm.pattern.wih.WorkItemHandlerOneThrowingException;
 import net.a.g.jbpm.pattern.wih.WorkItemHandlerThrowingException;
 
 public class HandlerGlobalExceptionProcessTest extends JbpmJUnitBaseTestCase {
@@ -49,11 +51,41 @@ public class HandlerGlobalExceptionProcessTest extends JbpmJUnitBaseTestCase {
 			ProcessInstance processInstance = kieSession.startProcess("ExceptionToErrorProcess", params);
 			fail("Ne doit pas passer ici");
 		} catch (WorkflowRuntimeException e) {
-			
+
 		}
 //		assertProcessInstanceNotActive(processInstance.getId(), kieSession);
 //		// assertNodeTriggered(processInstance.getId(), "ScriptTask");
 //		assertNodeTriggered(processInstance.getId(), "Nominal End");
+
+		runtimeManager.disposeRuntimeEngine(runtimeEngine);
+		runtimeManager.close();
+	}
+
+	@Test
+	public void testRetryOneException() {
+		HandlerGlobalExceptionProcessTest.LOG.debug("jBPM unit test sample");
+
+		addWorkItemHandler("WorkItemHandler",
+				new WorkItemHandlerOneThrowingException(new ProcessWorkItemHandlerException(
+						"HandlerGlobalExceptionProcess", "RETRY", new RuntimeException("Exception inside Test Case"))));
+
+		final RuntimeManager runtimeManager = createRuntimeManager("net/a/g/jbpm/pattern/ExceptionToErrorProcess.bpmn",
+				"net/a/g/jbpm/pattern/HandlerGlobalExceptionProcess.bpmn");
+		final RuntimeEngine runtimeEngine = getRuntimeEngine(null);
+		final KieSession kieSession = runtimeEngine.getKieSession();
+
+		kieSession.addEventListener((ProcessEventListener) new PatternProcessListener());
+
+		Map<String, Object> params = new HashMap<String, Object>();
+
+		params.put("booleanIn", true);
+		params.put("stringIn", UUID.randomUUID().toString());
+		params.put("integerIn", 42);
+
+		ProcessInstance processInstance = kieSession.startProcess("ExceptionToErrorProcess", params);
+
+		assertProcessInstanceNotActive(processInstance.getId(), kieSession);
+		assertNodeTriggered(processInstance.getId(), "Nominal End");
 
 		runtimeManager.disposeRuntimeEngine(runtimeEngine);
 		runtimeManager.close();
@@ -119,14 +151,16 @@ public class HandlerGlobalExceptionProcessTest extends JbpmJUnitBaseTestCase {
 		runtimeManager.disposeRuntimeEngine(runtimeEngine);
 		runtimeManager.close();
 	}
-	
-	
+
 	@Test
+	@Ignore
 	public void testAbortWithSignal() throws InterruptedException {
 		HandlerGlobalExceptionProcessTest.LOG.debug("jBPM unit test sample");
 
-		addWorkItemHandler("WorkItemHandler", new WorkItemHandlerThrowingException(new ProcessWorkItemHandlerException(
-				"HandlerGlobalExceptionProcessWithSignal", "ABORT", new RuntimeException("Exception inside Test Case"))));
+		addWorkItemHandler("WorkItemHandler",
+				new WorkItemHandlerThrowingException(
+						new ProcessWorkItemHandlerException("HandlerGlobalExceptionProcessWithSignal", "ABORT",
+								new RuntimeException("Exception inside Test Case"))));
 
 		final RuntimeManager runtimeManager = createRuntimeManager("net/a/g/jbpm/pattern/ExceptionToErrorProcess.bpmn",
 				"net/a/g/jbpm/pattern/HandlerGlobalExceptionProcessWithSignal.bpmn");
@@ -146,11 +180,10 @@ public class HandlerGlobalExceptionProcessTest extends JbpmJUnitBaseTestCase {
 		Thread.sleep(1000);
 		assertProcessInstanceActive(processInstance.getId(), kieSession);
 
-		
 		kieSession.signalEvent("Resolution", new Integer(42));
-		
-		//Resolution
-		
+
+		// Resolution
+
 		assertProcessInstanceNotActive(processInstance.getId(), kieSession);
 		// assert
 		// assertNodeTriggered(processInstance.getId(), "ScriptTask");

@@ -1,5 +1,6 @@
 package net.a.g.jbpm.pattern.listener;
 
+import org.jbpm.process.core.async.AsyncExecutionMarker;
 import org.jbpm.process.instance.impl.ProcessInstanceImpl;
 import org.jbpm.ruleflow.instance.RuleFlowProcessInstance;
 import org.kie.api.event.process.ProcessCompletedEvent;
@@ -34,6 +35,7 @@ public class ContextListener implements ProcessEventListener, RuleRuntimeEventLi
 	private static final String PROCESS_INSTANCE_ID = "ProcessInstanceId";
 	private static final String PROCESS_NAME = "ProcessName";
 	private static final String PROCESS_ID = "ProcessId";
+	private static final String ASYNC = "Async";
 
 	private Logger LOG = LoggerFactory.getLogger("net.a.g.jbpm.pattern.Context");
 
@@ -58,6 +60,11 @@ public class ContextListener implements ProcessEventListener, RuleRuntimeEventLi
 			org.slf4j.MDC.put(RUNTIME_STRATEGY, ((RuntimeManager) kieSession.getEnvironment().get(RUNTIME_MANAGER))
 					.getClass().getSimpleName().replace(RUNTIME_MANAGER, NEUTRAL));
 		}
+
+		org.slf4j.MDC.put(ASYNC, NEUTRAL + AsyncExecutionMarker.isAsync());
+		
+		org.slf4j.MDC.remove(NODE_TYPE);
+		org.slf4j.MDC.remove(NODE_NAME);
 	}
 
 	private void removeMDC(Object l) {
@@ -70,6 +77,11 @@ public class ContextListener implements ProcessEventListener, RuleRuntimeEventLi
 		org.slf4j.MDC.remove(VERSION);
 		org.slf4j.MDC.remove(EXTERNAL_ID);
 		org.slf4j.MDC.remove(RUNTIME_STRATEGY);
+
+		org.slf4j.MDC.remove(ASYNC);
+		// For node only
+		org.slf4j.MDC.remove(NODE_TYPE);
+		org.slf4j.MDC.remove(NODE_NAME);
 	}
 
 	@Override
@@ -80,32 +92,11 @@ public class ContextListener implements ProcessEventListener, RuleRuntimeEventLi
 	}
 
 	@Override
-	public void beforeProcessCompleted(ProcessCompletedEvent event) {
-	}
-
-	@Override
-	public void beforeNodeTriggered(ProcessNodeTriggeredEvent event) {
-		injectMDC(event.getProcessInstance(), ((KieRuntime) event.getKieRuntime()));
-		if (event.getNodeInstance().getNodeName() != null) {
-			org.slf4j.MDC.put(NODE_NAME, event.getNodeInstance().getNodeName());
-			org.slf4j.MDC.put(NODE_TYPE, event.getNodeInstance().getNode().getNodeType().name());
-		}
-		LOG.info("Node - {}", event.getNodeInstance().getNodeName());
-		org.slf4j.MDC.remove(NODE_TYPE);
-		org.slf4j.MDC.remove(NODE_NAME);
-		removeMDC(event.getProcessInstance());
-	}
-
-	@Override
-	public void beforeNodeLeft(ProcessNodeLeftEvent event) {
-	}
-
-	@Override
-	public void afterVariableChanged(ProcessVariableChangedEvent event) {
-	}
-
-	@Override
 	public void afterProcessStarted(ProcessStartedEvent event) {
+	}
+
+	@Override
+	public void beforeProcessCompleted(ProcessCompletedEvent event) {
 	}
 
 	@Override
@@ -117,11 +108,28 @@ public class ContextListener implements ProcessEventListener, RuleRuntimeEventLi
 	}
 
 	@Override
+	public void beforeNodeTriggered(ProcessNodeTriggeredEvent event) {
+		injectMDC(event.getProcessInstance(), ((KieRuntime) event.getKieRuntime()));
+		if (event.getNodeInstance().getNodeName() != null) {
+			org.slf4j.MDC.put(NODE_NAME, event.getNodeInstance().getNodeName());
+			org.slf4j.MDC.put(NODE_TYPE, event.getNodeInstance().getNode().getNodeType().name());
+		}
+		LOG.info("Node - {}", event.getNodeInstance().getNodeName());
+	}
+
+	@Override
+	public void beforeNodeLeft(ProcessNodeLeftEvent event) {
+		removeMDC(event.getProcessInstance());
+	}
+
+	@Override
 	public void afterNodeTriggered(ProcessNodeTriggeredEvent event) {
+		removeMDC(event.getProcessInstance());
 	}
 
 	@Override
 	public void afterNodeLeft(ProcessNodeLeftEvent event) {
+		removeMDC(event.getProcessInstance());
 	}
 
 	@Override
@@ -130,6 +138,10 @@ public class ContextListener implements ProcessEventListener, RuleRuntimeEventLi
 		LOG.info("Update Variable ({}) - {} = {} <- {}", event.getProcessInstance().getId(), event.getVariableId(),
 				event.getNewValue(), event.getOldValue());
 		removeMDC(event.getProcessInstance());
+	}
+
+	@Override
+	public void afterVariableChanged(ProcessVariableChangedEvent event) {
 	}
 
 	@Override
