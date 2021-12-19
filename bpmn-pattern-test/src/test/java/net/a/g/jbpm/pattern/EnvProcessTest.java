@@ -27,6 +27,15 @@ public class EnvProcessTest extends JbpmJUnitBaseTestCase {
 	private static final String CONF = "conf";
 	private static final Logger LOG = LoggerFactory.getLogger(EnvProcessTest.class);
 
+	public class ConfigurationInjectorListener extends DefaultProcessEventListener {
+		@Override
+		public void beforeProcessStarted(ProcessStartedEvent event) {
+			EnvProcessTest.LOG.info("Inject \"{}\" value \"{}\" ", CONF, Configuration.class);
+			((WorkflowProcessInstance) event.getProcessInstance()).setVariable(CONF,
+					new Configuration((KieSession) event.getKieRuntime()));
+		}
+	}
+
 	public class Configuration {
 
 		private volatile KieSession kieSession;
@@ -70,14 +79,7 @@ public class EnvProcessTest extends JbpmJUnitBaseTestCase {
 
 		kieSession.getWorkItemManager().registerWorkItemHandler("Human Task", new CopyInToOutWorkItemHandler());
 		kieSession.addEventListener((ProcessEventListener) new PatternProcessListener());
-		kieSession.addEventListener((ProcessEventListener) new DefaultProcessEventListener() {
-			@Override
-			public void beforeProcessStarted(ProcessStartedEvent event) {
-				EnvProcessTest.LOG.info("Inject \"conf\" value \"{}\" ", Configuration.class);
-				((WorkflowProcessInstance) event.getProcessInstance()).setVariable(CONF,
-						new Configuration((KieSession) event.getKieRuntime()));
-			}
-		});
+		kieSession.addEventListener((ProcessEventListener) new ConfigurationInjectorListener());
 
 		Map<String, Object> params = new HashMap<String, Object>();
 
@@ -112,15 +114,8 @@ public class EnvProcessTest extends JbpmJUnitBaseTestCase {
 
 		kieSession.getWorkItemManager().registerWorkItemHandler("Human Task", new CopyInToOutWorkItemHandler());
 		kieSession.addEventListener((ProcessEventListener) new PatternProcessListener());
-		kieSession.addEventListener((ProcessEventListener) new DefaultProcessEventListener() {
-			@Override
-			public void beforeProcessStarted(ProcessStartedEvent event) {
-				EnvProcessTest.LOG.info("Inject \"conf\" value \"{}\" ", Configuration.class);
-				((WorkflowProcessInstance) event.getProcessInstance()).setVariable(CONF,
-						new Configuration((KieSession) event.getKieRuntime()));
-			}
-		});
-		
+		kieSession.addEventListener((ProcessEventListener) new ConfigurationInjectorListener());
+
 		Map<String, Object> params = new HashMap<String, Object>();
 
 		params.put("booleanIn", true);
