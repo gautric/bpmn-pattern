@@ -2,12 +2,15 @@ package net.a.g.jbpm.pattern;
 
 import org.jbpm.executor.AsynchronousJobEvent;
 import org.jbpm.executor.AsynchronousJobListener;
+import org.kie.api.event.process.MessageEvent;
 import org.kie.api.event.process.ProcessCompletedEvent;
 import org.kie.api.event.process.ProcessEventListener;
 import org.kie.api.event.process.ProcessNodeLeftEvent;
 import org.kie.api.event.process.ProcessNodeTriggeredEvent;
 import org.kie.api.event.process.ProcessStartedEvent;
 import org.kie.api.event.process.ProcessVariableChangedEvent;
+import org.kie.api.event.process.SLAViolatedEvent;
+import org.kie.api.event.process.SignalEvent;
 import org.kie.api.event.rule.ObjectDeletedEvent;
 import org.kie.api.event.rule.ObjectInsertedEvent;
 import org.kie.api.event.rule.ObjectUpdatedEvent;
@@ -15,9 +18,8 @@ import org.kie.api.event.rule.RuleRuntimeEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PatternProcessListener implements ProcessEventListener, RuleRuntimeEventListener, AsynchronousJobListener  {
+public class PatternProcessListener implements ProcessEventListener, RuleRuntimeEventListener, AsynchronousJobListener {
 	private Logger LOG = LoggerFactory.getLogger("net.a.g.jbpm.pattern.PatternProcessListener");
-
 
 	@Override
 	public void beforeProcessStarted(ProcessStartedEvent event) {
@@ -67,19 +69,19 @@ public class PatternProcessListener implements ProcessEventListener, RuleRuntime
 	@Override
 	public void objectInserted(ObjectInsertedEvent event) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void objectUpdated(ObjectUpdatedEvent event) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void objectDeleted(ObjectDeletedEvent event) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -89,16 +91,18 @@ public class PatternProcessListener implements ProcessEventListener, RuleRuntime
 
 	@Override
 	public void afterJobScheduled(AsynchronousJobEvent event) {
-		
+		LOG.info("After Job Scheduled  : {}", event.getJob());
 	}
 
 	@Override
 	public void beforeJobExecuted(AsynchronousJobEvent event) {
-		LOG.info("Before Job Executed  : {}", event.getJob());	
+		LOG.info("Before Job Executed  : {}", event.getJob());
 	}
 
 	@Override
 	public void afterJobExecuted(AsynchronousJobEvent event) {
+		LOG.info("After Job Executed  : {}", event.getJob());
+
 	}
 
 	@Override
@@ -107,5 +111,25 @@ public class PatternProcessListener implements ProcessEventListener, RuleRuntime
 
 	@Override
 	public void afterJobCancelled(AsynchronousJobEvent event) {
+	}
+
+	@Override
+	public void beforeSLAViolated(SLAViolatedEvent event) {
+
+	}
+
+	@Override
+	public void afterSLAViolated(SLAViolatedEvent event) {
+	}
+
+	@Override
+	public void onSignal(SignalEvent event) {
+		LOG.debug("onSignal : {}", event);
+	}
+
+	@Override
+	public void onMessage(MessageEvent event) {
+		LOG.debug("onMessage : {}", event);
+
 	}
 }
