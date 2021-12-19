@@ -6,10 +6,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.codehaus.plexus.util.StringUtils;
 import org.jbpm.ruleflow.instance.RuleFlowProcessInstance;
 import org.jbpm.test.JbpmJUnitBaseTestCase;
+import org.jbpm.workflow.instance.WorkflowProcessInstance;
 import org.junit.Test;
+import org.kie.api.event.process.DefaultProcessEventListener;
 import org.kie.api.event.process.ProcessEventListener;
+import org.kie.api.event.process.ProcessStartedEvent;
 import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.manager.RuntimeEngine;
 import org.kie.api.runtime.manager.RuntimeManager;
@@ -20,7 +24,41 @@ import org.slf4j.LoggerFactory;
 import net.a.g.jbpm.pattern.wih.CopyInToOutWorkItemHandler;
 
 public class EnvProcessTest extends JbpmJUnitBaseTestCase {
+	private static final String CONF = "conf";
 	private static final Logger LOG = LoggerFactory.getLogger(EnvProcessTest.class);
+
+	public class Configuration {
+
+		private volatile KieSession kieSession;
+
+		public Configuration(KieSession kieSession) {
+			this.kieSession = kieSession;
+		}
+
+		public String getProperty(String name, String def) {
+
+			String ret = null;
+
+			if (StringUtils.isNotBlank((String) kieSession.getEnvironment().get(name))) {
+				ret = (String) kieSession.getEnvironment().get(name);
+			}
+
+			if (ret == null && StringUtils.isNotBlank(System.getProperty(name))) {
+				ret = System.getProperty(name);
+			}
+
+			if (ret == null && StringUtils.isNotBlank(System.getenv(name))) {
+				ret = System.getenv(name);
+			}
+
+			if (ret == null) {
+				ret = def;
+			}
+
+			LOG.debug("name {} ret {} default {}", name, ret, def);
+			return ret;
+		}
+	}
 
 	@Test
 	public void testWithEnv_EnvProcess() {
@@ -32,14 +70,23 @@ public class EnvProcessTest extends JbpmJUnitBaseTestCase {
 
 		kieSession.getWorkItemManager().registerWorkItemHandler("Human Task", new CopyInToOutWorkItemHandler());
 		kieSession.addEventListener((ProcessEventListener) new PatternProcessListener());
+		kieSession.addEventListener((ProcessEventListener) new DefaultProcessEventListener() {
+			@Override
+			public void beforeProcessStarted(ProcessStartedEvent event) {
+				EnvProcessTest.LOG.info("Inject \"conf\" value \"{}\" ", Configuration.class);
+				((WorkflowProcessInstance) event.getProcessInstance()).setVariable(CONF,
+						new Configuration((KieSession) event.getKieRuntime()));
+			}
+		});
 
 		Map<String, Object> params = new HashMap<String, Object>();
 
 		params.put("booleanIn", true);
 		params.put("stringIn", UUID.randomUUID().toString());
 		params.put("integerIn", 42);
+		// params.put("conf", new Configuration(kieSession));
 
-		System.setProperty("myURL", "http://www.example.com");
+		System.setProperty("net.a.g.jbpm.conf.url", "http://www.example.com");
 
 		ProcessInstance processInstance = kieSession.startProcess("EnvProcess", params);
 
@@ -65,7 +112,15 @@ public class EnvProcessTest extends JbpmJUnitBaseTestCase {
 
 		kieSession.getWorkItemManager().registerWorkItemHandler("Human Task", new CopyInToOutWorkItemHandler());
 		kieSession.addEventListener((ProcessEventListener) new PatternProcessListener());
-
+		kieSession.addEventListener((ProcessEventListener) new DefaultProcessEventListener() {
+			@Override
+			public void beforeProcessStarted(ProcessStartedEvent event) {
+				EnvProcessTest.LOG.info("Inject \"conf\" value \"{}\" ", Configuration.class);
+				((WorkflowProcessInstance) event.getProcessInstance()).setVariable(CONF,
+						new Configuration((KieSession) event.getKieRuntime()));
+			}
+		});
+		
 		Map<String, Object> params = new HashMap<String, Object>();
 
 		params.put("booleanIn", true);
