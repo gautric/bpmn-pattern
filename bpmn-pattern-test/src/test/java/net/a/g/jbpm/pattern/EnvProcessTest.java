@@ -1,10 +1,10 @@
 package net.a.g.jbpm.pattern;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import org.codehaus.plexus.util.StringUtils;
 import org.jbpm.process.instance.event.DefaultSignalManagerFactory;
@@ -89,9 +89,9 @@ public class EnvProcessTest extends JbpmJUnitBaseTestCase {
 
 		Map<String, Object> params = new HashMap<String, Object>();
 
-		params.put("booleanIn", true);
-		params.put("stringIn", UUID.randomUUID().toString());
-		params.put("integerIn", 42);
+		params.put("configurationVar", "----");
+		params.put("environementEntryVar", "----");
+		params.put("systemPropertyVar", "----");
 
 		System.setProperty("net.a.g.jbpm.conf.url", "http://property.example.com");
 
@@ -103,11 +103,17 @@ public class EnvProcessTest extends JbpmJUnitBaseTestCase {
 		assertNodeTriggered(processInstance.getId(), "Script Node");
 		assertNodeTriggered(processInstance.getId(), "Env Exécutée");
 
-		assertEquals(((RuleFlowProcessInstance) processInstance).getVariable("stringIn"),
+		assertEquals(((RuleFlowProcessInstance) processInstance).getVariable("configurationVar"),
+				"http://property.example.com");
+		assertNull(((RuleFlowProcessInstance) processInstance).getVariable("environementEntryVar"));
+		assertEquals(((RuleFlowProcessInstance) processInstance).getVariable("systemPropertyVar"),
 				"http://property.example.com");
 
 		runtimeManager.disposeRuntimeEngine(runtimeEngine);
 		runtimeManager.close();
+
+		System.getProperties().remove("net.a.g.jbpm.conf.url");
+
 	}
 
 	@Test
@@ -124,9 +130,9 @@ public class EnvProcessTest extends JbpmJUnitBaseTestCase {
 
 		Map<String, Object> params = new HashMap<String, Object>();
 
-		params.put("booleanIn", true);
-		params.put("stringIn", UUID.randomUUID().toString());
-		params.put("integerIn", 42);
+		params.put("configurationVar", "----");
+		params.put("environementEntryVar", "----");
+		params.put("systemPropertyVar", "----");
 
 		ProcessInstance processInstance = kieSession.startProcess("EnvProcess", params);
 
@@ -136,7 +142,11 @@ public class EnvProcessTest extends JbpmJUnitBaseTestCase {
 		assertNodeTriggered(processInstance.getId(), "Script Node");
 		assertNodeTriggered(processInstance.getId(), "Env Exécutée");
 
-		assertEquals(((RuleFlowProcessInstance) processInstance).getVariable("stringIn"), "http://default.example.com");
+		assertEquals(((RuleFlowProcessInstance) processInstance).getVariable("configurationVar"),
+				"http://default.example.com");
+		assertNull(((RuleFlowProcessInstance) processInstance).getVariable("environementEntryVar"));
+		assertEquals(((RuleFlowProcessInstance) processInstance).getVariable("systemPropertyVar"),
+				"http://default.example.com");
 
 		runtimeManager.disposeRuntimeEngine(runtimeEngine);
 		runtimeManager.close();
@@ -166,9 +176,9 @@ public class EnvProcessTest extends JbpmJUnitBaseTestCase {
 
 		Map<String, Object> params = new HashMap<String, Object>();
 
-		params.put("booleanIn", true);
-		params.put("stringIn", UUID.randomUUID().toString());
-		params.put("integerIn", 42);
+		params.put("configurationVar", "----");
+		params.put("environementEntryVar", "----");
+		params.put("systemPropertyVar", "----");
 
 		ProcessInstance processInstance = kieSession.startProcess("EnvProcess", params);
 
@@ -178,8 +188,12 @@ public class EnvProcessTest extends JbpmJUnitBaseTestCase {
 		assertNodeTriggered(processInstance.getId(), "Script Node");
 		assertNodeTriggered(processInstance.getId(), "Env Exécutée");
 
-		assertEquals(((RuleFlowProcessInstance) processInstance).getVariable("stringIn"),
+		assertEquals(((RuleFlowProcessInstance) processInstance).getVariable("configurationVar"),
 				"http://env-entry.example.com");
+		assertEquals(((RuleFlowProcessInstance) processInstance).getVariable("environementEntryVar"),
+				"http://env-entry.example.com");
+		assertEquals(((RuleFlowProcessInstance) processInstance).getVariable("systemPropertyVar"),
+				"http://default.example.com");
 
 		runtimeManager.disposeRuntimeEngine(runtimeEngine);
 		runtimeManager.close();
